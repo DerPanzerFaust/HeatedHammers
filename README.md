@@ -11,6 +11,17 @@
 ### Concept
 
 ***
+## WikiLinks ⬇️
+<ul>
+      <li><a href="">🏡Home</a></li>
+      <li><a href="">ℹGeneral Information</a></li>
+      <li><a href="">⚒️Features & Art</a></li>
+      <li><a href="">🌊GitFlow</a></li>
+      <li><a href="">📃Pipeline</a></li>
+      <li><a href="">🧪UserTests</a></li>
+    </ul>
+
+***
 
 ![LogoSmall](/Images/LogoSmall.png)
 #### KoffieVlekProductions™

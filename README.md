@@ -21,5 +21,3 @@
     </ul>
     
 ***
-
-## KoffieVlekProdcutions™ 

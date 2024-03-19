@@ -22,6 +22,3 @@
     </ul>
 
 ***
-
-![LogoSmall](/Images/LogoSmall.png)
-#### KoffieVlekProductions™

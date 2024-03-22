@@ -1,3 +1,4 @@
+using System;
 using UnityEngine.InputSystem;
 
 namespace InputNameSpace
@@ -7,40 +8,31 @@ namespace InputNameSpace
         //--------------------Private--------------------//
         private GameInput _gameInput;
 
-        private InputAction _move;
-        private InputAction _interact;
+        private InputAction _onMoveInputAction;
         //--------------------Public--------------------//
-        public InputAction Move
+        public InputAction OnMoveInputAction
         {
-            get => _move; 
-            set => _move = value;
+            get => _onMoveInputAction; 
+            set => _onMoveInputAction = value;
         }
 
-        public InputAction Interact
-        {
-            get => _interact;
-            set => _interact = value;
-        }
-
+        public Action OnMoveAction;
         //--------------------Functions--------------------//
         private void Awake()
         {
             _gameInput = new GameInput();
 
-            _move = _gameInput.Player.Move;
-            _interact = _gameInput.Player.Interact;
+            _onMoveInputAction = _gameInput.Player.Move;
         }
 
-        private void OnEnable()
-        {
-            _move.Enable();
-            _interact.Enable();
-        }
+        private void OnEnable() => _onMoveInputAction.Enable();
 
-        private void OnDisable()
+        private void OnDisable() => _onMoveInputAction.Disable();
+
+        private void Update()
         {
-            _move.Disable();
-            _interact.Disable();
+            if (_onMoveInputAction.IsPressed())
+                OnMoveAction.Invoke();
         }
     }
 }

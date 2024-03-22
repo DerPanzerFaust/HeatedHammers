@@ -1,5 +1,5 @@
 # Welcome To RoboTown 
-![BannerPlaceHolder](/Images/BannerPlaceHolder.jpg)
+![TempLogo](/Images/discount_logo.png)
 ### This is the repository to RoboTown. In this repository you can find all the information, files and other things related to RoboTown
 
 ## Final Concept

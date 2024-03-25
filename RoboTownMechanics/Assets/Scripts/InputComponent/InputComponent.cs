@@ -7,7 +7,6 @@ namespace InputNameSpace
     {
         //--------------------Private--------------------//
         private GameInput _gameInput;
-
         private InputAction _onMoveInputAction;
         private InputAction _interact;
         //--------------------Public--------------------//
@@ -21,14 +20,11 @@ namespace InputNameSpace
             get => _interact;
             set => _interact = value;
         }
-
-
         public Action OnMoveAction;
         //--------------------Functions--------------------//
         private void Awake()
         {
             _gameInput = new GameInput();
-
             _onMoveInputAction = _gameInput.Player.Move;
             _interact = _gameInput.Player.Interact;
         }

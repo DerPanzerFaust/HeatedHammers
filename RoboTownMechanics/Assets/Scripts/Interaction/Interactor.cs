@@ -11,6 +11,9 @@ public class Interactor : MonoBehaviour
         [SerializeField]
         private LayerMask _interatableLayer;
 
+        [SerializeField]
+        private float _interactRange;
+
         private InputComponent _playerInput;
         private Transform _transform;
 
@@ -31,10 +34,8 @@ public class Interactor : MonoBehaviour
         private void DoInteract(InputAction.CallbackContext callbackContext)
         {
             if (!Physics.Raycast(_transform.position + (Vector3.up * 0.3f) + (_transform.forward * 0.2f),
-                _transform.forward, out var hit, 1.5f, _interatableLayer)) return;
+                _transform.forward, out var hit, _interactRange, _interatableLayer)) return;
             if (!hit.transform.TryGetComponent(out WorkstationInteraction interactable)) return;
             interactable.Interact();
-
-            Debug.Log("Interact");
         }
     }

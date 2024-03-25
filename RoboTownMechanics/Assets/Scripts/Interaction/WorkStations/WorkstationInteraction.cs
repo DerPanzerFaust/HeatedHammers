@@ -33,10 +33,6 @@ namespace WorkstationInteractionBase
         {
             if (_isOn)
             {
-                _stopInteract.Invoke();
-            }
-            else
-            {
                 _onInteract.Invoke();
             }
 

@@ -1,11 +1,9 @@
 using InputNameSpace;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
+using QuickTime.Handler;
 
 namespace QuickTime.Rhythm
 {
@@ -30,19 +28,22 @@ namespace QuickTime.Rhythm
         private int _bufferHeight;
         [SerializeField]
         private Animation ButtonPress;
+        [SerializeField]
+        private QuickTimeHandler _quickTimeHanlder;
 
         private InputComponent _inputComponent;
+
         //--------------------Public--------------------//
         public Action OnFailQuickTime;
-
 
         //--------------------Functions--------------------//
         private void Start()
         {
+
             _inputComponent = InputComponent.Instance;
             _inputComponent.Interact.performed += InteractPressed;
 
-            OnFailQuickTime += FailedQuickTime;
+            OnFailQuickTime += _quickTimeHanlder.FailedQuickTime;
         }
 
         private void Update()
@@ -56,7 +57,7 @@ namespace QuickTime.Rhythm
 
             if (_rhythmCirkel.rectTransform.sizeDelta.magnitude <= new Vector2(_targetWidth, _targetHeight).magnitude)
             {
-                Debug.Log("Too late!");
+                _quickTimeHanlder.FailedQuickTime();
                 OnFailQuickTime.Invoke();
             }
         }
@@ -71,15 +72,10 @@ namespace QuickTime.Rhythm
             }
             else if (_rhythmCirkel.rectTransform.sizeDelta.magnitude >= new Vector2(_bufferHeight, _bufferWidth).magnitude)
             {
-                Debug.Log("Too early!"); //Hier komt wat er gebeurt als de speler te vroeg drukt
+                _quickTimeHanlder.FailedQuickTime();
             }
 
             ButtonPress.Play();
-        }
-
-        private void FailedQuickTime()
-        {
-            //Hier komt de code voor wat er gebeurd als de speler de QTE faalt. Exit en wegschieten in ragdoll.
         }
     }
 }

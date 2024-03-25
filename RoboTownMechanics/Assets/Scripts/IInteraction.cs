@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Events;
+   public interface IInteraction
+    {
+        //--------------------Public--------------------//
+        public UnityEvent onInteract { get; protected set; }
 
-public interface IInteraction 
-{
-    //--------------------Public--------------------//
-    public UnityEvent onInteract { get; protected set; }
+        //--------------------Functions--------------------//
 
-    //--------------------Functions--------------------//
-    public void Interact();
-}
+        /// <summary>
+        /// The interact function from the interface
+        /// </summary>
+        public void Interact();
+    }

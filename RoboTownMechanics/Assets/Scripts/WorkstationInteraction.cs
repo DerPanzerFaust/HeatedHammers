@@ -1,40 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class WorkstationInteraction : MonoBehaviour, IInteraction
+
+namespace WorkstationInteractionBase
 {
-
-    //--------------------Private--------------------//
-
-    private bool _isOn;
-
-    [SerializeField] 
-    private UnityEvent _stopInteract;
-    
-    [SerializeField] 
-    private UnityEvent _onInteract;
-
-    //--------------------Functions--------------------//
-    UnityEvent IInteraction.onInteract
+    public class WorkstationInteraction : MonoBehaviour, IInteraction
     {
-        get => _onInteract;
-        set => _onInteract = value;
-    }
 
-    public void Interact()
-    {
-        if (_isOn)
+        //--------------------Private--------------------//
+
+        private bool _isOn;
+
+        [SerializeField]
+        private UnityEvent _stopInteract;
+
+        [SerializeField]
+        private UnityEvent _onInteract;
+
+        //--------------------Functions--------------------//
+        UnityEvent IInteraction.onInteract
         {
-            _stopInteract.Invoke();
-        }
-        else
-        {
-            _onInteract.Invoke();
+            get => _onInteract;
+            set => _onInteract = value;
         }
 
-        _isOn = !_isOn;
+
+        /// <summary>
+        /// The interact function which invokes the interact when the raycast hits and "stop" the interaction.
+        /// </summary>
+
+        public void Interact()
+        {
+            if (_isOn)
+            {
+                _stopInteract.Invoke();
+            }
+            else
+            {
+                _onInteract.Invoke();
+            }
+
+            _isOn = !_isOn;
+        }
     }
+
 }

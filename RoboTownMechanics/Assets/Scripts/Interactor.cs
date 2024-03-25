@@ -8,7 +8,9 @@ public class Interactor : MonoBehaviour
 {
     //--------------------Private--------------------//
 
-    [SerializeField] private LayerMask _interatableLayer;
+    [SerializeField] 
+    private LayerMask _interatableLayer;
+    
     private InputComponent _playerInput;
     private Transform _transform;
 

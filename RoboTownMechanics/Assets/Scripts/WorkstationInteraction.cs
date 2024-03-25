@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +9,13 @@ public class WorkstationInteraction : MonoBehaviour, IInteraction
 
     //--------------------Private--------------------//
 
-    [SerializeField]private UnityEvent _onInteract;
+    private bool _isOn;
+
+    [SerializeField] 
+    private UnityEvent _stopInteract;
+    
+    [SerializeField] 
+    private UnityEvent _onInteract;
 
     //--------------------Functions--------------------//
     UnityEvent IInteraction.onInteract
@@ -17,5 +24,17 @@ public class WorkstationInteraction : MonoBehaviour, IInteraction
         set => _onInteract = value;
     }
 
-    public void Interact() => _onInteract.Invoke();
+    public void Interact()
+    {
+        if (_isOn)
+        {
+            _stopInteract.Invoke();
+        }
+        else
+        {
+            _onInteract.Invoke();
+        }
+
+        _isOn = !_isOn;
+    }
 }

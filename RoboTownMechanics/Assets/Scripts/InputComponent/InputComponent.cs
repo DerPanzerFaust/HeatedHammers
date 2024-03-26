@@ -8,19 +8,25 @@ namespace InputNameSpace
     {
         //--------------------Private--------------------//
         private GameInput _gameInput;
-
         private InputAction _onMoveInputAction;
+        private InputAction _interact;
         //--------------------Public--------------------//
         public InputAction OnMoveInputAction
         {
-            get => _onMoveInputAction; 
+            get => _onMoveInputAction;
             set => _onMoveInputAction = value;
         }
-
+        
         public GameInput GameInput
         {
             get => _gameInput;
             set => _gameInput = value;
+        }
+
+        public InputAction Interact
+        {
+            get => _interact;
+            set => _interact = value;
         }
 
         public Action OnMoveAction;
@@ -28,13 +34,23 @@ namespace InputNameSpace
         private void Awake()
         {
             _gameInput = new GameInput();
-
             _onMoveInputAction = _gameInput.Player.Move;
+            _interact = _gameInput.Player.Interact;
         }
 
-        private void OnEnable() => _onMoveInputAction.Enable();
 
-        private void OnDisable() => _onMoveInputAction.Disable();
+
+        private void OnEnable()
+        {
+            _onMoveInputAction.Enable();
+            _interact.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _onMoveInputAction.Disable();
+            _interact.Disable();
+        }
 
         private void Update()
         {

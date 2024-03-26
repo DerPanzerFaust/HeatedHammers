@@ -1,9 +1,10 @@
 using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace InputNameSpace
 {
-    public class InputComponent : SingletonBehaviour<InputComponent>
+    public class InputComponent : MonoBehaviour
     {
         //--------------------Private--------------------//
         private GameInput _gameInput;
@@ -14,6 +15,12 @@ namespace InputNameSpace
         {
             get => _onMoveInputAction; 
             set => _onMoveInputAction = value;
+        }
+
+        public GameInput GameInput
+        {
+            get => _gameInput;
+            set => _gameInput = value;
         }
 
         public Action OnMoveAction;
@@ -32,7 +39,7 @@ namespace InputNameSpace
         private void Update()
         {
             if (_onMoveInputAction.IsPressed())
-                OnMoveAction.Invoke();
+                OnMoveAction?.Invoke();
         }
     }
 }

@@ -472,7 +472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &325611387
 Transform:
   m_ObjectHideFlags: 0
@@ -503,16 +503,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4d463a6fda203346acb80d203fa999b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rhythmCirkel: {fileID: 824231642}
+  _maxCount: 3
   _tempo: 3
   _targetWidth: 75
   _targetHeight: 75
   _originalWidth: 300
   _originalHeight: 300
-  _bufferWidth: 100
-  _bufferHeight: 100
+  _bufferWidth: 115
+  _bufferHeight: 115
   ButtonPress: {fileID: 104329239}
   _quickTimeHanlder: {fileID: 1364190671}
+  _rhythmCirkel: {fileID: 824231642}
+  _currentWidth: 0
+  _currentHeight: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,7 +1038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &548699839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1789,7 +1792,7 @@ MonoBehaviour:
   _stopInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 325611386}
+      - m_Target: {fileID: 548699838}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -1804,7 +1807,7 @@ MonoBehaviour:
   _onInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 325611386}
+      - m_Target: {fileID: 548699838}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -1828,7 +1831,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d4f079a5ff13e946957c8bbafacebce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rhythmQuickTime: {fileID: 0}
+  _rhythmQuickTime: {fileID: 1364190665}
+  _rhythmQuickTimeCanvas: {fileID: 548699838}
+  _rhythmHandler: {fileID: 325611388}
+  _rhythmQuickTimeObject: {fileID: 325611386}
 --- !u!1 &1511987473
 GameObject:
   m_ObjectHideFlags: 0

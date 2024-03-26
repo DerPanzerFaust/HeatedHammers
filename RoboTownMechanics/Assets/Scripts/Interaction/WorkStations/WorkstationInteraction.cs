@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using QuickTime.Handler;
 
 
 namespace WorkstationInteractionBase
@@ -13,7 +14,6 @@ namespace WorkstationInteractionBase
 
         [SerializeField]
         private UnityEvent _stopInteract;
-
         [SerializeField]
         private UnityEvent _onInteract;
 

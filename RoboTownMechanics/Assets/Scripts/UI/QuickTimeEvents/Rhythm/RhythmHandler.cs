@@ -7,38 +7,69 @@ using QuickTime.Handler;
 
 namespace QuickTime.Rhythm
 {
-    public class Rhythm : MonoBehaviour
+    public class RhythmHandler : MonoBehaviour
     {
         //--------------------Private--------------------//
+        [SerializeField] [Tooltip("Controls how many times the player needs to press to complete the QTE")]
+        private int _maxCount;
         [SerializeField]
-        private Image _rhythmCirkel;
-        [SerializeField]
+        [Tooltip("Controls how was the player needs to react")]
         private float _tempo;
         [SerializeField]
-        private int _targetWidth;
+        private float _targetWidth;
         [SerializeField]
-        private int _targetHeight;
+        private float _targetHeight;
         [SerializeField]
-        private int _originalWidth;
+        private float _originalWidth;
         [SerializeField]
-        private int _originalHeight;
+        private float _originalHeight;
         [SerializeField]
-        private int _bufferWidth;
+        private float _bufferWidth;
         [SerializeField]
-        private int _bufferHeight;
+        private float _bufferHeight;
         [SerializeField]
         private Animation ButtonPress;
         [SerializeField]
         private QuickTimeHandler _quickTimeHanlder;
+        [SerializeField]
+        private Image _rhythmCirkel;
 
+        public float _currentWidth;
+        public float _currentHeight;
+        private int _rhythmCounter;
         private InputComponent _inputComponent;
 
         //--------------------Public--------------------//
         public Action OnFailQuickTime;
 
+        public float CurrentWidth
+        {
+            get => _currentWidth;
+            set => _currentWidth = value;
+        }
+        public float CurrentHeight
+        {
+            get => _currentHeight;
+            set => _currentHeight = value;
+        }
+        public float OriginalWidth
+        {
+            get => _originalWidth;
+            set => _originalWidth = value;
+        }
+        public float OriginalHeight
+        {
+            get => _originalHeight;
+            set => _originalHeight = value;
+        }
+
         //--------------------Functions--------------------//
         private void Start()
-        {
+        { 
+            _currentHeight = _originalHeight;
+            _currentWidth = _originalWidth;
+
+            _rhythmCounter = 0;
 
             _inputComponent = InputComponent.Instance;
             _inputComponent.Interact.performed += InteractPressed;
@@ -49,6 +80,9 @@ namespace QuickTime.Rhythm
         private void Update()
         {
             MakeRhythm();
+
+            _currentHeight = _rhythmCirkel.rectTransform.sizeDelta.y;
+            _currentWidth = _rhythmCirkel.rectTransform.sizeDelta.x;
         }
 
         private void MakeRhythm()
@@ -68,7 +102,14 @@ namespace QuickTime.Rhythm
                 _rhythmCirkel.rectTransform.sizeDelta.magnitude <= new Vector2(_bufferHeight, _bufferWidth).magnitude)
             {
                 _rhythmCirkel.rectTransform.sizeDelta = new Vector2(_originalWidth, _originalHeight);
-                Debug.Log("On point!");
+                if (_rhythmCirkel.rectTransform.sizeDelta == new Vector2(_originalWidth, _originalHeight))
+                {
+                    _rhythmCounter = _rhythmCounter + 1;
+                    if (_rhythmCounter == _maxCount)
+                    {
+                        _quickTimeHanlder.CompletedQuickTime();
+                    }
+                }
             }
             else if (_rhythmCirkel.rectTransform.sizeDelta.magnitude >= new Vector2(_bufferHeight, _bufferWidth).magnitude)
             {

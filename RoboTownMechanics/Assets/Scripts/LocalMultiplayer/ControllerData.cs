@@ -1,3 +1,4 @@
+using LocalMultiplayer.Lobby;
 using LocalMultiplayer.Player;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,14 +20,20 @@ namespace LocalMultiplayer.Controller
         private float _scanForControllerRate;
 
         //--------------------Functions--------------------//
-        private void Awake() => InvokeRepeating(nameof(CheckForConnectedController), 0f, _scanForControllerRate);
+        private void Awake()
+        {
+            InvokeRepeating(nameof(CheckForConnectedController), 0f, _scanForControllerRate);
+            InputSystem.onDeviceChange += OnDisconnectedController;
+        }
+
+        private void OnDisable() => InputSystem.onDeviceChange -= OnDisconnectedController;
 
         private void CheckForConnectedController()
         {
-            //if in lobby state
             foreach(var inputDevice in Gamepad.all)
             {
-                if(!_currentGamepads.Contains(inputDevice) && _playerMasters.Count + 1 <= 4)
+                //if in lobby state
+                if (!_currentGamepads.Contains(inputDevice) && _playerMasters.Count + 1 <= 4)
                 {
                     _currentGamepads.Add(inputDevice);
                     
@@ -40,6 +47,31 @@ namespace LocalMultiplayer.Controller
                     spawnedPrefab.GetComponent<PlayerMaster>().PlayerInputUser = user;
 
                     _playerMasters.Add(spawnedPrefab);
+                }
+            }
+        }
+
+        private void OnDisconnectedController(InputDevice device, InputDeviceChange change)
+        {
+            if (change != InputDeviceChange.Disconnected)
+                return;
+
+            for (int i = 0; i < _playerMasters.Count; i++)
+            {
+                PlayerMaster masterComponent = _playerMasters[i].GetComponent<PlayerMaster>();
+
+                if (device == masterComponent.CurrentGamepad)
+                {
+                    //check if in lobby state, if in lobby state:
+                    LobbyJoinManager.Instance.LeaveLobby(masterComponent);
+
+                    masterComponent.PlayerInputUser.UnpairDevices();
+                    masterComponent.PlayerInputUser.UnpairDevicesAndRemoveUser();
+
+                    _playerMasters.Remove(_playerMasters[i]);
+                    _currentGamepads.Remove((Gamepad)device);
+
+                    masterComponent.Destroy();
                 }
             }
         }

@@ -11,18 +11,19 @@ namespace LocalMultiplayer.Player
         //--------------------Private--------------------//
         private Gamepad _currentGamepad;
 
-        [SerializeField]
-        private GameObject _playerPrefab;
-
         private InputComponent _playerInputComponent;
 
         private InputUser _playerInputUser;
 
-        private bool _playerIsSpawned;
+        private bool _hasJoinedLobby;
 
         private Color _playerColor;
 
         private LobbyJoinManager _lobbyJoinManager;
+
+        private PlayerSpawner _playerSpawner;
+
+        private GameObject _currentActivePlayerModel;
 
         //--------------------Public--------------------//
         public Gamepad CurrentGamepad
@@ -45,23 +46,53 @@ namespace LocalMultiplayer.Player
             set => _playerColor = value;
         }
 
+        public GameObject CurrentActivePlayerModel
+        {
+            get => _currentActivePlayerModel;
+            set => _currentActivePlayerModel = value;
+        }
+
         //--------------------Functions--------------------//
         private void Awake() => _playerInputComponent = GetComponent<InputComponent>();
 
-        private void Start() => _lobbyJoinManager = LobbyJoinManager.Instance;
-
-        private void Update()
+        private void Start()
         {
-            //when starting game, spawn
-            if (_currentGamepad.buttonSouth.IsPressed() && !_playerIsSpawned)
+            _lobbyJoinManager = LobbyJoinManager.Instance;
+            _playerSpawner = PlayerSpawner.Instance;
+
+            _playerInputComponent.OnPickUpInputAction.performed += JoinLobby;
+        }
+
+        private void OnDisable() => _playerInputComponent.OnPickUpInputAction.performed -= JoinLobby;
+
+        private void JoinLobby(InputAction.CallbackContext context)
+        {
+            //if in game state
+            /*
+            if (_hasJoinedLobby)
             {
-                _playerIsSpawned = true;
+                _playerSpawner.SpawnPlayer(this);
+            }
+            */
+
+            if (!_hasJoinedLobby)
+            {
+                _hasJoinedLobby = true;
 
                 _lobbyJoinManager.JoinLobby(this);
-
-                //GameObject instantiatedPrefab = Instantiate(_playerPrefab, new Vector3(0, _playerPrefab.transform.localScale.y, 0), Quaternion.identity);
-                //instantiatedPrefab.GetComponent<PlayerData>().Master = this;
             }
+        }
+
+        
+        /// <summary>
+        /// Destroys this master and its child player
+        /// </summary>
+        public void Destroy()
+        {
+            if(_currentActivePlayerModel != null)
+                Destroy(_currentActivePlayerModel);
+        
+            Destroy(gameObject);
         }
     }
 }

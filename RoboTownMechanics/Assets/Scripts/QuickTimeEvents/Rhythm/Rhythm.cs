@@ -39,8 +39,8 @@ namespace QuickTime.Rhythm
         //--------------------Functions--------------------//
         private void Start()
         {
-            _inputComponent = InputComponent.Instance;
-            _inputComponent.Interact.performed += InteractPressed;
+            //_inputComponent = InputComponent.Instance;
+            _inputComponent.OnInteractInputAction.performed += InteractPressed;
 
             OnFailQuickTime += FailedQuickTime;
         }

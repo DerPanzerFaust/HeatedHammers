@@ -120,6 +120,7 @@ namespace LocalMultiplayer.Lobby
 
             _playerSpawner.SpawnPlayers(_joinedMasters);
             
+            //set state to game state
             _lobbyCanvas.SetActive(false);
             _lobbyHasStarted = true;
         }

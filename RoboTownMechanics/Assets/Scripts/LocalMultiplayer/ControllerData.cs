@@ -32,7 +32,6 @@ namespace LocalMultiplayer.Controller
         {
             foreach(var inputDevice in Gamepad.all)
             {
-                //if in lobby state
                 if (!_currentGamepads.Contains(inputDevice) && _playerMasters.Count + 1 <= 4)
                 {
                     _currentGamepads.Add(inputDevice);

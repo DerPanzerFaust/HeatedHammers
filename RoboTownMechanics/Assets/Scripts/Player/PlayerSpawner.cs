@@ -31,8 +31,6 @@ namespace LocalMultiplayer.Player
             master.CurrentActivePlayerModel = instantiatedPrefab;
 
             instantiatedPrefab.GetComponent<Renderer>().material.color = master.PlayerColor;
-
-            //set state to playing
         }
     }
 }

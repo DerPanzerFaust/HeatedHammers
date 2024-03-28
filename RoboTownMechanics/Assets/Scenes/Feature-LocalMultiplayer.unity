@@ -1440,7 +1440,6 @@ GameObject:
   - component: {fileID: 1033421816}
   - component: {fileID: 1033421815}
   - component: {fileID: 1033421814}
-  - component: {fileID: 1033421818}
   m_Layer: 0
   m_Name: ---Lobby---
   m_TagString: Untagged
@@ -1482,7 +1481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059fe67ffd35c5743beaf029cbf49b24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Menu
+  _name: Lobby
   _open: 1
 --- !u!114 &1033421815
 MonoBehaviour:
@@ -1547,27 +1546,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1033421818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1033421812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92b4a2c9a4d88354b8814e676994c9f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _upperLeft: {fileID: 0}
-  _upperLeftColor: {r: 0, g: 0, b: 0, a: 0}
-  _upperRight: {fileID: 0}
-  _upperRightColor: {r: 0, g: 0, b: 0, a: 0}
-  _lowerLeft: {fileID: 0}
-  _lowerLeftColor: {r: 0, g: 0, b: 0, a: 0}
-  _lowerRight: {fileID: 0}
-  _lowerRightColor: {r: 0, g: 0, b: 0, a: 0}
-  _lobbyCanvas: {fileID: 0}
 --- !u!1 &1047581229
 GameObject:
   m_ObjectHideFlags: 0

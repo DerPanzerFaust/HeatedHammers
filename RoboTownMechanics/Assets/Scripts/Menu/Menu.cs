@@ -6,7 +6,7 @@ namespace MenuHandler
     {
         //-------------------Private-------------------//
         [SerializeField]
-        private new string name;
+        private string _name;
         [SerializeField]
         private bool _open;
         

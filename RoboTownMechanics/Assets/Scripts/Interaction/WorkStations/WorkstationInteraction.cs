@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using QuickTime.Handler;
 
 
 namespace WorkstationInteractionBase
@@ -9,7 +8,7 @@ namespace WorkstationInteractionBase
     {
 
         //--------------------Private--------------------//
-
+        [SerializeField]
         private bool _isOn;
 
         [SerializeField]
@@ -17,7 +16,14 @@ namespace WorkstationInteractionBase
         [SerializeField]
         private UnityEvent _onInteract;
 
+        public bool IsOn
+        {
+            get => _isOn;
+            set => _isOn = value;
+        }
+
         //--------------------Functions--------------------//
+
         UnityEvent IInteraction.onInteract
         {
             get => _onInteract;
@@ -31,9 +37,13 @@ namespace WorkstationInteractionBase
 
         public void Interact()
         {
-            if (_isOn)
+            if (!_isOn)
             {
                 _onInteract.Invoke();
+            }
+            else
+            {
+                _stopInteract.Invoke();
             }
 
             _isOn = !_isOn;

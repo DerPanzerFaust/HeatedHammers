@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using QuickTime.Handler;
+using Unity.VisualScripting;
 
 namespace QuickTime.Rhythm
 {
@@ -13,7 +14,7 @@ namespace QuickTime.Rhythm
         [SerializeField] [Tooltip("Controls how many times the player needs to press to complete the QTE")]
         private int _maxCount;
         [SerializeField]
-        [Tooltip("Controls how was the player needs to react")]
+        [Tooltip("Controls how fast the player needs to react")]
         private float _tempo;
         [SerializeField]
         private float _targetWidth;
@@ -30,28 +31,15 @@ namespace QuickTime.Rhythm
         [SerializeField]
         private Animation ButtonPress;
         [SerializeField]
-        private QuickTimeHandler _quickTimeHanlder;
+        private QuickTimeHandler _quickTimeHandler;
         [SerializeField]
         private Image _rhythmCirkel;
 
-        public float _currentWidth;
-        public float _currentHeight;
         private int _rhythmCounter;
         private InputComponent _inputComponent;
 
         //--------------------Public--------------------//
         public Action OnFailQuickTime;
-
-        public float CurrentWidth
-        {
-            get => _currentWidth;
-            set => _currentWidth = value;
-        }
-        public float CurrentHeight
-        {
-            get => _currentHeight;
-            set => _currentHeight = value;
-        }
         public float OriginalWidth
         {
             get => _originalWidth;
@@ -62,27 +50,37 @@ namespace QuickTime.Rhythm
             get => _originalHeight;
             set => _originalHeight = value;
         }
+        public Image RhythmCirkel
+        {
+            get => _rhythmCirkel;
+            set => _rhythmCirkel = value;
+        }
+        public int RhythmCounter
+        {
+            get => _rhythmCounter;
+            set => _rhythmCounter = value;
+        }
 
         //--------------------Functions--------------------//
         private void Start()
         { 
-            _currentHeight = _originalHeight;
-            _currentWidth = _originalWidth;
 
             _rhythmCounter = 0;
 
             _inputComponent = InputComponent.Instance;
             _inputComponent.Interact.performed += InteractPressed;
 
-            OnFailQuickTime += _quickTimeHanlder.FailedQuickTime;
+            OnFailQuickTime += _quickTimeHandler.FailedQuickTime;
         }
 
         private void Update()
         {
             MakeRhythm();
 
-            _currentHeight = _rhythmCirkel.rectTransform.sizeDelta.y;
-            _currentWidth = _rhythmCirkel.rectTransform.sizeDelta.x;
+            if (_rhythmCirkel.rectTransform.sizeDelta.magnitude <= new Vector2(_targetHeight, _targetWidth).magnitude)
+            {
+                _quickTimeHandler.FailedQuickTime();
+            }
         }
 
         private void MakeRhythm()
@@ -91,7 +89,7 @@ namespace QuickTime.Rhythm
 
             if (_rhythmCirkel.rectTransform.sizeDelta.magnitude <= new Vector2(_targetWidth, _targetHeight).magnitude)
             {
-                _quickTimeHanlder.FailedQuickTime();
+                _quickTimeHandler.FailedQuickTime();
                 OnFailQuickTime.Invoke();
             }
         }
@@ -107,13 +105,13 @@ namespace QuickTime.Rhythm
                     _rhythmCounter = _rhythmCounter + 1;
                     if (_rhythmCounter == _maxCount)
                     {
-                        _quickTimeHanlder.CompletedQuickTime();
+                        _quickTimeHandler.CompletedQuickTime();
                     }
                 }
             }
             else if (_rhythmCirkel.rectTransform.sizeDelta.magnitude >= new Vector2(_bufferHeight, _bufferWidth).magnitude)
             {
-                _quickTimeHanlder.FailedQuickTime();
+                _quickTimeHandler.FailedQuickTime();
             }
 
             ButtonPress.Play();

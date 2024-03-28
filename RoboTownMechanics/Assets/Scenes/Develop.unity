@@ -512,10 +512,8 @@ MonoBehaviour:
   _bufferWidth: 115
   _bufferHeight: 115
   ButtonPress: {fileID: 104329239}
-  _quickTimeHanlder: {fileID: 1364190671}
+  _quickTimeHandler: {fileID: 1364190671}
   _rhythmCirkel: {fileID: 824231642}
-  _currentWidth: 0
-  _currentHeight: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1789,21 +1787,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31df9eb0c275ea343b32e6fafcde8bb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isOn: 0
   _stopInteract:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 548699838}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   _onInteract:
     m_PersistentCalls:
       m_Calls:
@@ -1834,7 +1821,7 @@ MonoBehaviour:
   _rhythmQuickTime: {fileID: 1364190665}
   _rhythmQuickTimeCanvas: {fileID: 548699838}
   _rhythmHandler: {fileID: 325611388}
-  _rhythmQuickTimeObject: {fileID: 325611386}
+  _workstationInteraction: {fileID: 1364190670}
 --- !u!1 &1511987473
 GameObject:
   m_ObjectHideFlags: 0

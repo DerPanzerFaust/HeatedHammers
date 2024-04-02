@@ -1,4 +1,5 @@
 using QuickTime.Rhythm;
+using System.Collections.Generic;
 using UnityEngine;
 using WorkstationInteractionBase;
 
@@ -6,6 +7,7 @@ namespace QuickTime.Handler
 {
     public class QuickTimeHandler : MonoBehaviour
     {
+        //--------------------Private--------------------//
         [SerializeField]
         private GameObject _rhythmQuickTime;
         [SerializeField]
@@ -14,26 +16,41 @@ namespace QuickTime.Handler
         private RhythmHandler _rhythmHandler;
         [SerializeField]
         private WorkstationInteraction _workstationInteraction;
-        // Location to spawn objects for robot
+        [SerializeField]
+        private Transform _partSpawnLocation;
+        [SerializeField]
+        private List<GameObject> _parts;
 
+        //--------------------Public--------------------//
         public GameObject RhythmQuickTimeCanvas
         {
             get => _rhythmQuickTimeCanvas;
             set => _rhythmQuickTimeCanvas = value;
         }
 
+        //--------------------Functions--------------------//
+
+        /// <summary>
+        /// When QTE is failed do ResetQuickTime and launch player from workstation 
+        /// </summary>
         public void FailedQuickTime()
         {
             ResetQuicktTime();
-            // Close QTE, reset QTE and launch player from workstation
+            LaunchPlayer();
         }
 
+        /// <summary>
+        /// When QTE is completed do ResetQuickTime and spawn object to repair robot 
+        /// </summary>
         public void CompletedQuickTime()
         {
             ResetQuicktTime();
-            // Close QTE and spawn object for robot
+            SpawnPart();
         }
 
+        /// <summary>
+        /// Resets Canvas, Image, Counter to original size and count. 
+        /// </summary>..
         public void ResetQuicktTime()
         {
             if (_workstationInteraction.IsOn == false)
@@ -45,6 +62,22 @@ namespace QuickTime.Handler
             // Stop Interacting
             // Reset currentHeight/Width to orignalHeight/Width and enable rhythmQTE object
             // Change interaction to match InputComponent
+        }
+
+        /// <summary>
+        /// Spawn part needed to repair the robot. To spawn a part there must always a transform where the part can spawn
+        /// </summary>
+        public void SpawnPart()
+        {
+            Instantiate(_parts[UnityEngine.Random.Range(0, _parts.Count)], _partSpawnLocation);
+        }
+
+        /// <summary>
+        /// Launch player from workstation
+        /// </summary>
+        public void LaunchPlayer()
+        {
+            Debug.Log("Player Launched");
         }
     }
 

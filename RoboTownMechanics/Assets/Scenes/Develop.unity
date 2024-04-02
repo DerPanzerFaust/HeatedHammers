@@ -1524,6 +1524,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1083764785}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &872719981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 872719982}
+  m_Layer: 10
+  m_Name: PartSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &872719982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872719981}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1364190666}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1047581229
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,6 +1732,7 @@ Transform:
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 872719982}
   - {fileID: 548699842}
   m_Father: {fileID: 41935289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1822,6 +1854,10 @@ MonoBehaviour:
   _rhythmQuickTimeCanvas: {fileID: 548699838}
   _rhythmHandler: {fileID: 325611388}
   _workstationInteraction: {fileID: 1364190670}
+  _partSpawnLocation: {fileID: 872719982}
+  _parts:
+  - {fileID: 5388479003248007694, guid: 16092618613853743ac9ab5237175cce, type: 3}
+  - {fileID: 5388479003248007694, guid: f69d870e484fd174c9bf76a671aa11a3, type: 3}
 --- !u!1 &1511987473
 GameObject:
   m_ObjectHideFlags: 0

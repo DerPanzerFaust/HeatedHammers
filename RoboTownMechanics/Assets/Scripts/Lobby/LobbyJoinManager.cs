@@ -1,4 +1,5 @@
 using LocalMultiplayer.Player;
+using StateMachines.GlobalStateMachine;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -32,9 +33,7 @@ namespace LocalMultiplayer.Lobby
         [SerializeField]
         private Color _lowerRightColor;
 
-        [Header("Temporary")]
-        [SerializeField]
-        private GameObject _lobbyCanvas;
+        private StateMachine _stateMachine;
 
         private List<PlayerMaster> _joinedMasters = new();
 
@@ -43,7 +42,11 @@ namespace LocalMultiplayer.Lobby
         private bool _lobbyHasStarted;
 
         //--------------------Functions--------------------//
-        private void Start() => _playerSpawner = PlayerSpawner.Instance;
+        private void Start()
+        {
+            _playerSpawner = PlayerSpawner.Instance;
+            _stateMachine = StateMachine.Instance;
+        }
 
         /// <summary>
         /// A function to join the localmultiplayer lobby with your playermaster
@@ -89,6 +92,8 @@ namespace LocalMultiplayer.Lobby
         {
             int index = _joinedMasters.IndexOf(master);
 
+            master.HasJoinedLobby = false;
+
             if ((_joinedMasters.Count - 1) == 0)
             {
                 master.PlayerInputComponent.OnInteractInputAction.performed -= StartGame;
@@ -119,9 +124,8 @@ namespace LocalMultiplayer.Lobby
                 return;
 
             _playerSpawner.SpawnPlayers(_joinedMasters);
-            
-            //set state to game state
-            _lobbyCanvas.SetActive(false);
+
+            _stateMachine.SetState(_stateMachine.GameStateInstance);
             _lobbyHasStarted = true;
         }
     }

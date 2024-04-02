@@ -61,7 +61,6 @@ namespace LocalMultiplayer.Controller
 
                 if (device == masterComponent.CurrentGamepad)
                 {
-                    //check if in lobby state, if in lobby state:
                     LobbyJoinManager.Instance.LeaveLobby(masterComponent);
 
                     masterComponent.PlayerInputUser.UnpairDevices();

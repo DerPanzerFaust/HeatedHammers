@@ -1,5 +1,7 @@
 using InputNameSpace;
 using LocalMultiplayer.Lobby;
+using StateMachines.GlobalStateMachine;
+using StateMachines.States;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
@@ -24,6 +26,8 @@ namespace LocalMultiplayer.Player
         private PlayerSpawner _playerSpawner;
 
         private GameObject _currentActivePlayerModel;
+
+        private StateMachine _stateMachine;
 
         //--------------------Public--------------------//
         public Gamepad CurrentGamepad
@@ -52,6 +56,12 @@ namespace LocalMultiplayer.Player
             set => _currentActivePlayerModel = value;
         }
 
+        public bool HasJoinedLobby
+        {
+            get => _hasJoinedLobby;
+            set => _hasJoinedLobby = value;
+        }
+
         //--------------------Functions--------------------//
         private void Awake() => _playerInputComponent = GetComponent<InputComponent>();
 
@@ -59,6 +69,7 @@ namespace LocalMultiplayer.Player
         {
             _lobbyJoinManager = LobbyJoinManager.Instance;
             _playerSpawner = PlayerSpawner.Instance;
+            _stateMachine = StateMachine.Instance;
 
             _playerInputComponent.OnPickUpInputAction.performed += JoinLobby;
         }
@@ -67,18 +78,18 @@ namespace LocalMultiplayer.Player
 
         private void JoinLobby(InputAction.CallbackContext context)
         {
-            //if in game state
-            /*
             if (_hasJoinedLobby)
+                return;
+            
+            _hasJoinedLobby = true;
+
+            if (_stateMachine.CurrentState.GetType() == typeof(GameState))
             {
+                _lobbyJoinManager.JoinLobby(this);
                 _playerSpawner.SpawnPlayer(this);
             }
-            */
-
-            if (!_hasJoinedLobby)
+            else
             {
-                _hasJoinedLobby = true;
-
                 _lobbyJoinManager.JoinLobby(this);
             }
         }

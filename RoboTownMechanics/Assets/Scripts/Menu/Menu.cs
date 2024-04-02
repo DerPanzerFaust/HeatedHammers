@@ -11,6 +11,12 @@ namespace MenuHandler
         private bool _open;
         
         //-------------------Public-------------------//
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
+
         public bool Open
         {
             get => _open;
@@ -19,15 +25,16 @@ namespace MenuHandler
         
         //-------------------Functions-------------------//
         /// <summary>
-        /// Opent huidig menu aangeroepen door gedrukte knop.
+        /// Sets this Menu's gameObject to active and sets it Open
         /// </summary>
         public void OpenMenu()
         {
             Open = true;
             gameObject.SetActive(true);
         }
+
         /// <summary>
-        /// Sluit het huidige menu.
+        /// Deactivates this Menu's gameObject to inactive
         /// </summary>
         public void CloseMenu()
         {

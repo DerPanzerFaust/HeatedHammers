@@ -1,7 +1,4 @@
 using StateMachines.States;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace StateMachines.GlobalStateMachine
 {
@@ -9,18 +6,31 @@ namespace StateMachines.GlobalStateMachine
     {
         //--------------------Private--------------------//
         private State _currentState;
-        [SerializeField]
-        private State[] _states;
+
+        private LobbyState _lobbyStateInstance = new LobbyState();
+        private GameState _gameStateInstance = new GameState();
 
         //--------------------Public--------------------//
         public State CurrentState => _currentState;
 
+        public LobbyState lobbyStateInstance => _lobbyStateInstance;
+        public GameState GameStateInstance => _gameStateInstance;
+
+
         //--------------------Functions--------------------//
+        private void Start() => SetState(lobbyStateInstance);
+
+        /// <summary>
+        /// Set the current state of the state machine to the given state
+        /// </summary>
+        /// <param name="state">The state to set the state machine to</param>
         public void SetState(State state)
         {
             if(_currentState == state) 
                 return;
-            _currentState.OnExitState();
+
+            if(_currentState != null)
+                _currentState.OnExitState();
 
             _currentState = state;
 

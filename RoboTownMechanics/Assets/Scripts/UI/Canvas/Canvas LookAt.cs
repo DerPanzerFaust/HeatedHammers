@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Canvas : MonoBehaviour
 {
+    //--------------------Functions--------------------//
     private void Update()
     {
         transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, 

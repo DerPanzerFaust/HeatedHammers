@@ -15,7 +15,8 @@ namespace WorkstationInteractionBase
         private UnityEvent _stopInteract;
         [SerializeField]
         private UnityEvent _onInteract;
-
+        
+        //--------------------Public--------------------//
         public bool IsOn
         {
             get => _isOn;

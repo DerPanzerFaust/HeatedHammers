@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using QuickTime.Handler;
-using Unity.VisualScripting;
 
 namespace QuickTime.Rhythm
 {

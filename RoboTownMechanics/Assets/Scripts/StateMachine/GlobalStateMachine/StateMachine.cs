@@ -13,12 +13,12 @@ namespace StateMachines.GlobalStateMachine
         //--------------------Public--------------------//
         public State CurrentState => _currentState;
 
-        public LobbyState lobbyStateInstance => _lobbyStateInstance;
+        public LobbyState LobbyStateInstance => _lobbyStateInstance;
         public GameState GameStateInstance => _gameStateInstance;
 
 
         //--------------------Functions--------------------//
-        private void Start() => SetState(lobbyStateInstance);
+        private void Start() => SetState(LobbyStateInstance);
 
         /// <summary>
         /// Set the current state of the state machine to the given state

@@ -1,4 +1,5 @@
 using InputNameSpace;
+using LocalMultiplayer.Player;
 using UnityEngine;
 
 namespace Player.Movement
@@ -17,10 +18,14 @@ namespace Player.Movement
         [SerializeField]
         private float _slowingMultiplier;
 
+        private PlayerMaster _master;
+
         //--------------------Functions--------------------//
         private void Start()
         {
-            _inputComponent = InputComponent.Instance;
+            _master = GetComponent<PlayerData>().Master;
+
+            _inputComponent = _master.PlayerInputComponent;
 
             _inputComponent.OnMoveAction += MovePlayer;
 

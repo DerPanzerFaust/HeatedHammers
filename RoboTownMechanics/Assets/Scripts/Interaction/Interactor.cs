@@ -1,4 +1,5 @@
 using InputNameSpace;
+using LocalMultiplayer.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using WorkstationInteractionBase;
@@ -20,14 +21,14 @@ public class Interactor : MonoBehaviour
         //--------------------Functions--------------------//
         private void Start()
         {
-            _playerInput = InputComponent.Instance;
-            _playerInput.Interact.performed += DoInteract;
+            _playerInput = GetComponent<PlayerData>().Master.PlayerInputComponent;
+            _playerInput.OnInteractInputAction.performed += DoInteract;
             _transform = transform;
         }
 
         private void OnDisable()
         {
-            _playerInput.Interact.performed += DoInteract;
+            _playerInput.OnInteractInputAction.performed += DoInteract;
         }
 
 

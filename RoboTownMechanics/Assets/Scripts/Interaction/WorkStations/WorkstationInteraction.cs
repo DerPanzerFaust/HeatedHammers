@@ -8,16 +8,23 @@ namespace WorkstationInteractionBase
     {
 
         //--------------------Private--------------------//
-
+        [SerializeField]
         private bool _isOn;
 
         [SerializeField]
         private UnityEvent _stopInteract;
-
         [SerializeField]
         private UnityEvent _onInteract;
+        
+        //--------------------Public--------------------//
+        public bool IsOn
+        {
+            get => _isOn;
+            set => _isOn = value;
+        }
 
         //--------------------Functions--------------------//
+
         UnityEvent IInteraction.onInteract
         {
             get => _onInteract;
@@ -31,13 +38,13 @@ namespace WorkstationInteractionBase
 
         public void Interact()
         {
-            if (_isOn)
+            if (!_isOn)
             {
-                _stopInteract.Invoke();
+                _onInteract.Invoke();
             }
             else
             {
-                _onInteract.Invoke();
+                _stopInteract.Invoke();
             }
 
             _isOn = !_isOn;

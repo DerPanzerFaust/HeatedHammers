@@ -1,3 +1,4 @@
+using LocalMultiplayer.Player;
 using UnityEngine.Events;
    public interface IInteraction
     {
@@ -9,5 +10,5 @@ using UnityEngine.Events;
         /// <summary>
         /// The interact function from the interface
         /// </summary>
-        public void Interact();
+        public void Interact(PlayerMaster playerMaster);
     }

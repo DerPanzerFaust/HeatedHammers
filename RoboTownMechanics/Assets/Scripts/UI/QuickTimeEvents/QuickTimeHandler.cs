@@ -53,7 +53,7 @@ namespace QuickTime.Handler
         /// </summary>..
         public void ResetQuicktTime()
         {
-            if (_workstationInteraction.IsOn == false)
+            if (!_workstationInteraction.IsOn)
             {
                 _rhythmQuickTimeCanvas.SetActive(false);
                 _rhythmHandler.RhythmCounter = 0;

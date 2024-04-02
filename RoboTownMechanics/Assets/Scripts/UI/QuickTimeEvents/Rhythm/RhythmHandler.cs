@@ -66,8 +66,8 @@ namespace QuickTime.Rhythm
 
             _rhythmCounter = 0;
 
-            _inputComponent = InputComponent.Instance;
-            _inputComponent.Interact.performed += InteractPressed;
+            //_inputComponent = InputComponent.Instance;
+            //_inputComponent.Interact.performed += InteractPressed;
 
             OnFailQuickTime += _quickTimeHandler.FailedQuickTime;
         }

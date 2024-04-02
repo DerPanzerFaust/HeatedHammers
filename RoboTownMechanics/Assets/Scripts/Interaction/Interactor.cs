@@ -21,10 +21,14 @@ public class Interactor : MonoBehaviour
 
         private PlayerStateMachine _playerStateMachine;
 
+        private PlayerMaster _playerMaster;
+
         //--------------------Functions--------------------//
         private void Start()
         {
             _playerInput = GetComponent<PlayerData>().Master.PlayerInputComponent;
+
+            _playerMaster = GetComponent<PlayerData>().Master;
             
             _playerStateMachine = GetComponent<PlayerStateMachine>();
 
@@ -47,7 +51,7 @@ public class Interactor : MonoBehaviour
                 _transform.forward, out var hit, _interactRange, _interatableLayer)) return;
             if (!hit.transform.TryGetComponent(out WorkstationInteraction interactable)) return;
             
-            interactable.Interact();
+            interactable.Interact(_playerMaster);
             _playerStateMachine.CurrentPlayerState = Utilities.PlayerState.INTERACTING;
         }
     }

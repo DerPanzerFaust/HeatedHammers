@@ -32,7 +32,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     }
 
     /// <summary>
-    /// a function which checks if "_dontDestroy is true than then parent will be removed and prevents from being destroyed
+    /// a function which checks if "_dontDestroy" is true than then parent will be removed and prevents from being destroyed
     /// </summary>
     public virtual void Awake ()
     {

@@ -17,7 +17,7 @@ namespace RobotTimer {
 
         private void Start()
         {
-            _saveTime = ObjectPooling.robotTime;
+           // _saveTime = ObjectPooling.robotTime;
 
             _platform = GameObject.FindWithTag("Platform");
             
@@ -26,9 +26,9 @@ namespace RobotTimer {
 
         void Update()
         {
-            ObjectPooling.robotTime -= Time.deltaTime;
+            //ObjectPooling.robotTime -= Time.deltaTime;
 
-            if (ObjectPooling.robotTime < 0)
+            //if (ObjectPooling.robotTime < 0)
                 timerEnded();
             
 
@@ -38,7 +38,7 @@ namespace RobotTimer {
         private void timerEnded()
         {
            gameObject.SetActive(false);
-            ObjectPooling.robotTime = _saveTime;
+            //ObjectPooling.robotTime = _saveTime;
         }
     }
 }

@@ -60,18 +60,22 @@ namespace QuickTime.Rhythm
             set => _rhythmCounter = value;
         }
 
-        //--------------------Functions--------------------//
-        private void Start()
-        { 
-
-            _rhythmCounter = 0;
-
-            _inputComponent = InputComponent.Instance;
-            _inputComponent.Interact.performed += InteractPressed;
-
-            OnFailQuickTime += _quickTimeHandler.FailedQuickTime;
+        public InputComponent InputComponent
+        {
+            get => _inputComponent;
+            set => _inputComponent = value;
         }
 
+        //--------------------Functions--------------------//
+        private void Start() => _rhythmCounter = 0;
+
+        private void OnDisable()
+        {
+            _inputComponent = null;
+
+            _inputComponent.OnInteractInputAction.performed -= InteractPressed;
+            OnFailQuickTime -= _quickTimeHandler.FailedQuickTime;
+        }
         private void Update()
         {
             MakeRhythm();
@@ -80,6 +84,14 @@ namespace QuickTime.Rhythm
             {
                 _quickTimeHandler.FailedQuickTime();
             }
+        }
+
+        public void SetInputEvents(InputComponent inputComponent)
+        {
+            _inputComponent = inputComponent;
+
+            _inputComponent.OnInteractInputAction.performed += InteractPressed;
+            OnFailQuickTime += _quickTimeHandler.FailedQuickTime;
         }
 
         private void MakeRhythm()
@@ -108,10 +120,10 @@ namespace QuickTime.Rhythm
                     }
                 }
             }
-            else if (_rhythmCirkel.rectTransform.sizeDelta.magnitude >= new Vector2(_bufferHeight, _bufferWidth).magnitude)
+            /*else if (_rhythmCirkel.rectTransform.sizeDelta.magnitude >= new Vector2(_bufferHeight, _bufferWidth).magnitude)
             {
                 _quickTimeHandler.FailedQuickTime();
-            }
+            }*/
 
             ButtonPress.Play();
         }

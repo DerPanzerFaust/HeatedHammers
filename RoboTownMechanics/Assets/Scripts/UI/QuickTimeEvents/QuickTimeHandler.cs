@@ -8,8 +8,8 @@ namespace QuickTime.Handler
     public class QuickTimeHandler : MonoBehaviour
     {
         //--------------------Private--------------------//
-        [SerializeField]
-        private GameObject _rhythmQuickTime;
+        //[SerializeField]
+        //private GameObject _rhythmQuickTime;
         [SerializeField]
         private GameObject _rhythmQuickTimeCanvas;
         [SerializeField]
@@ -26,6 +26,12 @@ namespace QuickTime.Handler
         {
             get => _rhythmQuickTimeCanvas;
             set => _rhythmQuickTimeCanvas = value;
+        }
+
+        public RhythmHandler RhythmHandlerRef
+        {
+            get => _rhythmHandler;
+            set => _rhythmHandler = value;
         }
 
         //--------------------Functions--------------------//
@@ -53,7 +59,7 @@ namespace QuickTime.Handler
         /// </summary>..
         public void ResetQuicktTime()
         {
-            if (_workstationInteraction.IsOn == false)
+            if (!_workstationInteraction.IsOn)
             {
                 _rhythmQuickTimeCanvas.SetActive(false);
                 _rhythmHandler.RhythmCounter = 0;

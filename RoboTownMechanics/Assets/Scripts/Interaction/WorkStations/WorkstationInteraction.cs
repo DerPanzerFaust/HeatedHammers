@@ -1,3 +1,5 @@
+using LocalMultiplayer.Player;
+using QuickTime.Handler;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,6 +17,11 @@ namespace WorkstationInteractionBase
         private UnityEvent _stopInteract;
         [SerializeField]
         private UnityEvent _onInteract;
+        [SerializeField]
+        private GameObject _quickTimeCanvas;
+        [SerializeField]
+        private QuickTimeHandler _quickHandler;
+        private PlayerMaster _playerMaster;
         
         //--------------------Public--------------------//
         public bool IsOn
@@ -23,21 +30,24 @@ namespace WorkstationInteractionBase
             set => _isOn = value;
         }
 
-        //--------------------Functions--------------------//
-
         UnityEvent IInteraction.onInteract
         {
             get => _onInteract;
             set => _onInteract = value;
         }
 
+        //--------------------Functions--------------------//
+        private void Awake() => _onInteract.AddListener(OpenQuickTime);
+
+        private void OnDisable() => _onInteract.RemoveListener(OpenQuickTime);
 
         /// <summary>
         /// The interact function which invokes the interact when the raycast hits and "stop" the interaction.
         /// </summary>
-
-        public void Interact()
+        public void Interact(PlayerMaster playerMaster)
         {
+            _playerMaster = playerMaster;
+
             if (!_isOn)
             {
                 _onInteract.Invoke();
@@ -48,6 +58,14 @@ namespace WorkstationInteractionBase
             }
 
             _isOn = !_isOn;
+        }
+
+        private void OpenQuickTime()
+        {
+            /*
+            _quickTimeCanvas.SetActive(true);
+            _quickHandler.RhythmHandlerRef.SetInputEvents(_playerMaster.PlayerInputComponent);
+            */
         }
     }
 

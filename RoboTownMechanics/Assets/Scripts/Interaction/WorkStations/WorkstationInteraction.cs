@@ -1,4 +1,5 @@
 using LocalMultiplayer.Player;
+using QuickTime.Handler;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,6 +19,9 @@ namespace WorkstationInteractionBase
         private UnityEvent _onInteract;
         [SerializeField]
         private GameObject _quickTimeCanvas;
+        [SerializeField]
+        private QuickTimeHandler _quickHandler;
+        private PlayerMaster _playerMaster;
         
         //--------------------Public--------------------//
         public bool IsOn
@@ -42,6 +46,8 @@ namespace WorkstationInteractionBase
         /// </summary>
         public void Interact(PlayerMaster playerMaster)
         {
+            _playerMaster = playerMaster;
+
             if (!_isOn)
             {
                 _onInteract.Invoke();
@@ -56,7 +62,10 @@ namespace WorkstationInteractionBase
 
         private void OpenQuickTime()
         {
-            //logica voor openen canvas qt
+            /*
+            _quickTimeCanvas.SetActive(true);
+            _quickHandler.RhythmHandlerRef.SetInputEvents(_playerMaster.PlayerInputComponent);
+            */
         }
     }
 

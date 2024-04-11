@@ -7,6 +7,9 @@ namespace TimerHandler
 {
     public class InternalTimer : SingletonBehaviour<InternalTimer>
     {
+        //--------------------Public--------------------//
+        public bool isPaused;
+
 
         //--------------------Private--------------------//
         private float _gameLength;
@@ -37,32 +40,28 @@ namespace TimerHandler
             else if(_started)
                 GoGameOver();
 
-            Debug.Log(_currentTime);
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void TimerStart()
         {
             _started = true;
-            Debug.Log("Timer Started");
             _startTime = Time.time;
-           //StartCoroutine(PlayTimer());
         }
 
         public void GoGameOver()
         {
-            Debug.Log("GameOver");
             _stateMachine.SetState(_stateMachine.GameOverStateInstance);
         }
 
-        private IEnumerator PlayTimer()
-        {
-            Debug.Log("Timer Start");
-            while (_gameLength > 0)
-            {
-                yield return new WaitForSeconds(_gameLength);
-                _gameLength--;
-            }
 
-            GoGameOver();
+        public void PausingGame()
+        {
+            isPaused = !isPaused;
+            Time.timeScale = isPaused ? 0 : 1;  
         }
 
     }

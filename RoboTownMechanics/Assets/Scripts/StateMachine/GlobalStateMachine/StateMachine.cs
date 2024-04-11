@@ -1,4 +1,6 @@
 using StateMachines.States;
+using System;
+using UnityEngine;
 
 namespace StateMachines.GlobalStateMachine
 {
@@ -9,12 +11,14 @@ namespace StateMachines.GlobalStateMachine
 
         private LobbyState _lobbyStateInstance = new LobbyState();
         private GameState _gameStateInstance = new GameState();
+        private GameOverState _gameOverStateInstance = new GameOverState();
 
         //--------------------Public--------------------//
         public State CurrentState => _currentState;
 
         public LobbyState LobbyStateInstance => _lobbyStateInstance;
         public GameState GameStateInstance => _gameStateInstance;
+        public GameOverState GameOverStateInstance => _gameOverStateInstance;
 
 
         //--------------------Functions--------------------//

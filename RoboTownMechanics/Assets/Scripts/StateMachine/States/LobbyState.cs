@@ -1,4 +1,5 @@
 using MenuHandler;
+using System.Diagnostics;
 
 namespace StateMachines.States
 {
@@ -8,10 +9,12 @@ namespace StateMachines.States
         private MenuManager _menuManager;
 
         //--------------------Functions--------------------//
+
         protected override void OnEnter()
         {
             _menuManager = MenuManager.Instance;
             _menuManager.OpenMenu("Lobby");
+
         }
 
         protected override void OnUpdate()

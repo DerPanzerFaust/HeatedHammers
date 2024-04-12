@@ -1,13 +1,12 @@
 using StateMachines.States;
-using UnityEngine;
 using MenuHandler;
-using TimerHandler;
+using PauseHandler;
 
 public class GameOverState : State
 {
     //--------------------Private--------------------//
     private MenuManager _menuManager;
-    private InternalTimer _timer;
+    private PauseSystem _pauseSystem;
 
     //--------------------Functions--------------------//
     protected override void OnEnter()
@@ -15,8 +14,8 @@ public class GameOverState : State
         _menuManager = MenuManager.Instance;
         _menuManager.OpenMenu("GameOver");
 
-        _timer = InternalTimer.Instance;
-        _timer.PausingGame();
+        _pauseSystem = PauseSystem.Instance;
+        _pauseSystem.PausingGame();
         
     }
 

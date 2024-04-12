@@ -6,6 +6,9 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(InternalTimer))]
 public class TimeSpanDrawer : PropertyDrawer
 {
+    /// <summary>
+    /// This is a function which makes the minutes and seconds in the inspector look cleaner
+    /// </summary>
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         EditorGUI.BeginProperty(position, label, property);

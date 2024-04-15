@@ -1,71 +1,42 @@
-using LocalMultiplayer.Player;
-using QuickTime.Handler;
+using PlayerInteraction.Base;
 using UnityEngine;
-using UnityEngine.Events;
-
+using Utilities;
 
 namespace WorkstationInteractionBase
 {
-    public class WorkstationInteraction : MonoBehaviour, IInteraction
+    public class WorkstationInteraction : BaseInteraction
     {
 
         //--------------------Private--------------------//
         [SerializeField]
-        private bool _isOn;
+        private StationType _currentStationType;
 
-        [SerializeField]
-        private UnityEvent _stopInteract;
-        [SerializeField]
-        private UnityEvent _onInteract;
-        [SerializeField]
-        private GameObject _quickTimeCanvas;
-        [SerializeField]
-        private QuickTimeHandler _quickHandler;
-        private PlayerMaster _playerMaster;
-        
+        private PickUpObjectType _currentPickUpObjectType;
+
         //--------------------Public--------------------//
-        public bool IsOn
-        {
-            get => _isOn;
-            set => _isOn = value;
-        }
+        public StationType CurrentStationType => _currentStationType;
 
-        UnityEvent IInteraction.onInteract
+        public PickUpObjectType CurrentPickUpObjectType
         {
-            get => _onInteract;
-            set => _onInteract = value;
+            get => _currentPickUpObjectType;
+            set => _currentPickUpObjectType = value;
         }
 
         //--------------------Functions--------------------//
-        private void Awake() => _onInteract.AddListener(OpenQuickTime);
+        private void Awake() => _onInteract.AddListener(InteractionStart);
 
-        private void OnDisable() => _onInteract.RemoveListener(OpenQuickTime);
-
-        /// <summary>
-        /// The interact function which invokes the interact when the raycast hits and "stop" the interaction.
-        /// </summary>
-        public void Interact(PlayerMaster playerMaster)
+        private void OnDisable() => _onInteract.RemoveListener(InteractionStart);
+        
+        private void InteractionStart()
         {
-            _playerMaster = playerMaster;
-
-            if (!_isOn)
-            {
-                _onInteract.Invoke();
-            }
-            else
-            {
-                _stopInteract.Invoke();
-            }
-
-            _isOn = !_isOn;
+            if (_currentPickUpObjectType != PickUpObjectType.NONE)
+                OpenQuickTime();
         }
+
 
         private void OpenQuickTime()
         {
-            /*
-            _quickTimeCanvas.SetActive(true);
-            _quickHandler.RhythmHandlerRef.SetInputEvents(_playerMaster.PlayerInputComponent);
-            */
+            //start quickTime
         }
     }
 

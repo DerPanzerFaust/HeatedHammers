@@ -1,12 +1,15 @@
 using InputNameSpace;
 using LocalMultiplayer.Player;
+using Player.PickUp;
 using Player.StateMachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utilities;
 using WorkstationInteractionBase;
 
-
-public class Interactor : MonoBehaviour
+namespace PlayerInteraction.Base
+{
+    public class Interactor : MonoBehaviour
     {
         //--------------------Private--------------------//
 
@@ -23,14 +26,18 @@ public class Interactor : MonoBehaviour
 
         private PlayerMaster _playerMaster;
 
+        private PlayerPickUp _playerPickUp;
+
         //--------------------Functions--------------------//
         private void Start()
         {
             _playerInput = GetComponent<PlayerData>().Master.PlayerInputComponent;
 
             _playerMaster = GetComponent<PlayerData>().Master;
-            
+
             _playerStateMachine = GetComponent<PlayerStateMachine>();
+
+            _playerPickUp = GetComponent<PlayerPickUp>();
 
             _playerInput.OnInteractInputAction.performed += DoInteract;
             _transform = transform;
@@ -44,14 +51,27 @@ public class Interactor : MonoBehaviour
 
         private void DoInteract(InputAction.CallbackContext callbackContext)
         {
-            if (_playerStateMachine.CurrentPlayerState != Utilities.PlayerState.WALKING)
+            if (_playerStateMachine.CurrentPlayerState != PlayerState.WALKING)
                 return;
 
             if (!Physics.Raycast(_transform.position + (Vector3.up * 0.3f) + (_transform.forward * 0.2f),
-                _transform.forward, out var hit, _interactRange, _interatableLayer)) return;
-            if (!hit.transform.TryGetComponent(out WorkstationInteraction interactable)) return;
+                _transform.forward, out var hit, _interactRange, _interatableLayer)) 
+                return;
 
-            interactable.Interact(_playerMaster);
-            //_playerStateMachine.CurrentPlayerState = Utilities.PlayerState.INTERACTING;
+            if (!hit.transform.TryGetComponent(out BaseInteraction interactable)) 
+                return;
+
+            if (_playerPickUp.CurrentPickedUpObject != null 
+                && interactable.CurrentInterActionType == InterActionType.WORKSTATION)
+            {
+                WorkstationInteraction workstationInteraction = (WorkstationInteraction)interactable;
+                _playerPickUp.PlaceInStation(workstationInteraction);
+            }
+            else
+            {
+                interactable.Interact(_playerMaster);
+                //_playerStateMachine.CurrentPlayerState = Utilities.PlayerState.INTERACTING;
+            }
         }
     }
+}

@@ -50,8 +50,8 @@ public class Interactor : MonoBehaviour
             if (!Physics.Raycast(_transform.position + (Vector3.up * 0.3f) + (_transform.forward * 0.2f),
                 _transform.forward, out var hit, _interactRange, _interatableLayer)) return;
             if (!hit.transform.TryGetComponent(out WorkstationInteraction interactable)) return;
-
+            if(_playerStateMachine.CurrentPlayerState != Utilities.PlayerState.WALKING) return;
             interactable.Interact(_playerMaster);
-            //_playerStateMachine.CurrentPlayerState = Utilities.PlayerState.INTERACTING;
+            _playerStateMachine.CurrentPlayerState = Utilities.PlayerState.INTERACTING;
         }
     }

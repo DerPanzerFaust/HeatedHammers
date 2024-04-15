@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Canvas : MonoBehaviour
+public class CanvasLookat : MonoBehaviour
 {
     //--------------------Functions--------------------//
     private void Update()

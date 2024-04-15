@@ -12,34 +12,38 @@ namespace WorkstationInteractionBase
         //--------------------Private--------------------//
         [SerializeField]
         private bool _isOn;
-
-        [SerializeField]
-        private UnityEvent _stopInteract;
-        [SerializeField]
-        private UnityEvent _onInteract;
         [SerializeField]
         private GameObject _quickTimeCanvas;
         [SerializeField]
         private QuickTimeHandler _quickHandler;
         private PlayerMaster _playerMaster;
-        
+
         //--------------------Public--------------------//
+        [HideInInspector]
+        public UnityEvent OnStopInteract;
+        [HideInInspector]
+        public UnityEvent OnInteract;
+
         public bool IsOn
         {
             get => _isOn;
             set => _isOn = value;
         }
-
+        public PlayerMaster PlayerMaster
+        {
+            get => _playerMaster;
+            set => _playerMaster = value;
+        }
         UnityEvent IInteraction.onInteract
         {
-            get => _onInteract;
-            set => _onInteract = value;
+            get => OnInteract;
+            set => OnInteract = value;
         }
 
         //--------------------Functions--------------------//
-        private void Awake() => _onInteract.AddListener(OpenQuickTime);
+        private void Awake() => OnInteract.AddListener(OpenQuickTime);
 
-        private void OnDisable() => _onInteract.RemoveListener(OpenQuickTime);
+        private void OnDisable() => OnInteract.RemoveListener(OpenQuickTime);
 
         /// <summary>
         /// The interact function which invokes the interact when the raycast hits and "stop" the interaction.
@@ -50,11 +54,11 @@ namespace WorkstationInteractionBase
 
             if (!_isOn)
             {
-                _onInteract.Invoke();
+                OnInteract.Invoke();
             }
             else
             {
-                _stopInteract.Invoke();
+                OnStopInteract.Invoke();
             }
 
             _isOn = !_isOn;
@@ -62,10 +66,9 @@ namespace WorkstationInteractionBase
 
         private void OpenQuickTime()
         {
-            /*
             _quickTimeCanvas.SetActive(true);
-            _quickHandler.RhythmHandlerRef.SetInputEvents(_playerMaster.PlayerInputComponent);
-            */
+            _quickHandler.SetInputEvents(_playerMaster.PlayerInputComponent);
+            _quickHandler.QuickTimeActive = true;
         }
     }
 

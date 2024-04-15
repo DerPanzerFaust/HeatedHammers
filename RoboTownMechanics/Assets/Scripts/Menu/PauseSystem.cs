@@ -6,7 +6,7 @@ namespace PauseHandler
     public class PauseSystem : SingletonBehaviour<PauseSystem>
     {
         //--------------------Public--------------------//
-        public bool isPaused;
+        public bool IsPaused;
 
 
         /// <summary>
@@ -14,8 +14,8 @@ namespace PauseHandler
         /// </summary>
         public void PausingGame()
         {
-            isPaused = !isPaused;
-            Time.timeScale = isPaused ? 0 : 1;
+            IsPaused = !IsPaused;
+            Time.timeScale = IsPaused ? 0 : 1;
         }
 
 

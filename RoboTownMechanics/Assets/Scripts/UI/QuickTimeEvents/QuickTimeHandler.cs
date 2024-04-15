@@ -1,48 +1,83 @@
-using QuickTime.Rhythm;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using WorkstationInteractionBase;
+using Player.StateMachine;
+using InputNameSpace;
+using UnityEngine.InputSystem;
 
 namespace QuickTime.Handler
 {
     public class QuickTimeHandler : MonoBehaviour
     {
         //--------------------Private--------------------//
-        //[SerializeField]
-        //private GameObject _rhythmQuickTime;
         [SerializeField]
-        private GameObject _rhythmQuickTimeCanvas;
-        [SerializeField]
-        private RhythmHandler _rhythmHandler;
+        private GameObject _quickTimeObject;
         [SerializeField]
         private WorkstationInteraction _workstationInteraction;
         [SerializeField]
         private Transform _partSpawnLocation;
         [SerializeField]
         private List<GameObject> _parts;
+        private InputComponent _inputComponent;
+        private PlayerStateMachine _currentPlayerState;
+
+        private bool _quickTimeActive;
 
         //--------------------Public--------------------//
-        public GameObject RhythmQuickTimeCanvas
+        public Action OnFailQuickTime;
+
+        public GameObject QuickTimeObject
         {
-            get => _rhythmQuickTimeCanvas;
-            set => _rhythmQuickTimeCanvas = value;
+            get => _quickTimeObject;
+            set => _quickTimeObject = value;
+        }
+        public InputComponent InputComponent
+        {
+            get => _inputComponent;
+            set => _inputComponent = value;
         }
 
-        public RhythmHandler RhythmHandlerRef
+        public bool QuickTimeActive
         {
-            get => _rhythmHandler;
-            set => _rhythmHandler = value;
+            get => _quickTimeActive;
+            set => _quickTimeActive = value;
         }
 
         //--------------------Functions--------------------//
+
+        /// <summary>
+        /// Sets the references for the input
+        /// </summary>
+        /// <param name="inputComponent"></param>
+        public void SetInputEvents(InputComponent inputComponent)
+        {
+            _inputComponent = inputComponent;
+
+            _inputComponent.OnInteractInputAction.performed += InteractPressed;
+            OnFailQuickTime += FailedQuickTime;
+        }
+
+        protected virtual void InteractPressed(InputAction.CallbackContext context)
+        {
+
+        }
+        private void OnDisable()
+        {
+            _inputComponent.OnInteractInputAction.performed -= InteractPressed;
+            OnFailQuickTime -= FailedQuickTime;
+            _inputComponent = null;
+        }
 
         /// <summary>
         /// When QTE is failed do ResetQuickTime and launch player from workstation 
         /// </summary>
         public void FailedQuickTime()
         {
-            ResetQuicktTime();
+            _workstationInteraction.OnStopInteract.Invoke();
+            ResetQuickTime();
             LaunchPlayer();
+            
         }
 
         /// <summary>
@@ -50,40 +85,31 @@ namespace QuickTime.Handler
         /// </summary>
         public void CompletedQuickTime()
         {
-            ResetQuicktTime();
+            _workstationInteraction.OnStopInteract.Invoke();
+            ResetQuickTime();
             SpawnPart();
         }
 
-        /// <summary>
-        /// Resets Canvas, Image, Counter to original size and count. 
-        /// </summary>..
-        public void ResetQuicktTime()
+        protected virtual void ResetQuickTime()
         {
-            if (!_workstationInteraction.IsOn)
-            {
-                _rhythmQuickTimeCanvas.SetActive(false);
-                _rhythmHandler.RhythmCounter = 0;
-                _rhythmHandler.RhythmCirkel.rectTransform.sizeDelta = new Vector2(_rhythmHandler.OriginalHeight, _rhythmHandler.OriginalWidth);
-            }
-            // Stop Interacting
-            // Reset currentHeight/Width to orignalHeight/Width and enable rhythmQTE object
-            // Change interaction to match InputComponent
+            _quickTimeActive = false;
+            _currentPlayerState = _workstationInteraction.PlayerMaster.CurrentActivePlayerModel.GetComponent<PlayerStateMachine>();
+            _currentPlayerState.CurrentPlayerState = Utilities.PlayerState.WALKING;
+            _workstationInteraction.IsOn = false;
+            _quickTimeObject.SetActive(false);
         }
 
         /// <summary>
         /// Spawn part needed to repair the robot. To spawn a part there must always a transform where the part can spawn
         /// </summary>
-        public void SpawnPart()
-        {
-            Instantiate(_parts[UnityEngine.Random.Range(0, _parts.Count)], _partSpawnLocation);
-        }
+        public void SpawnPart() => Instantiate(_parts[UnityEngine.Random.Range(0, _parts.Count)], _partSpawnLocation);
 
         /// <summary>
         /// Launch player from workstation
         /// </summary>
         public void LaunchPlayer()
         {
-            Debug.Log("Player Launched");
+            
         }
     }
 

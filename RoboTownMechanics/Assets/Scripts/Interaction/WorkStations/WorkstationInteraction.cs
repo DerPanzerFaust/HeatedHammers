@@ -26,7 +26,7 @@ namespace WorkstationInteractionBase
         private void Awake() => _onInteract.AddListener(InteractionStart);
 
         private void OnDisable() => _onInteract.RemoveListener(InteractionStart);
-        
+
         private void InteractionStart()
         {
             if (_currentPickUpObjectType != PickUpObjectType.NONE)
@@ -36,7 +36,9 @@ namespace WorkstationInteractionBase
 
         private void OpenQuickTime()
         {
-            //start quickTime
+            _quickTimeCanvas.SetActive(true);
+            _quickHandler.SetInputEvents(_playerMaster.PlayerInputComponent);
+            _quickHandler.QuickTimeActive = true;
         }
     }
 

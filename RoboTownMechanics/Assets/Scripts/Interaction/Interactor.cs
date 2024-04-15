@@ -55,13 +55,13 @@ namespace PlayerInteraction.Base
                 return;
 
             if (!Physics.Raycast(_transform.position + (Vector3.up * 0.3f) + (_transform.forward * 0.2f),
-                _transform.forward, out var hit, _interactRange, _interatableLayer)) 
+                _transform.forward, out var hit, _interactRange, _interatableLayer))
                 return;
 
-            if (!hit.transform.TryGetComponent(out BaseInteraction interactable)) 
+            if (!hit.transform.TryGetComponent(out BaseInteraction interactable))
                 return;
 
-            if (_playerPickUp.CurrentPickedUpObject != null 
+            if (_playerPickUp.CurrentPickedUpObject != null
                 && interactable.CurrentInterActionType == InterActionType.WORKSTATION)
             {
                 WorkstationInteraction workstationInteraction = (WorkstationInteraction)interactable;
@@ -70,7 +70,7 @@ namespace PlayerInteraction.Base
             else
             {
                 interactable.Interact(_playerMaster);
-                //_playerStateMachine.CurrentPlayerState = Utilities.PlayerState.INTERACTING;
+                _playerStateMachine.CurrentPlayerState = Utilities.PlayerState.INTERACTING;
             }
         }
     }

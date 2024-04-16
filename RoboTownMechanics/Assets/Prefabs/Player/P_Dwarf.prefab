@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: -855099560831049974}
   - component: {fileID: -9013086093414483338}
   m_Layer: 0
-  m_Name: Dwarf
+  m_Name: P_Dwarf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

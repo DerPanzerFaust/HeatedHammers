@@ -55,7 +55,11 @@ namespace QuickTime.Rhythm
         }
 
         //--------------------Functions--------------------//
-        private void Start() => _rhythmCounter = 0;
+        protected override void Start()
+        {
+            base.Start();
+            _rhythmCounter = 0;
+        }
 
         private void Update()
         {

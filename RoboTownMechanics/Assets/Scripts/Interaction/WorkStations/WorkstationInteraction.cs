@@ -1,8 +1,10 @@
-using PlayerInteraction.Base;
+using Player.StateMachine;
+using QuickTime.Handler;
 using UnityEngine;
 using Utilities;
+using Interaction.Base;
 
-namespace WorkstationInteractionBase
+namespace Interaction.Workstations
 {
     public class WorkstationInteraction : BaseInteraction
     {
@@ -12,6 +14,12 @@ namespace WorkstationInteractionBase
         private StationType _currentStationType;
 
         private PickUpObjectType _currentPickUpObjectType;
+
+        //--------------------Protected--------------------//
+        [SerializeField]
+        protected GameObject _quickTimeCanvas;
+        
+        protected QuickTimeHandler _quickHandler;
 
         //--------------------Public--------------------//
         public StationType CurrentStationType => _currentStationType;
@@ -23,23 +31,22 @@ namespace WorkstationInteractionBase
         }
 
         //--------------------Functions--------------------//
-        private void Awake() => _onInteract.AddListener(InteractionStart);
+        private void Awake() => OnInteract.AddListener(InteractionStart);
 
-        private void OnDisable() => _onInteract.RemoveListener(InteractionStart);
+        private void Start() => _quickHandler = GetComponent<QuickTimeHandler>();
+
+        private void OnDisable() => OnInteract.RemoveListener(InteractionStart);
 
         private void InteractionStart()
         {
             if (_currentPickUpObjectType != PickUpObjectType.NONE)
-                OpenQuickTime();
+                SpecialAction();
+            else
+                PlayerMaster.CurrentActivePlayerModel.GetComponent<PlayerStateMachine>().CurrentPlayerState = PlayerState.WALKING;
         }
 
-
-        private void OpenQuickTime()
+        protected virtual void SpecialAction()
         {
-            _quickTimeCanvas.SetActive(true);
-            _quickHandler.SetInputEvents(_playerMaster.PlayerInputComponent);
-            _quickHandler.QuickTimeActive = true;
         }
     }
-
 }

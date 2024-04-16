@@ -5,9 +5,9 @@ using Player.StateMachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utilities;
-using WorkstationInteractionBase;
+using Interaction.Workstations;
 
-namespace PlayerInteraction.Base
+namespace Interaction.Base
 {
     public class Interactor : MonoBehaviour
     {
@@ -69,8 +69,8 @@ namespace PlayerInteraction.Base
             }
             else
             {
+                _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;
                 interactable.Interact(_playerMaster);
-                _playerStateMachine.CurrentPlayerState = Utilities.PlayerState.INTERACTING;
             }
         }
     }

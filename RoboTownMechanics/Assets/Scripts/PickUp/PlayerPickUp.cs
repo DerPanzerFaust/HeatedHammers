@@ -1,26 +1,32 @@
 using PickUps;
-using PlayerInteraction.Pickup;
+using Player.StateMachine;
 using UnityEngine;
 using Utilities;
-using WorkstationInteractionBase;
+using Interaction.Workstations;
 
 namespace Player.PickUp
 {
     public class PlayerPickUp : MonoBehaviour
     {
         //--------------------Private--------------------//
-        private PickUpInteraction _currentPickedUpObject;
+        private PickUpComponent _currentPickedUpObject;
+
+        private PlayerStateMachine _playerStateMachine;
 
         //--------------------Public--------------------//
-        public PickUpInteraction CurrentPickedUpObject => _currentPickedUpObject;
+        public PickUpComponent CurrentPickedUpObject => _currentPickedUpObject;
 
         //--------------------Functions--------------------//
+        private void Awake() => _playerStateMachine = GetComponent<PlayerStateMachine>();
+
         /// <summary>
         /// When this function is called, the player will pick up the given object
         /// </summary>
         /// <param name="pickUpObject">The object to PickUp</param>
-        public void PickUpObject(PickUpInteraction pickUpObject)
+        public void PickUpObject(PickUpComponent pickUpObject)
         {
+            SetWalkingState();
+
             if (_currentPickedUpObject != null)
                 return;
 
@@ -36,6 +42,8 @@ namespace Player.PickUp
         /// <param name="station">The station to place object inside of</param>
         public void PlaceInStation(WorkstationInteraction station)
         {
+            SetWalkingState();
+
             switch (station.CurrentStationType)
             {
                 case StationType.REPAIR:
@@ -63,5 +71,7 @@ namespace Player.PickUp
             Destroy(_currentPickedUpObject.gameObject);
             _currentPickedUpObject = null;
         }
+
+        private void SetWalkingState() => _playerStateMachine.CurrentPlayerState = PlayerState.WALKING;
     }
 }

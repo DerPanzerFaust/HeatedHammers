@@ -3,30 +3,21 @@ using UnityEngine;
 using UnityEngine.Events;
 using Utilities;
 
-namespace PlayerInteraction.Base
+namespace Interaction.Base
 {
     public class BaseInteraction : MonoBehaviour, IInteraction
     {
         //--------------------Private--------------------//
-        [SerializeField]
-        private bool _isOn;
-        
         [SerializeField]
         private InterActionType _currentInterActionType;
 
         private PlayerMaster _playerMaster;
 
         //--------------------Public--------------------//
-        public bool IsOn
-        {
-            get => _isOn;
-            set => _isOn = value;
-        }
-
         UnityEvent IInteraction.onInteract
         {
-            get => _onInteract;
-            set => _onInteract = value;
+            get => OnInteract;
+            set => OnInteract = value;
         }
 
         public PlayerMaster PlayerMaster => _playerMaster;
@@ -34,9 +25,7 @@ namespace PlayerInteraction.Base
         public InterActionType CurrentInterActionType => _currentInterActionType;
 
         [HideInInspector]
-        public UnityEvent _onStopInteract;
-        [HideInInspector]
-        public UnityEvent _onInteract;
+        public UnityEvent OnInteract;
 
         //--------------------Functions--------------------//
         /// <summary>
@@ -47,16 +36,7 @@ namespace PlayerInteraction.Base
         {
             _playerMaster = playerMaster;
 
-            if (!_isOn)
-            {
-                _onInteract.Invoke();
-            }
-            else
-            {
-                _onStopInteract.Invoke();
-            }
-
-            _isOn = !_isOn;
+            OnInteract.Invoke();
         }
     }
 }

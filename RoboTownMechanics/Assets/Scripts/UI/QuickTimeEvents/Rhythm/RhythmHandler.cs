@@ -1,5 +1,3 @@
-using InputNameSpace;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -7,7 +5,7 @@ using QuickTime.Handler;
 
 namespace QuickTime.Rhythm
 {
-    public class RhythmHandler : MonoBehaviour
+    public class RhythmHandler : QuickTimeHandler
     {
         //--------------------Private--------------------//
         [SerializeField] [Tooltip("Controls how many times the player needs to press to complete the QTE")]
@@ -30,15 +28,11 @@ namespace QuickTime.Rhythm
         [SerializeField]
         private Animation ButtonPress;
         [SerializeField]
-        private QuickTimeHandler _quickTimeHandler;
-        [SerializeField]
         private Image _rhythmCirkel;
 
         private int _rhythmCounter;
-        private InputComponent _inputComponent;
 
         //--------------------Public--------------------//
-        public Action OnFailQuickTime;
         public float OriginalWidth
         {
             get => _originalWidth;
@@ -60,38 +54,24 @@ namespace QuickTime.Rhythm
             set => _rhythmCounter = value;
         }
 
-        public InputComponent InputComponent
-        {
-            get => _inputComponent;
-            set => _inputComponent = value;
-        }
-
         //--------------------Functions--------------------//
-        private void Start() => _rhythmCounter = 0;
-
-        private void OnDisable()
+        protected override void Start()
         {
-            _inputComponent = null;
-
-            _inputComponent.OnInteractInputAction.performed -= InteractPressed;
-            OnFailQuickTime -= _quickTimeHandler.FailedQuickTime;
+            base.Start();
+            _rhythmCounter = 0;
         }
+
         private void Update()
         {
+            if (!QuickTimeActive)
+                return;
+
             MakeRhythm();
 
             if (_rhythmCirkel.rectTransform.sizeDelta.magnitude <= new Vector2(_targetHeight, _targetWidth).magnitude)
             {
-                _quickTimeHandler.FailedQuickTime();
+                FailedQuickTime();
             }
-        }
-
-        public void SetInputEvents(InputComponent inputComponent)
-        {
-            _inputComponent = inputComponent;
-
-            _inputComponent.OnInteractInputAction.performed += InteractPressed;
-            OnFailQuickTime += _quickTimeHandler.FailedQuickTime;
         }
 
         private void MakeRhythm()
@@ -100,12 +80,18 @@ namespace QuickTime.Rhythm
 
             if (_rhythmCirkel.rectTransform.sizeDelta.magnitude <= new Vector2(_targetWidth, _targetHeight).magnitude)
             {
-                _quickTimeHandler.FailedQuickTime();
-                OnFailQuickTime.Invoke();
+                FailedQuickTime();
             }
         }
 
-        private void InteractPressed(InputAction.CallbackContext context)
+        protected override void ResetQuickTime()
+        {
+            RhythmCounter = 0;
+            RhythmCirkel.rectTransform.sizeDelta = new Vector2(OriginalHeight, OriginalWidth);
+            base.ResetQuickTime();
+        }
+
+        protected override void InteractPressed(InputAction.CallbackContext context)
         {
             if (_rhythmCirkel.rectTransform.sizeDelta.magnitude >= new Vector2(_targetHeight, _targetWidth).magnitude &&
                 _rhythmCirkel.rectTransform.sizeDelta.magnitude <= new Vector2(_bufferHeight, _bufferWidth).magnitude)
@@ -116,15 +102,10 @@ namespace QuickTime.Rhythm
                     _rhythmCounter = _rhythmCounter + 1;
                     if (_rhythmCounter == _maxCount)
                     {
-                        _quickTimeHandler.CompletedQuickTime();
+                        CompletedQuickTime();
                     }
                 }
             }
-            /*else if (_rhythmCirkel.rectTransform.sizeDelta.magnitude >= new Vector2(_bufferHeight, _bufferWidth).magnitude)
-            {
-                _quickTimeHandler.FailedQuickTime();
-            }*/
-
             ButtonPress.Play();
         }
     }

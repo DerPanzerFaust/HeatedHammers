@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using WorkstationInteractionBase;
+using Interaction.Workstations;
 using Player.StateMachine;
 using InputNameSpace;
 using UnityEngine.InputSystem;
@@ -13,8 +13,9 @@ namespace QuickTime.Handler
         //--------------------Private--------------------//
         [SerializeField]
         private GameObject _quickTimeObject;
-        [SerializeField]
+
         private WorkstationInteraction _workstationInteraction;
+        
         [SerializeField]
         private Transform _partSpawnLocation;
         [SerializeField]
@@ -45,6 +46,7 @@ namespace QuickTime.Handler
         }
 
         //--------------------Functions--------------------//
+        protected virtual void Start() => _workstationInteraction = GetComponent<WorkstationInteraction>();
 
         /// <summary>
         /// Sets the references for the input
@@ -74,7 +76,6 @@ namespace QuickTime.Handler
         /// </summary>
         public void FailedQuickTime()
         {
-            _workstationInteraction.OnStopInteract.Invoke();
             ResetQuickTime();
             LaunchPlayer();
             
@@ -85,7 +86,6 @@ namespace QuickTime.Handler
         /// </summary>
         public void CompletedQuickTime()
         {
-            _workstationInteraction.OnStopInteract.Invoke();
             ResetQuickTime();
             SpawnPart();
         }
@@ -95,7 +95,7 @@ namespace QuickTime.Handler
             _quickTimeActive = false;
             _currentPlayerState = _workstationInteraction.PlayerMaster.CurrentActivePlayerModel.GetComponent<PlayerStateMachine>();
             _currentPlayerState.CurrentPlayerState = Utilities.PlayerState.WALKING;
-            _workstationInteraction.IsOn = false;
+            _workstationInteraction.CurrentPickUpObjectType = Utilities.PickUpObjectType.NONE;
             _quickTimeObject.SetActive(false);
         }
 
@@ -109,8 +109,6 @@ namespace QuickTime.Handler
         /// </summary>
         public void LaunchPlayer()
         {
-            
         }
     }
-
 }

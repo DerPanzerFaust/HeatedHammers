@@ -3,6 +3,7 @@ using Player.StateMachine;
 using UnityEngine;
 using Utilities;
 using Interaction.Workstations;
+using LocalMultiplayer.Player;
 
 namespace Player.PickUp
 {
@@ -30,9 +31,10 @@ namespace Player.PickUp
             if (_currentPickedUpObject != null)
                 return;
 
-            pickUpObject.transform.parent = transform;
+            pickUpObject.transform.rotation = transform.rotation;
             pickUpObject.transform.position = transform.position + Vector3.up;
-
+            pickUpObject.transform.SetParent(transform, true);
+            
             _currentPickedUpObject = pickUpObject;
         }
 
@@ -61,6 +63,9 @@ namespace Player.PickUp
                         return;
                     break;
             }
+
+            if (station.CurrentStationType == StationType.COMPLETED)
+                station.Interact(GetComponent<PlayerData>().Master);
 
             //when nothing is in the station
             if (station.CurrentPickUpObjectType != PickUpObjectType.NONE)

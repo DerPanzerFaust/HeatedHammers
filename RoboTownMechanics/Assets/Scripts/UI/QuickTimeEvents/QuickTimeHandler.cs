@@ -48,12 +48,21 @@ namespace QuickTime.Handler
         //--------------------Functions--------------------//
         protected virtual void Start() => _workstationInteraction = GetComponent<WorkstationInteraction>();
 
+        private void OnDisable()
+        {
+            OnFailQuickTime -= FailedQuickTime;
+            _inputComponent = null;
+        }
+
         /// <summary>
         /// Sets the references for the input
         /// </summary>
         /// <param name="inputComponent"></param>
         public void SetInputEvents(InputComponent inputComponent)
         {
+            if(_inputComponent != null)
+                _inputComponent.OnInteractInputAction.performed -= InteractPressed;
+
             _inputComponent = inputComponent;
 
             _inputComponent.OnInteractInputAction.performed += InteractPressed;
@@ -63,12 +72,6 @@ namespace QuickTime.Handler
         protected virtual void InteractPressed(InputAction.CallbackContext context)
         {
 
-        }
-        private void OnDisable()
-        {
-            _inputComponent.OnInteractInputAction.performed -= InteractPressed;
-            OnFailQuickTime -= FailedQuickTime;
-            _inputComponent = null;
         }
 
         /// <summary>
@@ -102,7 +105,11 @@ namespace QuickTime.Handler
         /// <summary>
         /// Spawn part needed to repair the robot. To spawn a part there must always a transform where the part can spawn
         /// </summary>
-        public void SpawnPart() => Instantiate(_parts[UnityEngine.Random.Range(0, _parts.Count)], _partSpawnLocation);
+        public void SpawnPart()
+        {
+            Instantiate(_parts[UnityEngine.Random.Range(0, _parts.Count)], 
+            _partSpawnLocation.position, Quaternion.identity);
+        }
 
         /// <summary>
         /// Launch player from workstation

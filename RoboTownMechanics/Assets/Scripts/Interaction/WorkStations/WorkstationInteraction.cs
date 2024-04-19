@@ -37,7 +37,7 @@ namespace Interaction.Workstations
 
         private void OnDisable() => OnInteract.RemoveListener(InteractionStart);
 
-        private void InteractionStart()
+        protected virtual void InteractionStart()
         {
             if (_currentPickUpObjectType != PickUpObjectType.NONE)
                 SpecialAction();

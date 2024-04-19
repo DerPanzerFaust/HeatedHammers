@@ -12,7 +12,7 @@ namespace QuickTime.Rhythm
         private int _maxCount;
         [SerializeField]
         [Tooltip("Controls how fast the player needs to react")]
-        private float _tempo;
+        private Vector2Int _tempo;
         [SerializeField]
         private float _targetWidth;
         [SerializeField]
@@ -76,7 +76,9 @@ namespace QuickTime.Rhythm
 
         private void MakeRhythm()
         {
-            _rhythmCirkel.rectTransform.sizeDelta -= new Vector2(_targetWidth, _targetHeight) * _tempo * Time.deltaTime;
+            int randomTempo = Random.Range(_tempo.x, _tempo.y);
+
+            _rhythmCirkel.rectTransform.sizeDelta -= new Vector2(_targetWidth, _targetHeight) * randomTempo * Time.deltaTime;
 
             if (_rhythmCirkel.rectTransform.sizeDelta.magnitude <= new Vector2(_targetWidth, _targetHeight).magnitude)
             {
@@ -105,6 +107,10 @@ namespace QuickTime.Rhythm
                         CompletedQuickTime();
                     }
                 }
+            }
+            else if (_rhythmCirkel.rectTransform.sizeDelta.magnitude >= new Vector2(_bufferHeight, _bufferWidth).magnitude)
+            {
+                FailedQuickTime();
             }
             ButtonPress.Play();
         }

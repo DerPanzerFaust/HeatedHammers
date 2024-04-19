@@ -12,9 +12,14 @@ namespace Player.Movement
         private Rigidbody _rigidBody;
 
         [SerializeField]
-        private float _movementForce;
+        private float _maxMovementForce;
+        [SerializeField]
+        private float _minimalMovementForce;
+        private float _currentMovementForce;
         [SerializeField]
         private float _maxMovementSpeed;
+        [SerializeField]
+        private float _minimalMovementSpeed;
         [SerializeField]
         private float _slowingMultiplier;
 
@@ -30,15 +35,11 @@ namespace Player.Movement
             _inputComponent.OnMoveAction += MovePlayer;
 
             _rigidBody = GetComponent<Rigidbody>();
+
+            _currentMovementForce = _maxMovementForce;
         }
 
         private void OnDisable() => _inputComponent.OnMoveAction -= MovePlayer;
-
-        private void Update()
-        {
-            if (_rigidBody.velocity.magnitude > _maxMovementSpeed)
-                _rigidBody.velocity = Vector3.ClampMagnitude(_rigidBody.velocity, _maxMovementSpeed);
-        }
 
         private void FixedUpdate()
         {
@@ -46,12 +47,31 @@ namespace Player.Movement
                 SlowPlayer();
         }
 
-        private void MovePlayer()
+        private void CalculateForce()
         {
-            Vector2 direction = _inputComponent.OnMoveInputAction.ReadValue<Vector2>();
-            _rigidBody.AddForce(new Vector3(direction.x, 0, direction.y) * _movementForce *Time.deltaTime);
+            if (_rigidBody.velocity.magnitude < 5)
+                _currentMovementForce = _maxMovementForce;
+            else
+                _currentMovementForce = _minimalMovementForce;
         }
 
-        private void SlowPlayer() => _rigidBody.velocity = _rigidBody.velocity * _slowingMultiplier;
+        private void MovePlayer()
+        {
+            CalculateForce();
+
+            Vector2 direction = _inputComponent.OnMoveInputAction.ReadValue<Vector2>();
+            _rigidBody.AddForce(new Vector3(direction.x, 0, direction.y) * _currentMovementForce *Time.deltaTime);
+
+            if (_rigidBody.velocity.magnitude > _maxMovementSpeed)
+                _rigidBody.velocity = Vector3.ClampMagnitude(_rigidBody.velocity, _maxMovementSpeed);
+        }
+
+        private void SlowPlayer()
+        {
+            if (_rigidBody.velocity.magnitude <= _minimalMovementSpeed)
+                _rigidBody.velocity = Vector3.zero;
+
+            _rigidBody.velocity = _rigidBody.velocity * _slowingMultiplier;
+        }
     }
 }

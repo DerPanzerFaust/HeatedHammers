@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TimerHandler
 {
-    public class InternalTimer : SingletonBehaviour<InternalTimer>
+    public class GameTimer : SingletonBehaviour<GameTimer>
     {
         //--------------------Private--------------------//
         private float _gameLength;

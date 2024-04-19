@@ -3,8 +3,8 @@ using UnityEditor;
 using UnityEngine;
 
 
-[CustomPropertyDrawer(typeof(InternalTimer))]
-public class TimeSpanDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(GameTimer))]
+public class TimeSpawnDrawer : PropertyDrawer
 {
     /// <summary>
     /// This is a function which makes the minutes and seconds in the inspector look cleaner

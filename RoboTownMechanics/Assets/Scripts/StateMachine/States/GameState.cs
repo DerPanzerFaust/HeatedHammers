@@ -7,12 +7,12 @@ namespace StateMachines.States
     {
         //--------------------Private--------------------//
 
-        private InternalTimer _timerManager;
+        private GameTimer _timerManager;
         //--------------------Functions--------------------//
 
         protected override void OnEnter()
         {
-            _timerManager = InternalTimer.Instance;
+            _timerManager = GameTimer.Instance;
             _timerManager.TimerStart();
         }
 

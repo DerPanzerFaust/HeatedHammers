@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1124221307058610864}
   - component: {fileID: 6969544714537096591}
   - component: {fileID: 8168910071562085652}
+  - component: {fileID: 6308191605103224119}
   m_Layer: 0
   m_Name: P_FireExtuinguisher
   m_TagString: Untagged
@@ -133,9 +134,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.017303243
-  m_Height: 0.10159269
+  m_Height: 0.09222781
   m_Direction: 2
-  m_Center: {x: 0, y: -0.0020833467, z: 0.0035650635}
+  m_Center: {x: 0, y: -0.0020833467, z: 0.008247452}
 --- !u!65 &8168910071562085652
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -157,3 +158,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0075068567, y: 0.021418866, z: 0.028515978}
   m_Center: {x: -0.0006049907, y: -0.025488976, z: 0.022500593}
+--- !u!65 &6308191605103224119
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4150130124046399523}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.02063037, y: 0.027569715, z: 0.016903361}
+  m_Center: {x: -0.000017563105, y: -0.001941148, z: -0.029551592}

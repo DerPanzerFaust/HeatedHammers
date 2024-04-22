@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Robot.Timer
 {
-    public class BrokenPartSpawner : MonoBehaviour
+    public class BotPartBreakTimer : MonoBehaviour
     {
         //--------------------Private--------------------//
         [SerializeField]
@@ -12,9 +12,9 @@ namespace Robot.Timer
         [SerializeField]
         private float _currentTime;
         [SerializeField]
-        private BrokenBotList _brokenBotList;
+        private BotPartList _brokenBotList;
         [SerializeField]
-        private BrokenBotSpawn _brokenBotSpawn;
+        private BotPartHandler _brokenBotSpawn;
 
         //--------------------Functions--------------------//
         private void Start() => _currentTime = _initialTime;

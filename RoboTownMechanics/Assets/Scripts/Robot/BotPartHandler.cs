@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace Robot.Spawn
 {
-    public class BrokenBotSpawn : MonoBehaviour
+    public class BotPartHandler : MonoBehaviour
     {
         //--------------------Private--------------------//
         [SerializeField]
-        private BrokenBotList _brokenBotList;
+        private BotPartList _brokenBotList;
         [SerializeField]
         private int _brokenStartParts;
         [SerializeField]
-        private BrokenPartSpawner _brokenPartSpawner;
+        private BotPartBreakTimer _brokenPartSpawner;
         [SerializeField]
         private bool _botSpawned;
         private Part _brokenPart;

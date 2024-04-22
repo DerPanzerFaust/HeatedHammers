@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Robot.List
 {
     //--------------------Private--------------------//
-    public class BrokenBotList : MonoBehaviour
+    public class BotPartList : MonoBehaviour
     {
         [SerializeField]
         private List<Part> _parts;

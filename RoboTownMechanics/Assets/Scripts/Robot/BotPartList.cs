@@ -45,6 +45,12 @@ namespace Robot.List
             set => _isBroken = value;
         }
 
+        public GameObject BrokenPart
+        {
+            get => _brokenPart;
+            set => _brokenPart = value;
+        }
+
         public Part(string name, GameObject wholePart, GameObject brokenPart, bool isBroken)
         {
             _partName = name;

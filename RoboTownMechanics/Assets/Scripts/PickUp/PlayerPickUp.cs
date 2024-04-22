@@ -15,7 +15,11 @@ namespace Player.PickUp
         private PlayerStateMachine _playerStateMachine;
 
         //--------------------Public--------------------//
-        public PickUpComponent CurrentPickedUpObject => _currentPickedUpObject;
+        public PickUpComponent CurrentPickedUpObject
+        {
+            get => _currentPickedUpObject;
+            set => _currentPickedUpObject = value;
+        }
 
         //--------------------Functions--------------------//
         private void Awake() => _playerStateMachine = GetComponent<PlayerStateMachine>();

@@ -1,12 +1,12 @@
 using Robot.List;
 using Robot.Spawn;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace Robot.Timer
 {
     public class BrokenPartSpawner : MonoBehaviour
     {
+        //--------------------Private--------------------//
         [SerializeField]
         private float _initialTime;
         [SerializeField]
@@ -15,12 +15,9 @@ namespace Robot.Timer
         private BrokenBotList _brokenBotList;
         [SerializeField]
         private BrokenBotSpawn _brokenBotSpawn;
-        private Part _brokenPart;
 
-        private void Start()
-        {
-            _currentTime = _initialTime;
-        }
+        //--------------------Functions--------------------//
+        private void Start() => _currentTime = _initialTime;
         public void DoTimer()
         {
             _currentTime -= Time.deltaTime;

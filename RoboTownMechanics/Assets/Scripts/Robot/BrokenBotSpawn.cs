@@ -1,8 +1,6 @@
 using Robot.List;
 using Robot.Timer;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 namespace Robot.Spawn
 {
@@ -25,7 +23,7 @@ namespace Robot.Spawn
             if (_botSpawned)
                 _brokenPartSpawner.DoTimer();
 
-            if (Input.GetKeyDown("space"))
+            if (_botSpawned)
             {
                 for (int i = 0; i < _brokenStartParts; i++)
                 {
@@ -33,6 +31,9 @@ namespace Robot.Spawn
                 }
             }
         }
+        /// <summary>
+        /// This function gets a random part from the whole part list, Checks if the part isBroken and stows sat part in the broken parts list.
+        /// </summary>
         public void BreakPart()
         {
             if (_brokenBotList.Parts.Count <= 0)

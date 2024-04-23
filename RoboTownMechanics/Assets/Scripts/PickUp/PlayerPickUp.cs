@@ -4,6 +4,7 @@ using UnityEngine;
 using Utilities;
 using Interaction.Workstations;
 using LocalMultiplayer.Player;
+using System.Xml.Serialization;
 
 namespace Player.PickUp
 {
@@ -15,7 +16,13 @@ namespace Player.PickUp
         private PlayerStateMachine _playerStateMachine;
 
         //--------------------Public--------------------//
-        public PickUpComponent CurrentPickedUpObject => _currentPickedUpObject;
+        public PickUpComponent CurrentPickedUpObject
+            {
+            get => _currentPickedUpObject;
+            set => _currentPickedUpObject = value;
+            }
+            
+            
 
         //--------------------Functions--------------------//
         private void Awake() => _playerStateMachine = GetComponent<PlayerStateMachine>();
@@ -56,6 +63,7 @@ namespace Player.PickUp
                 case StationType.RECYCLE:
                     if (_currentPickedUpObject.CurrentPickUpState != PickUpState.DESTROYED)
                         return;
+
                     break;
 
                 case StationType.COMPLETED:
@@ -78,5 +86,7 @@ namespace Player.PickUp
         }
 
         private void SetWalkingState() => _playerStateMachine.CurrentPlayerState = PlayerState.WALKING;
+
+
     }
 }

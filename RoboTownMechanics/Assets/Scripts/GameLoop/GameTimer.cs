@@ -1,4 +1,5 @@
 using StateMachines.GlobalStateMachine;
+using System;
 using UnityEngine; 
 
 
@@ -20,6 +21,11 @@ namespace TimerHandler
         [SerializeField]
         private int _seconds = 0;
 
+        //--------------------Public--------------------//
+        public Action<float> OnCurrentTimeChanged;
+
+        public float GameLength => _gameLength;
+
         //--------------------Functions-----------------//
 
         private void Start()
@@ -31,10 +37,14 @@ namespace TimerHandler
         private void Update()
         {
             if(_currentTime < _gameLength && _started)
+            {
                 _currentTime += Time.deltaTime;
-            else if(_started)
+                OnCurrentTimeChanged?.Invoke(_currentTime);
+            }
+            else if (_started)
+            {
                 GoGameOver();
-
+            }
         }
 
         /// <summary>

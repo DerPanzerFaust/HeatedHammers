@@ -19,7 +19,7 @@ namespace LocalMultiplayer.Player
 
         private bool _hasJoinedLobby;
 
-        private Color _playerColor;
+        private Material _playerMaterial;
 
         private LobbyJoinManager _lobbyJoinManager;
 
@@ -44,10 +44,10 @@ namespace LocalMultiplayer.Player
             set => _playerInputUser = value;
         }
 
-        public Color PlayerColor
+        public Material PlayerMaterial
         {
-            get => _playerColor;
-            set => _playerColor = value;
+            get => _playerMaterial;
+            set => _playerMaterial = value;
         }
 
         public GameObject CurrentActivePlayerModel

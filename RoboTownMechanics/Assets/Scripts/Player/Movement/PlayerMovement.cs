@@ -1,6 +1,7 @@
 using InputNameSpace;
 using LocalMultiplayer.Player;
 using UnityEngine;
+using Player.Animation;
 
 namespace Player.Movement
 {
@@ -25,10 +26,23 @@ namespace Player.Movement
 
         private PlayerMaster _master;
 
+        private PlayerAnimation _playerAnimation;
+
+        private bool _canMove;
+
+        //--------------------Public--------------------//
+        public bool CanMove
+        {
+            get => _canMove;
+            set => _canMove = value;
+        }
+
         //--------------------Functions--------------------//
         private void Start()
         {
             _master = GetComponent<PlayerData>().Master;
+
+            _playerAnimation = GetComponent<PlayerAnimation>();
 
             _inputComponent = _master.PlayerInputComponent;
 
@@ -37,6 +51,8 @@ namespace Player.Movement
             _rigidBody = GetComponent<Rigidbody>();
 
             _currentMovementForce = _maxMovementForce;
+
+            _canMove = true;
         }
 
         private void OnDisable() => _inputComponent.OnMoveAction -= MovePlayer;
@@ -45,6 +61,11 @@ namespace Player.Movement
         {
             if(!_inputComponent.OnMoveInputAction.IsPressed() && _rigidBody.velocity != Vector3.zero)
                 SlowPlayer();
+
+            if (CanMove)
+                _playerAnimation.PlayerSpeed = _inputComponent.OnMoveInputAction.ReadValue<Vector2>().magnitude;
+            else
+                _playerAnimation.PlayerSpeed = 0;
         }
 
         private void CalculateForce()
@@ -57,6 +78,9 @@ namespace Player.Movement
 
         private void MovePlayer()
         {
+            if (!_canMove)
+                return;
+
             CalculateForce();
 
             Vector2 direction = _inputComponent.OnMoveInputAction.ReadValue<Vector2>();

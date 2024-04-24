@@ -73,5 +73,11 @@ namespace Interaction.Base
                 interactable.Interact(_playerMaster);
             }
         }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawSphere(transform.position + Vector3.up * .1f, .1f);
+        }
     }
 }

@@ -14,25 +14,25 @@ namespace LocalMultiplayer.Lobby
         [SerializeField]
         private GameObject _upperLeft;
         [SerializeField]
-        private Color _upperLeftColor;
+        private Material _upperLeftMaterial;
         
         [Header("UpperRight")]
         [SerializeField]
         private GameObject _upperRight;
         [SerializeField] 
-        private Color _upperRightColor;
+        private Material _upperRightMaterial;
         
         [Header("LowerLeft")]
         [SerializeField]
         private GameObject _lowerLeft;
         [SerializeField]
-        private Color _lowerLeftColor;
+        private Material _lowerLeftMaterial;
         
         [Header("LowerRight")]
         [SerializeField] 
         private GameObject _lowerRight;
         [SerializeField]
-        private Color _lowerRightColor;
+        private Material _lowerRightMaterial;
 
         private StateMachine _stateMachine;
 
@@ -42,6 +42,8 @@ namespace LocalMultiplayer.Lobby
         private PlayerSpawner _playerSpawner;
 
         private bool _lobbyHasStarted;
+
+        private Material _lowestMaterial;
 
         //--------------------Functions--------------------//
         private void Start()
@@ -77,7 +79,6 @@ namespace LocalMultiplayer.Lobby
         private void JoinLowestSpot(PlayerMaster playerMaster)
         {
             int lowestAvailableIndex = 5;
-            Color color = Color.black;
 
             if(_lobbySpots.Count == 0)
             {
@@ -112,25 +113,25 @@ namespace LocalMultiplayer.Lobby
             switch (lowestAvailableIndex)
             {
                 case 1:
-                    color = _upperLeftColor;
+                    _lowestMaterial = _upperLeftMaterial;
                     _upperLeft.SetActive(true);
                     break;
                 case 2:
-                    color = _upperRightColor;
+                    _lowestMaterial = _upperRightMaterial;
                     _upperRight.SetActive(true);
                     break;
                 case 3:
-                    color = _lowerLeftColor;
+                    _lowestMaterial = _lowerLeftMaterial;
                     _lowerLeft.SetActive(true);
                     break;
                 case 4:
-                    color = _lowerRightColor;
+                    _lowestMaterial = _lowerRightMaterial;
                     _lowerRight.SetActive(true);
                     break;
             }
 
-            playerMaster.PlayerColor = color;
-            _lobbySpots.Add(new LobbySpot(playerMaster, color, lowestAvailableIndex));
+            playerMaster.PlayerMaterial = _lowestMaterial;
+            _lobbySpots.Add(new LobbySpot(playerMaster, _lowestMaterial, lowestAvailableIndex));
         }
 
         /// <summary>
@@ -199,22 +200,22 @@ namespace LocalMultiplayer.Lobby
         //--------------------Private--------------------//
         private PlayerMaster _currentPlayerMaster;
         [SerializeField]
-        private Color _spotColor;
+        private Material _spotMaterial;
         [SerializeField]
         private int _spotIndex;
 
         //--------------------Public--------------------//
         public PlayerMaster CurrentPlayerMaster => _currentPlayerMaster;
         
-        public Color SpotColor => _spotColor;
+        public Material SpotMaterial => _spotMaterial;
         
         public int SpotIndex => _spotIndex;
 
         //--------------------Functions--------------------//
-        public LobbySpot(PlayerMaster playerMaster, Color spotColor, int spotIndex)
+        public LobbySpot(PlayerMaster playerMaster, Material spotMaterial, int spotIndex)
         {
             _currentPlayerMaster = playerMaster;
-            _spotColor = spotColor;
+            _spotMaterial = spotMaterial;
             _spotIndex = spotIndex;
         }
     }

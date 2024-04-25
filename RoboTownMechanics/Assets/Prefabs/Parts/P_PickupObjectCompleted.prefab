@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebf0607b203bef7439ea5e50fe9f5a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explodetimer: 3
+  _explodetimer: 10
   _destroyedPart: {fileID: 1219477990552376703, guid: db4411e118993064fb7fdebbe1ef3ff7,
     type: 3}
 --- !u!1 &8870951850651139657

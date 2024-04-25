@@ -25,11 +25,7 @@ namespace PartsHandler
 
         private PickUpInteraction _pickUpInteraction;
 
-        private bool _inhands;
-
-
-        //--------------------Public--------------------/
-
+        //--------------------Public--------------------//
         public PickUpComponent CurrentPickedUpObject
         {
             get => _currentPickedUpObject;
@@ -43,7 +39,6 @@ namespace PartsHandler
         }
 
         //--------------------Functions--------------------//
-
         private void Start()
         {
             _pickUpInteraction = GetComponent<PickUpInteraction>();
@@ -59,7 +54,6 @@ namespace PartsHandler
 
         private void PickedUp()
         {
-            _inhands = true;
             PickUpInteraction pickUpInteraction = GetComponent<PickUpInteraction>();
 
             _playerPickUp = pickUpInteraction.PlayerMaster.CurrentActivePlayerModel.GetComponent<PlayerPickUp>();
@@ -73,31 +67,28 @@ namespace PartsHandler
             ExplosionTimer();
         }
 
-
-        public void ExplosionTimer()
+        private void ExplosionTimer()
         {
             if (_explodetimer < 0)
             {
-                Destroy(gameObject);
-                //then part "explodes" (animation)
-                ChangePart();        
+                ChangePart();
             }
         }
 
         private void ChangePart()
-        {   
-            if (_inhands)
+        {
+            if (_playerPickUp != null && _playerPickUp.CurrentPickedUpObject != null)
             {
                 GameObject spawnedPart = Instantiate(_destroyedPart, _position.transform.position, Quaternion.identity);
+
+                _playerPickUp.DestroyObject();
                 _playerPickUp.PickUpObject(spawnedPart.GetComponent<PickUpComponent>());
             }
-            else
+            else if(_playerPickUp == null)
             {
                 GameObject spawnedPart = Instantiate(_destroyedPart, gameObject.transform.position , Quaternion.identity);
+                Destroy(gameObject);
             }
-
         }
-
     }
-
 }

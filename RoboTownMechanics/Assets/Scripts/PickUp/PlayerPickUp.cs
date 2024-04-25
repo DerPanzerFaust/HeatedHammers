@@ -38,11 +38,21 @@ namespace Player.PickUp
             if (_currentPickedUpObject != null)
                 return;
 
+
             pickUpObject.transform.rotation = transform.rotation;
             pickUpObject.transform.position = transform.position + Vector3.up;
             pickUpObject.transform.SetParent(transform, true);
             
             _currentPickedUpObject = pickUpObject;
+        }
+
+        /// <summary>
+        /// destroys the currentObject
+        /// </summary>
+        public void DestroyObject()
+        {
+            Destroy(_currentPickedUpObject.gameObject);
+            _currentPickedUpObject = null;
         }
 
         /// <summary>
@@ -81,8 +91,7 @@ namespace Player.PickUp
 
             station.CurrentPickUpObjectType = _currentPickedUpObject.GetComponent<PickUpComponent>().PickUpObjectType;
 
-            Destroy(_currentPickedUpObject.gameObject);
-            _currentPickedUpObject = null;
+            DestroyObject();
         }
 
         private void SetWalkingState() => _playerStateMachine.CurrentPlayerState = PlayerState.WALKING;

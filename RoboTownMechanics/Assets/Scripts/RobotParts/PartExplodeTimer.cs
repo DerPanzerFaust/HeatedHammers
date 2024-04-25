@@ -1,8 +1,5 @@
 using PickUps;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Utilities;
 using Player.PickUp;
 using Interaction.Pickup;
 namespace PartsHandler
@@ -82,11 +79,13 @@ namespace PartsHandler
                 GameObject spawnedPart = Instantiate(_destroyedPart, _position.transform.position, Quaternion.identity);
 
                 _playerPickUp.DestroyObject();
+                
                 _playerPickUp.PickUpObject(spawnedPart.GetComponent<PickUpComponent>());
             }
             else if(_playerPickUp == null)
             {
                 GameObject spawnedPart = Instantiate(_destroyedPart, gameObject.transform.position , Quaternion.identity);
+                
                 Destroy(gameObject);
             }
         }

@@ -1,7 +1,7 @@
 using Bomb.ImageChanger;
 using MenuHandler;
-using UnityEngine;
 using TimerHandler;
+using Robot.Spawner;
 
 namespace StateMachines.States
 {
@@ -14,6 +14,8 @@ namespace StateMachines.States
 
         private MenuManager _menuManager;
 
+        private RobotSpawner _robotSpawner;
+
         //--------------------Functions--------------------//
         protected override void OnEnter()
         {
@@ -25,6 +27,9 @@ namespace StateMachines.States
             
             _bombImageChanger = BombImageChanger.Instance;
             _bombImageChanger.ChangeImage(_bombImageChanger.BombImageObjects[0]);
+
+            _robotSpawner = RobotSpawner.Instance;
+            _robotSpawner.SpawnRobot();
         }
 
         protected override void OnUpdate()

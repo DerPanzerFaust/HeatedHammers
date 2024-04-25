@@ -1,4 +1,5 @@
 using Robot.List;
+using Robot.Spawner;
 using Robot.Timer;
 using UnityEngine;
 
@@ -7,30 +8,43 @@ namespace Robot.Spawn
     public class BotPartHandler : MonoBehaviour
     {
         //--------------------Private--------------------//
-        [SerializeField]
         private BotPartList _brokenBotList;
+
+        private BotPartBreakTimer _brokenPartSpawner;
+
+        private RobotSpawner _robotSpawner;
+
         [SerializeField]
         private int _brokenStartParts;
-        [SerializeField]
-        private BotPartBreakTimer _brokenPartSpawner;
+
         [SerializeField]
         private bool _botSpawned;
+
         private Part _brokenPart;
 
         //--------------------Functions--------------------//
-        private void Update()
+        private void Start()
         {
-            if (_botSpawned)
-                _brokenPartSpawner.DoTimer();
+            _brokenBotList = GetComponent<BotPartList>();
+            _brokenPartSpawner = GetComponent<BotPartBreakTimer>();
 
-            if (_botSpawned)
+            _robotSpawner = RobotSpawner.Instance;
+
+            _robotSpawner.OnEnteredShop += BreakParts;
+        }
+
+        private void OnDisable() => _robotSpawner.OnEnteredShop -= BreakParts;
+
+        private void BreakParts()
+        {
+            _brokenPartSpawner.DoTimer();
+
+            for (int i = 0; i < _brokenStartParts; i++)
             {
-                for (int i = 0; i < _brokenStartParts; i++)
-                {
-                    BreakPart();
-                }
+                BreakPart();
             }
         }
+
         /// <summary>
         /// This function gets a random part from the whole part list, Checks if the part isBroken and stows sat part in the broken parts list.
         /// </summary>

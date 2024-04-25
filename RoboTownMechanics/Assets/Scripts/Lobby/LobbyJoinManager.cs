@@ -15,24 +15,32 @@ namespace LocalMultiplayer.Lobby
         private GameObject _upperLeft;
         [SerializeField]
         private Material _upperLeftMaterial;
+        [SerializeField]
+        private Transform _spawnPositionOne;
         
         [Header("UpperRight")]
         [SerializeField]
         private GameObject _upperRight;
         [SerializeField] 
         private Material _upperRightMaterial;
-        
+        [SerializeField]
+        private Transform _spawnPositionTwo;
+
         [Header("LowerLeft")]
         [SerializeField]
         private GameObject _lowerLeft;
         [SerializeField]
         private Material _lowerLeftMaterial;
-        
+        [SerializeField]
+        private Transform _spawnPositionThree;
+
         [Header("LowerRight")]
         [SerializeField] 
         private GameObject _lowerRight;
         [SerializeField]
         private Material _lowerRightMaterial;
+        [SerializeField]
+        private Transform _spawnPositionFour;
 
         private StateMachine _stateMachine;
 
@@ -44,6 +52,8 @@ namespace LocalMultiplayer.Lobby
         private bool _lobbyHasStarted;
 
         private Material _lowestMaterial;
+
+        private Transform _playerSpawnPosition;
 
         //--------------------Functions--------------------//
         private void Start()
@@ -109,29 +119,38 @@ namespace LocalMultiplayer.Lobby
             
             if(lowestAvailableIndex == 1)
                 playerMaster.PlayerInputComponent.OnInteractInputAction.performed += StartGame;
-
+            
             switch (lowestAvailableIndex)
             {
                 case 1:
                     _lowestMaterial = _upperLeftMaterial;
+                    _playerSpawnPosition = _spawnPositionOne;
                     _upperLeft.SetActive(true);
                     break;
                 case 2:
                     _lowestMaterial = _upperRightMaterial;
+                    _playerSpawnPosition = _spawnPositionTwo;
+
                     _upperRight.SetActive(true);
                     break;
                 case 3:
                     _lowestMaterial = _lowerLeftMaterial;
+                    _playerSpawnPosition = _spawnPositionThree;
+
                     _lowerLeft.SetActive(true);
                     break;
                 case 4:
                     _lowestMaterial = _lowerRightMaterial;
+                    _playerSpawnPosition = _spawnPositionFour;
                     _lowerRight.SetActive(true);
                     break;
             }
 
             playerMaster.PlayerMaterial = _lowestMaterial;
-            _lobbySpots.Add(new LobbySpot(playerMaster, _lowestMaterial, lowestAvailableIndex));
+            LobbySpot _playerLobbySpot = new LobbySpot(playerMaster, _lowestMaterial, lowestAvailableIndex, _playerSpawnPosition);
+
+            playerMaster.CurrentLobbySpot = _playerLobbySpot;
+            _lobbySpots.Add(_playerLobbySpot);
         }
 
         /// <summary>
@@ -180,14 +199,8 @@ namespace LocalMultiplayer.Lobby
         {
             if (_lobbyHasStarted)
                 return;
-            
-            List<PlayerMaster> masters = new();
-            foreach (LobbySpot spot in _lobbySpots)
-            {
-                masters.Add(spot.CurrentPlayerMaster);
-            }
 
-            _playerSpawner.SpawnPlayers(masters);
+            _playerSpawner.SpawnPlayers(_lobbySpots);
 
             _stateMachine.SetState(_stateMachine.GameStateInstance);
             _lobbyHasStarted = true;
@@ -203,6 +216,8 @@ namespace LocalMultiplayer.Lobby
         private Material _spotMaterial;
         [SerializeField]
         private int _spotIndex;
+        [SerializeField]
+        private Transform _spawnPosition;
 
         //--------------------Public--------------------//
         public PlayerMaster CurrentPlayerMaster => _currentPlayerMaster;
@@ -211,12 +226,15 @@ namespace LocalMultiplayer.Lobby
         
         public int SpotIndex => _spotIndex;
 
+        public Transform SpawnPosition => _spawnPosition;
+
         //--------------------Functions--------------------//
-        public LobbySpot(PlayerMaster playerMaster, Material spotMaterial, int spotIndex)
+        public LobbySpot(PlayerMaster playerMaster, Material spotMaterial, int spotIndex, Transform spawnPosition)
         {
             _currentPlayerMaster = playerMaster;
             _spotMaterial = spotMaterial;
             _spotIndex = spotIndex;
+            _spawnPosition = spawnPosition;
         }
     }
 }

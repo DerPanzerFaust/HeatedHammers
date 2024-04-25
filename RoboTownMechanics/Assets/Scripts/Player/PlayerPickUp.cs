@@ -4,7 +4,10 @@ using UnityEngine;
 using Utilities;
 using Interaction.Workstations;
 using LocalMultiplayer.Player;
-using System.Xml.Serialization;
+using System.Collections;
+using Player.Movement;
+using Player.Animation;
+using Player.Rotation;
 
 namespace Player.PickUp
 {
@@ -15,17 +18,26 @@ namespace Player.PickUp
 
         private PlayerStateMachine _playerStateMachine;
 
+        private PlayerMovement _playerMovement;
+
+        private PlayerRotation _playerRotation;
+
+        private PlayerAnimation _playerAnimation;
+
+        private bool _isPickingUp;
+        private bool _isPlacing;
+
         //--------------------Public--------------------//
-        public PickUpComponent CurrentPickedUpObject
-            {
-            get => _currentPickedUpObject;
-            set => _currentPickedUpObject = value;
-            }
-            
-            
+        public PickUpComponent CurrentPickedUpObject => _currentPickedUpObject;
 
         //--------------------Functions--------------------//
-        private void Awake() => _playerStateMachine = GetComponent<PlayerStateMachine>();
+        private void Start()
+        {
+            _playerStateMachine = GetComponent<PlayerStateMachine>();
+            _playerAnimation = GetComponent<PlayerAnimation>();
+            _playerMovement = GetComponent<PlayerMovement>();
+            _playerRotation = GetComponent<PlayerRotation>();
+        }
 
         /// <summary>
         /// When this function is called, the player will pick up the given object
@@ -35,15 +47,14 @@ namespace Player.PickUp
         {
             SetWalkingState();
 
-            if (_currentPickedUpObject != null)
+            if (_currentPickedUpObject != null || _isPickingUp)
                 return;
 
+            _playerMovement.CanMove = false;
+            _playerRotation.CanRotate = false;
+            _isPlacing = true;
 
-            pickUpObject.transform.rotation = transform.rotation;
-            pickUpObject.transform.position = transform.position + Vector3.up;
-            pickUpObject.transform.SetParent(transform, true);
-            
-            _currentPickedUpObject = pickUpObject;
+            StartCoroutine(PickUpObjectRoutine(pickUpObject));
         }
 
         /// <summary>
@@ -55,6 +66,24 @@ namespace Player.PickUp
             _currentPickedUpObject = null;
         }
 
+        private IEnumerator PickUpObjectRoutine(PickUpComponent pickUpObject)
+        {
+            _playerAnimation.PickUpObjectAnimation();
+            _currentPickedUpObject = pickUpObject;
+
+            yield return new WaitForSeconds(_playerAnimation.GetPickupAnimDuration());
+
+            pickUpObject.transform.rotation = transform.rotation;
+            pickUpObject.transform.position = transform.position + new Vector3(0, .5f, 0);
+            pickUpObject.transform.SetParent(transform, true);
+
+            _playerAnimation.HoldObjectAnimation();
+
+            _playerMovement.CanMove = true;
+            _playerRotation.CanRotate = true;
+            _isPlacing = false;
+        }
+
         /// <summary>
         /// When this function is called, the object the player is holding will be put into the given station
         /// </summary>
@@ -62,6 +91,9 @@ namespace Player.PickUp
         public void PlaceInStation(WorkstationInteraction station)
         {
             SetWalkingState();
+
+            if (_isPlacing)
+                return;
 
             switch (station.CurrentStationType)
             {
@@ -73,7 +105,6 @@ namespace Player.PickUp
                 case StationType.RECYCLE:
                     if (_currentPickedUpObject.CurrentPickUpState != PickUpState.DESTROYED)
                         return;
-
                     break;
 
                 case StationType.COMPLETED:
@@ -85,17 +116,32 @@ namespace Player.PickUp
             if (station.CurrentStationType == StationType.COMPLETED)
                 station.Interact(GetComponent<PlayerData>().Master);
 
-            //when nothing is in the station
             if (station.CurrentPickUpObjectType != PickUpObjectType.NONE)
                 return;
 
+            _playerMovement.CanMove = false;
+            _playerRotation.CanRotate = false;
+            _isPlacing = true;
+
+            StartCoroutine(PlaceInStationRoutine(station));
+        }
+
+        private IEnumerator PlaceInStationRoutine(WorkstationInteraction station)
+        {
+            _playerAnimation.StopPickUpObjectAnimation();
+
+            yield return new WaitForSeconds(_playerAnimation.GetPickupAnimDuration());
+
             station.CurrentPickUpObjectType = _currentPickedUpObject.GetComponent<PickUpComponent>().PickUpObjectType;
 
-            DestroyObject();
+            Destroy(_currentPickedUpObject.gameObject);
+            _currentPickedUpObject = null;
+
+            _playerMovement.CanMove = true;
+            _playerRotation.CanRotate = true;
+            _isPlacing = false;
         }
 
         private void SetWalkingState() => _playerStateMachine.CurrentPlayerState = PlayerState.WALKING;
-
-
     }
 }

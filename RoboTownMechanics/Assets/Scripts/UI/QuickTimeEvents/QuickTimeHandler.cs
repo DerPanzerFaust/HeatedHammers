@@ -60,9 +60,6 @@ namespace QuickTime.Handler
         /// <param name="inputComponent"></param>
         public void SetInputEvents(InputComponent inputComponent)
         {
-            if(_inputComponent != null)
-                _inputComponent.OnInteractInputAction.performed -= InteractPressed;
-
             _inputComponent = inputComponent;
 
             _inputComponent.OnInteractInputAction.performed += InteractPressed;
@@ -81,7 +78,6 @@ namespace QuickTime.Handler
         {
             ResetQuickTime();
             LaunchPlayer();
-            
         }
 
         /// <summary>
@@ -99,6 +95,10 @@ namespace QuickTime.Handler
             _currentPlayerState = _workstationInteraction.PlayerMaster.CurrentActivePlayerModel.GetComponent<PlayerStateMachine>();
             _currentPlayerState.CurrentPlayerState = Utilities.PlayerState.WALKING;
             _workstationInteraction.CurrentPickUpObjectType = Utilities.PickUpObjectType.NONE;
+
+            if (_inputComponent != null)
+                _inputComponent.OnInteractInputAction.performed -= InteractPressed;
+
             _quickTimeObject.SetActive(false);
         }
 

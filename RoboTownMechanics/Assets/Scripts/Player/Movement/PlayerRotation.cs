@@ -14,10 +14,21 @@ namespace Player.Rotation
 
         private PlayerMaster _master;
 
+        private bool _canRotate;
+
+        //--------------------Public--------------------//
+        public bool CanRotate
+        {
+            get => _canRotate;
+            set => _canRotate = value;
+        }
+
         //--------------------Function--------------------//
         private void Start()
         {
             _master = GetComponent<PlayerData>().Master;
+
+            _canRotate = true;
 
             _inputComponent = _master.PlayerInputComponent;
 
@@ -26,6 +37,9 @@ namespace Player.Rotation
 
         private void RotatePlayerTowardsDirection()
         {
+            if (!_canRotate)
+                return;
+
             Vector2 direction = _inputComponent.OnMoveInputAction.ReadValue<Vector2>();
             
             Quaternion rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.y));

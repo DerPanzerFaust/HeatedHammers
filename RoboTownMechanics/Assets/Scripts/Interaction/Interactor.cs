@@ -54,7 +54,7 @@ namespace Interaction.Base
             if (_playerStateMachine.CurrentPlayerState != PlayerState.WALKING)
                 return;
 
-            if (!Physics.Raycast(_transform.position + (Vector3.up * 0.3f) + (_transform.forward * 0.2f),
+            if (!Physics.Raycast(_transform.position + (Vector3.up * 0.1f) + (_transform.forward * 0.2f),
                 _transform.forward, out var hit, _interactRange, _interatableLayer))
                 return;
 
@@ -72,6 +72,12 @@ namespace Interaction.Base
                 _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;
                 interactable.Interact(_playerMaster);
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawSphere(transform.position + Vector3.up * .1f, .1f);
         }
     }
 }

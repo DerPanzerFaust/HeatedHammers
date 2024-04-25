@@ -30,7 +30,7 @@ namespace LocalMultiplayer.Player
             instantiatedPrefab.GetComponent<PlayerData>().Master = master;
             master.CurrentActivePlayerModel = instantiatedPrefab;
 
-            instantiatedPrefab.GetComponent<Renderer>().material.color = master.PlayerColor;
+            instantiatedPrefab.GetComponentInChildren<SkinnedMeshRenderer>().material = master.PlayerMaterial;
         }
     }
 }

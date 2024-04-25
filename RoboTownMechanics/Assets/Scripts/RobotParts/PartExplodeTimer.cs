@@ -18,7 +18,7 @@ namespace PartsHandler
         [SerializeField]
         private GameObject _destroyedPart;
 
-        private Transform _position;
+        private Transform _playerPosition;
 
         private PickUpInteraction _pickUpInteraction;
 
@@ -44,10 +44,8 @@ namespace PartsHandler
 
         }
 
-        private void OnDisable()
-        {
-            _pickUpInteraction.OnInteract.RemoveListener(PickedUp);
-        }
+        private void OnDisable() => _pickUpInteraction.OnInteract.RemoveListener(PickedUp);
+      
 
         private void PickedUp()
         {
@@ -55,7 +53,7 @@ namespace PartsHandler
 
             _playerPickUp = pickUpInteraction.PlayerMaster.CurrentActivePlayerModel.GetComponent<PlayerPickUp>();
 
-            _position = pickUpInteraction.PlayerMaster.CurrentActivePlayerModel.GetComponent<Transform>();
+            _playerPosition = pickUpInteraction.PlayerMaster.CurrentActivePlayerModel.GetComponent<Transform>();
         }
 
         private void Update()
@@ -76,7 +74,7 @@ namespace PartsHandler
         {
             if (_playerPickUp != null && _playerPickUp.CurrentPickedUpObject != null)
             {
-                GameObject spawnedPart = Instantiate(_destroyedPart, _position.transform.position, Quaternion.identity);
+                GameObject spawnedPart = Instantiate(_destroyedPart, _playerPosition.transform.position, Quaternion.identity);
 
                 _playerPickUp.DestroyObject();
                 

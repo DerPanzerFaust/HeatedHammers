@@ -57,6 +57,15 @@ namespace Player.PickUp
             StartCoroutine(PickUpObjectRoutine(pickUpObject));
         }
 
+        /// <summary>
+        /// destroys the currentObject
+        /// </summary>
+        public void DestroyObject()
+        {
+            Destroy(_currentPickedUpObject.gameObject);
+            _currentPickedUpObject = null;
+        }
+
         private IEnumerator PickUpObjectRoutine(PickUpComponent pickUpObject)
         {
             _playerAnimation.PickUpObjectAnimation();

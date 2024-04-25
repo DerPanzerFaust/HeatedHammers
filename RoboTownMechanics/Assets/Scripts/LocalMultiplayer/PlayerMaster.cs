@@ -29,6 +29,8 @@ namespace LocalMultiplayer.Player
 
         private StateMachine _stateMachine;
 
+        private LobbySpot _currentlobbySpot;
+
         //--------------------Public--------------------//
         public Gamepad CurrentGamepad
         {
@@ -62,6 +64,12 @@ namespace LocalMultiplayer.Player
             set => _hasJoinedLobby = value;
         }
 
+        public LobbySpot CurrentLobbySpot
+        {
+            get => _currentlobbySpot;
+            set => _currentlobbySpot = value;
+        }
+
         //--------------------Functions--------------------//
         private void Awake() => _playerInputComponent = GetComponent<InputComponent>();
 
@@ -86,7 +94,7 @@ namespace LocalMultiplayer.Player
             if (_stateMachine.CurrentState.GetType() == typeof(GameState))
             {
                 _lobbyJoinManager.JoinLobby(this);
-                _playerSpawner.SpawnPlayer(this);
+                _playerSpawner.SpawnPlayer(this, _currentlobbySpot.SpawnPosition);
             }
             else
             {

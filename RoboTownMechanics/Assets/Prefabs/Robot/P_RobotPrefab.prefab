@@ -337,6 +337,9 @@ GameObject:
   - component: {fileID: 2586576395490929677}
   - component: {fileID: 2799643263754007398}
   - component: {fileID: 721679611028820198}
+  - component: {fileID: 1121120982470270445}
+  - component: {fileID: -7496064343995043454}
+  - component: {fileID: 8014879147295815789}
   m_Layer: 10
   m_Name: P_RobotPrefab
   m_TagString: Untagged
@@ -433,6 +436,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f289a4f58f70b14ea04f7d4a9cbd219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1121120982470270445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785618420903987598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be5997feb6ba5ed4588362d67f38ee13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _parts:
+  - _partName: LeftArmLower
+    _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
+      type: 3}
+    _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
+      type: 3}
+    _isBroken: 0
+  - _partName: RightArmLower
+    _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
+      type: 3}
+    _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
+      type: 3}
+    _isBroken: 0
+  - _partName: LeftArmUpper
+    _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
+      type: 3}
+    _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
+      type: 3}
+    _isBroken: 0
+  - _partName: LeftArmUpper
+    _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
+      type: 3}
+    _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
+      type: 3}
+    _isBroken: 0
+  - _partName: Left Shoulder
+    _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
+      type: 3}
+    _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
+      type: 3}
+    _isBroken: 0
+  - _partName: Head
+    _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
+      type: 3}
+    _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
+      type: 3}
+    _isBroken: 0
+  - _partName: Battery
+    _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
+      type: 3}
+    _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
+      type: 3}
+    _isBroken: 0
+  _brokenParts: []
+--- !u!114 &-7496064343995043454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785618420903987598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b79979cf66eb8c4a9b3cfbb2207ac48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialTime: 30
+  _currentTime: 0
+  _brokenBotList: {fileID: 1121120982470270445}
+  _brokenBotSpawn: {fileID: 8014879147295815789}
+--- !u!114 &8014879147295815789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785618420903987598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2befbfd111a96c648b5d5bf7d04fd031, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _brokenBotList: {fileID: 1121120982470270445}
+  _brokenStartParts: 2
+  _brokenPartSpawner: {fileID: -7496064343995043454}
+  _botSpawned: 0
 --- !u!1 &829509283035740056
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,9 +14,9 @@ namespace Robot.Spawner
         private GameObject _robotObject;
 
         //--------------------Public--------------------//
-        private Action OnEnteredShop;
-        private Action OnExitedShopSucces;
-        private Action OnExitedShopUnSucces;
+        public Action OnEnteredShop;
+        public Action OnExitedShopSucces;
+        public Action OnExitedShopUnSucces;
 
         //--------------------Functions--------------------//
         private void Start()

@@ -73,10 +73,10 @@ namespace Interaction.Base
         }
 
         /// <summary>
-        /// 
+        /// Returns the direction from the angle given
         /// </summary>
-        /// <param name="angleInDegrees"></param>
-        /// <param name="angleIsGlobal"></param>
+        /// <param name="angleInDegrees">The angle you want to get the direction from</param>
+        /// <param name="angleIsGlobal">if you want the direction global or not</param>
         /// <returns></returns>
         public Vector3 DirectionFromAngle(float angleInDegrees, bool angleIsGlobal)
         {

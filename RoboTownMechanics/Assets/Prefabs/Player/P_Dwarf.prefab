@@ -157,7 +157,8 @@ MonoBehaviour:
   _interatableLayer:
     serializedVersion: 2
     m_Bits: 1024
-  _interactRange: 2.5
+  _interactRange: 2
+  _fieldOfViewAngle: 110
 --- !u!114 &-855099560831049974
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -605,6 +605,74 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a8ecdb447084024dae09e1b0145e829, type: 3}
+--- !u!1001 &3616055247055132037
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1073771123768702401, guid: 2ad9799de555df04ea6f7a634701ab9a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073771123768702401, guid: 2ad9799de555df04ea6f7a634701ab9a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073771123768702401, guid: 2ad9799de555df04ea6f7a634701ab9a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073771123768702401, guid: 2ad9799de555df04ea6f7a634701ab9a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073771123768702401, guid: 2ad9799de555df04ea6f7a634701ab9a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073771123768702401, guid: 2ad9799de555df04ea6f7a634701ab9a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073771123768702401, guid: 2ad9799de555df04ea6f7a634701ab9a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073771123768702401, guid: 2ad9799de555df04ea6f7a634701ab9a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073771123768702401, guid: 2ad9799de555df04ea6f7a634701ab9a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1073771123768702401, guid: 2ad9799de555df04ea6f7a634701ab9a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313002005180771602, guid: 2ad9799de555df04ea6f7a634701ab9a,
+        type: 3}
+      propertyPath: m_Name
+      value: Scheidingsmuur
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2ad9799de555df04ea6f7a634701ab9a, type: 3}
 --- !u!1001 &3797558891747758068
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1098,3 +1166,4 @@ SceneRoots:
   - {fileID: 2606040132390505634}
   - {fileID: 8426198614280286805}
   - {fileID: 7624767518898905796}
+  - {fileID: 3616055247055132037}

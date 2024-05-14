@@ -35,6 +35,8 @@ namespace Player.Rotation
             _inputComponent.OnMoveAction += RotatePlayerTowardsDirection;
         }
 
+        private void OnDisable() => _inputComponent.OnMoveAction -= RotatePlayerTowardsDirection;
+
         private void RotatePlayerTowardsDirection()
         {
             if (!_canRotate)

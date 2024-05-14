@@ -21,11 +21,10 @@ public class GameOverState : State
 
     protected override void OnUpdate()
     {
-
     }
 
     protected override void OnExit()
     {
-        
+        _menuManager.CloseMenu("GameOver");
     }
 }

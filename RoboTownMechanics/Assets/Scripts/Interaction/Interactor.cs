@@ -47,7 +47,7 @@ namespace Interaction.Base
             _playerInput.OnInteractInputAction.performed += DoInteract;
         }
 
-        private void OnDisable() => _playerInput.OnInteractInputAction.performed += DoInteract;
+        private void OnDisable() => _playerInput.OnInteractInputAction.performed -= DoInteract;
 
         private void DoInteract(InputAction.CallbackContext callbackContext)
         {

@@ -12,6 +12,7 @@ namespace StateMachines.GlobalStateMachine
         private LobbyState _lobbyStateInstance = new LobbyState();
         private GameState _gameStateInstance = new GameState();
         private GameOverState _gameOverStateInstance = new GameOverState();
+        private ResetState _resetStateInstance = new ResetState();
 
         //--------------------Public--------------------//
         public State CurrentState => _currentState;
@@ -19,6 +20,7 @@ namespace StateMachines.GlobalStateMachine
         public LobbyState LobbyStateInstance => _lobbyStateInstance;
         public GameState GameStateInstance => _gameStateInstance;
         public GameOverState GameOverStateInstance => _gameOverStateInstance;
+        public ResetState ResetStateInstance => _resetStateInstance;
 
 
         //--------------------Functions--------------------//

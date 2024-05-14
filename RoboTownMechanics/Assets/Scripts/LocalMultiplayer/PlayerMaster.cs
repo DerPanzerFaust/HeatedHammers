@@ -101,7 +101,6 @@ namespace LocalMultiplayer.Player
                 _lobbyJoinManager.JoinLobby(this);
             }
         }
-
         
         /// <summary>
         /// Destroys this master and its child player

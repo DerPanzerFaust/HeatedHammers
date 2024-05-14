@@ -35,5 +35,18 @@ namespace LocalMultiplayer.Player
 
             instantiatedPrefab.GetComponentInChildren<SkinnedMeshRenderer>().material = master.PlayerMaterial;
         }
+
+        /// <summary>
+        /// Despawns All the active player models from the spots given      
+        /// </summary>
+        /// <param name="lobbySpots">The list of spots to despawn models from</param>
+        public void DeSpawnPlayers(List<LobbySpot> lobbySpots)
+        {
+            foreach (LobbySpot spot in lobbySpots)
+            {
+                Destroy(spot.CurrentPlayerMaster.CurrentActivePlayerModel);
+                spot.CurrentPlayerMaster.CurrentActivePlayerModel = null;
+            }
+        }
     }
 }

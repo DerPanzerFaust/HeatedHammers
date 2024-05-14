@@ -39,10 +39,7 @@ namespace Interaction.Workstations
 
         protected virtual void InteractionStart()
         {
-            if (_currentPickUpObjectType != PickUpObjectType.NONE)
-                SpecialAction();
-            else
-                PlayerMaster.CurrentActivePlayerModel.GetComponent<PlayerStateMachine>().CurrentPlayerState = PlayerState.WALKING;
+            SpecialAction();
         }
 
         protected virtual void SpecialAction()

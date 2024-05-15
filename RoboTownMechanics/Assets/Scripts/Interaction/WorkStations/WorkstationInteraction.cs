@@ -1,4 +1,3 @@
-using Player.StateMachine;
 using QuickTime.Handler;
 using UnityEngine;
 using Utilities;
@@ -13,6 +12,9 @@ namespace Interaction.Workstations
         [SerializeField]
         private StationType _currentStationType;
 
+        [SerializeField]
+        private WorkStation _station;
+
         private PickUpObjectType _currentPickUpObjectType;
 
         //--------------------Protected--------------------//
@@ -24,6 +26,8 @@ namespace Interaction.Workstations
         //--------------------Public--------------------//
         public StationType CurrentStationType => _currentStationType;
 
+        public WorkStation Station => _station;
+        
         public PickUpObjectType CurrentPickUpObjectType
         {
             get => _currentPickUpObjectType;

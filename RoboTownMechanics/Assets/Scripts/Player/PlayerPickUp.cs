@@ -8,6 +8,7 @@ using System.Collections;
 using Player.Movement;
 using Player.Animation;
 using Player.Rotation;
+using PartUtilities.Route;
 
 namespace Player.PickUp
 {
@@ -94,6 +95,10 @@ namespace Player.PickUp
         public void PlaceInStation(WorkstationInteraction station)
         {
             SetWalkingState();
+
+            //checks if it is not the next station in the route
+            if (station.Station != _currentPickedUpObject.GetComponent<PartRoute>().CurrentToBeCompletedWorkstation.Station)
+                return;
 
             if (_isPlacing)
                 return;

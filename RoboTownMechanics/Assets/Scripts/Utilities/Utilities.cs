@@ -34,4 +34,12 @@ namespace Utilities
         BATTERY,
         PLATE,
     }
+
+    public enum WorkStation
+    {
+        Forge,
+        HydrolicPress,
+        Drill,
+        Paint,
+    }
 }

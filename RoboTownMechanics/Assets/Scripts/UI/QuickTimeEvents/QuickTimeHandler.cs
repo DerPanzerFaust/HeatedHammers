@@ -16,10 +16,7 @@ namespace QuickTime.Handler
 
         private WorkstationInteraction _workstationInteraction;
         
-        [SerializeField]
-        private Transform _partSpawnLocation;
-        [SerializeField]
-        private List<GameObject> _parts;
+        
         private InputComponent _inputComponent;
         private PlayerStateMachine _currentPlayerState;
 
@@ -86,7 +83,7 @@ namespace QuickTime.Handler
         public void CompletedQuickTime()
         {
             ResetQuickTime();
-            SpawnPart();
+            _workstationInteraction.SpawnPart()
         }
 
         protected virtual void ResetQuickTime()
@@ -100,15 +97,6 @@ namespace QuickTime.Handler
                 _inputComponent.OnInteractInputAction.performed -= InteractPressed;
 
             _quickTimeObject.SetActive(false);
-        }
-
-        /// <summary>
-        /// Spawn part needed to repair the robot. To spawn a part there must always a transform where the part can spawn
-        /// </summary>
-        public void SpawnPart()
-        {
-            Instantiate(_parts[UnityEngine.Random.Range(0, _parts.Count)], 
-            _partSpawnLocation.position, Quaternion.identity);
         }
 
         /// <summary>

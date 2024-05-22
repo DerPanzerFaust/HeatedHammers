@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
@@ -30,12 +29,13 @@ namespace PartUtilities.Route
         }
 
         
-        public void CompleteStation()
+        public bool CanCompleteStation()
         {
             if (_currentToBeCompletedWorkstation.Index + 1 > _route.Count)
-                return;
+                return false;
             
             _currentToBeCompletedWorkstation = _route[_currentToBeCompletedWorkstation.Index + 1];
+            return true;
         }
 
         /// <summary>
@@ -43,9 +43,9 @@ namespace PartUtilities.Route
         /// </summary>
         /// <param name="stationTypeToCheck"></param>
         /// <returns></returns>
-        public bool IsCorrectStation(RouteObject stationTypeToCheck)
+        public bool IsCorrectStation(WorkStation stationTypeToCheck)
         {
-            if(stationTypeToCheck.Station == _currentToBeCompletedWorkstation.Station)
+            if(stationTypeToCheck == _currentToBeCompletedWorkstation.Station)
                 return true;
             else
                 return false;

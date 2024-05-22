@@ -2,6 +2,9 @@ using QuickTime.Handler;
 using UnityEngine;
 using Utilities;
 using Interaction.Base;
+using Robot.List;
+using System.Collections.Generic;
+using PartUtilities.Route;
 
 namespace Interaction.Workstations
 {
@@ -16,6 +19,13 @@ namespace Interaction.Workstations
         private WorkStation _station;
 
         private PickUpObjectType _currentPickUpObjectType;
+
+        private GameObject _pickUpGameObjectReference;
+        [SerializeField]
+        private List<GameObject> _parts;
+
+        [SerializeField]
+        private Transform _partSpawnLocation;
 
         //--------------------Protected--------------------//
         [SerializeField]
@@ -34,6 +44,12 @@ namespace Interaction.Workstations
             set => _currentPickUpObjectType = value;
         }
 
+        public GameObject PickUpGameObjectReference
+        {
+            get => _pickUpGameObjectReference;
+            set => _pickUpGameObjectReference = value;
+        }
+
         //--------------------Functions--------------------//
         private void Awake() => OnInteract.AddListener(InteractionStart);
 
@@ -48,6 +64,26 @@ namespace Interaction.Workstations
 
         protected virtual void SpecialAction()
         {
+        }
+
+        public void SpawnPart()
+        {
+            PartRoute partRoute = _pickUpGameObjectReference.GetComponent<PartRoute>();
+
+            if (!partRoute.CanCompleteStation())
+            {
+                Instantiate(_parts[Random.Range(0, _parts.Count)], 
+                _partSpawnLocation.position, Quaternion.identity);
+
+                Destroy(_pickUpGameObjectReference);
+            }
+            else
+            {
+                _pickUpGameObjectReference.transform.position = _partSpawnLocation.position;
+                _pickUpGameObjectReference.transform.rotation = _partSpawnLocation.rotation;
+
+                _pickUpGameObjectReference.SetActive(true);
+            }
         }
     }
 }

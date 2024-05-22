@@ -9,6 +9,9 @@ using Player.Movement;
 using Player.Animation;
 using Player.Rotation;
 using Player.PickUp;
+using Interaction.Pickup;
+using static UnityEngine.Rendering.DebugUI;
+using UnityEditor;
 
 namespace Player.Drop
 {
@@ -27,26 +30,46 @@ namespace Player.Drop
 
         private PlayerPickUp _playerPickUp;
 
-        private PlayerMaster _playerMaster;
+        private Transform _playerPosition;
+     
+        private PickUpInteraction _pickUpInteraction;
 
         private bool _isPickingUp;
         private bool _isPlacing;
 
         //--------------------Public--------------------//
+        public PlayerPickUp PlayerPickUp
+        {
+            get => _playerPickUp;
+            set => _playerPickUp = value;
+        }
+
         public PickUpComponent CurrentPickedUpObject => _playerPickUp.CurrentPickedUpObject;
+
 
         //--------------------Functions--------------------//
         private void Start()
         {
-            _playerPickUp = GetComponent<PlayerPickUp>();
-
-            _playerMaster = GetComponent<PlayerData>().Master;
+            //_playerPickUp = GetComponent<PlayerPickUp>();
             
+            _pickUpInteraction = GetComponent<PickUpInteraction>();
+
             _playerStateMachine = GetComponent<PlayerStateMachine>();
             _playerAnimation = GetComponent<PlayerAnimation>();
             _playerMovement = GetComponent<PlayerMovement>();
             _playerRotation = GetComponent<PlayerRotation>();
+
+            GetPlayerPosition();
   
+        }
+
+        private void GetPlayerPosition()
+        {
+            PickUpInteraction pickUpInteraction = GetComponent<PickUpInteraction>();
+
+            _playerPosition = pickUpInteraction.PlayerMaster.CurrentActivePlayerModel.GetComponent<Transform>();
+
+
         }
 
         /// <summary>
@@ -75,7 +98,7 @@ namespace Player.Drop
             yield return new WaitForSeconds(_playerAnimation.GetPickupAnimDuration());
 
             dropObject.transform.rotation = transform.rotation;
-            dropObject.transform.position = transform.position;
+            dropObject.transform.position = _playerPosition.transform.position;
             dropObject.transform.SetParent(null, false);
 
             _playerMovement.CanMove = true;

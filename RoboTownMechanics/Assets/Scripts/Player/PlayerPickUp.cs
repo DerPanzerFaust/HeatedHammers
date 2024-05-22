@@ -8,6 +8,7 @@ using System.Collections;
 using Player.Movement;
 using Player.Animation;
 using Player.Rotation;
+using Interaction.Base;
 
 namespace Player.PickUp
 {
@@ -53,7 +54,7 @@ namespace Player.PickUp
             _playerMovement.CanMove = false;
             _playerRotation.CanRotate = false;
             _isPlacing = true;
-
+           
             StartCoroutine(PickUpObjectRoutine(pickUpObject));
         }
 
@@ -83,6 +84,7 @@ namespace Player.PickUp
             _playerRotation.CanRotate = true;
             _isPlacing = false;
         }
+            
 
         /// <summary>
         /// When this function is called, the object the player is holding will be put into the given station
@@ -115,6 +117,7 @@ namespace Player.PickUp
 
             if (station.CurrentStationType == StationType.COMPLETED)
                 station.Interact(GetComponent<PlayerData>().Master);
+
 
             if (station.CurrentPickUpObjectType != PickUpObjectType.NONE)
                 return;

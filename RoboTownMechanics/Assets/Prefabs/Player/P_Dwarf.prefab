@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -855099560831049974}
   - component: {fileID: -9013086093414483338}
   - component: {fileID: 292782110368188867}
+  - component: {fileID: 3292591043882940744}
   m_Layer: 0
   m_Name: P_Dwarf
   m_TagString: Untagged
@@ -193,6 +194,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc9b54b5366679b4193529a0cb8decd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3292591043882940744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483349649367155699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe769756041393469b8ea3ab6925b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6462287651593232351

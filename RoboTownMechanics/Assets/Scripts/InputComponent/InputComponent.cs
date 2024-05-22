@@ -11,6 +11,7 @@ namespace InputNameSpace
         private InputAction _onMoveInputAction;
         private InputAction _onInteractInputAction;
         private InputAction _onPickUpInputAction;
+        private InputAction _onDropInputAction;
 
         //--------------------Public--------------------//
         public InputAction OnMoveInputAction
@@ -37,6 +38,12 @@ namespace InputNameSpace
             set => _onPickUpInputAction = value;
         }
 
+        public InputAction onDropInputAction
+        {
+            get => _onDropInputAction;
+            set => _onDropInputAction = value;
+        }
+
         public Action OnMoveAction;
 
         //--------------------Functions--------------------//
@@ -47,6 +54,7 @@ namespace InputNameSpace
             _onMoveInputAction = _gameInput.Player.Move;
             _onInteractInputAction = _gameInput.Player.Interact;
             _onPickUpInputAction = _gameInput.Player.PickUp;
+            _onDropInputAction = _gameInput.Player.DropThrow;
         }
 
         private void OnEnable()
@@ -54,6 +62,7 @@ namespace InputNameSpace
             _onMoveInputAction.Enable();
             _onInteractInputAction.Enable();
             _onPickUpInputAction.Enable();
+            _onDropInputAction.Enable();
         }
 
         private void OnDisable()
@@ -61,6 +70,7 @@ namespace InputNameSpace
             _onMoveInputAction.Disable();
             _onInteractInputAction.Disable();
             _onPickUpInputAction.Disable();
+            _onDropInputAction.Disable();
         }
 
         private void Update()

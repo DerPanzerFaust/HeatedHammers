@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 using Utilities;
 using Interaction.Workstations;
 using System.Collections.Generic;
+using Player.Drop;
+using PickUps;
 
 namespace Interaction.Base
 {
@@ -29,6 +31,11 @@ namespace Interaction.Base
 
         private PlayerPickUp _playerPickUp;
 
+        private PlayerDrop _playerDrop;
+
+        public bool _pickingUp;
+
+
         //--------------------Public--------------------//
         public float InteractionRange => _interactRange;
         public float FieldOfViewAngler => _fieldOfViewAngle;
@@ -44,11 +51,15 @@ namespace Interaction.Base
 
             _playerPickUp = GetComponent<PlayerPickUp>();
 
+            _playerDrop = GetComponent<PlayerDrop>();
+
             _playerInput.OnInteractInputAction.performed += DoInteract;
+
         }
 
         private void OnDisable() => _playerInput.OnInteractInputAction.performed += DoInteract;
 
+        
         private void DoInteract(InputAction.CallbackContext callbackContext)
         {
             if (_playerStateMachine.CurrentPlayerState != PlayerState.WALKING)
@@ -56,8 +67,12 @@ namespace Interaction.Base
 
             BaseInteraction interactable = GetTopPriorityInteractionObject();
 
-            if(interactable == null) 
+            if(interactable == null)
+            {
+                _playerDrop.DropObject(_playerPickUp.CurrentPickedUpObject);
                 return;
+            }
+
 
             if (_playerPickUp.CurrentPickedUpObject != null
                 && interactable.CurrentInterActionType == InterActionType.WORKSTATION)
@@ -70,6 +85,8 @@ namespace Interaction.Base
                 _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;
                 interactable.Interact(_playerMaster);
             }
+
+            
         }
 
         /// <summary>

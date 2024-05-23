@@ -6,6 +6,7 @@ namespace Player.StateMachine
     public class PlayerStateMachine : MonoBehaviour
     {
         //--------------------Private--------------------//
+        [SerializeField]
         private PlayerState _currentPlayerState;
 
         //--------------------Public--------------------//

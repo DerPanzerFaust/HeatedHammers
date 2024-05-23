@@ -14,6 +14,7 @@ namespace Player.PickUp
     public class PlayerPickUp : MonoBehaviour
     {
         //--------------------Private--------------------//
+        [SerializeField]
         private PickUpComponent _currentPickedUpObject;
 
         private PlayerStateMachine _playerStateMachine;
@@ -136,8 +137,9 @@ namespace Player.PickUp
             yield return new WaitForSeconds(_playerAnimation.GetPickupAnimDuration());
 
             station.CurrentPickUpObjectType = _currentPickedUpObject.GetComponent<PickUpComponent>().PickUpObjectType;
+            station.PickUpGameObjectReference = _currentPickedUpObject.gameObject;
 
-            Destroy(_currentPickedUpObject.gameObject);
+            _currentPickedUpObject.gameObject.SetActive(false);
             _currentPickedUpObject = null;
 
             station.Interact(_playerData.Master);

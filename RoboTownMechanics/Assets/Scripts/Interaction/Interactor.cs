@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using Utilities;
 using Interaction.Workstations;
 using System.Collections.Generic;
+using PartUtilities.Route;
 
 namespace Interaction.Base
 {
@@ -59,12 +60,20 @@ namespace Interaction.Base
             if(interactable == null) 
                 return;
 
+            //when interacting with station
             if (_playerPickUp.CurrentPickedUpObject != null
                 && interactable.CurrentInterActionType == InterActionType.WORKSTATION)
             {
                 WorkstationInteraction workstationInteraction = (WorkstationInteraction)interactable;
+
+                //if it is not the station to be used in the route do nothing
+                if(_playerPickUp.CurrentPickedUpObject.CurrentPickUpState != PickUpState.COMPLETED)
+                    if (!_playerPickUp.CurrentPickedUpObject.GetComponent<PartRoute>().IsCorrectStation(workstationInteraction.Station))
+                        return;
+
                 _playerPickUp.PlaceInStation(workstationInteraction);
             }
+            //when interacting with PickUpObject
             else if (interactable.CurrentInterActionType == InterActionType.PICKUP)
             {
                 _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;

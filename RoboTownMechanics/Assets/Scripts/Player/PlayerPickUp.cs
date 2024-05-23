@@ -80,6 +80,7 @@ namespace Player.PickUp
             pickUpObject.transform.rotation = transform.rotation;
             pickUpObject.transform.position = transform.position + new Vector3(0, .5f, 0);
             pickUpObject.transform.SetParent(transform, true);
+            
 
             _playerAnimation.HoldObjectAnimation();
 
@@ -116,9 +117,6 @@ namespace Player.PickUp
                         return;
                     break;
             }
-
-            if (station.CurrentStationType == StationType.COMPLETED)
-                station.Interact(GetComponent<PlayerData>().Master);
 
             if (station.CurrentPickUpObjectType != PickUpObjectType.NONE)
                 return;

@@ -1,10 +1,11 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Interaction.Workstations;
 using Player.StateMachine;
 using InputNameSpace;
 using UnityEngine.InputSystem;
+using Robot.List;
+using PickUps;
 
 namespace QuickTime.Handler
 {
@@ -21,6 +22,8 @@ namespace QuickTime.Handler
         private PlayerStateMachine _currentPlayerState;
 
         private bool _quickTimeActive;
+
+        private BotPartList _partList;
 
         //--------------------Public--------------------//
         public Action OnFailQuickTime;
@@ -43,7 +46,11 @@ namespace QuickTime.Handler
         }
 
         //--------------------Functions--------------------//
-        protected virtual void Start() => _workstationInteraction = GetComponent<WorkstationInteraction>();
+        protected virtual void Start()
+        {
+            _workstationInteraction = GetComponent<WorkstationInteraction>();
+            _partList = BotPartList.Instance;
+        }
 
         private void OnDisable()
         {
@@ -73,6 +80,7 @@ namespace QuickTime.Handler
         /// </summary>
         public void FailedQuickTime()
         {
+            ReturnPart();
             ResetQuickTime();
             LaunchPlayer();
         }
@@ -97,6 +105,12 @@ namespace QuickTime.Handler
                 _inputComponent.OnInteractInputAction.performed -= InteractPressed;
 
             _quickTimeObject.SetActive(false);
+        }
+
+        private void ReturnPart()
+        {
+            _partList.ReturnPartDestroyed(_workstationInteraction.PickUpGameObjectReference.
+                GetComponent<PickUpComponent>().Part);
         }
 
         /// <summary>

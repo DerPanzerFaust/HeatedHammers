@@ -16,8 +16,25 @@ namespace Robot.Timer
         [SerializeField]
         private BotPartHandler _brokenBotSpawn;
 
+        private bool _isRunning;
+
+        //--------------------Public--------------------//
+        public bool IsRunning
+        {
+            get => _isRunning;
+            set => _isRunning = value;
+        }
+
         //--------------------Functions--------------------//
         private void Start() => _currentTime = _initialTime;
+
+        private void Update()
+        {
+            if (_isRunning)
+            { 
+                DoTimer();
+            }
+        }
         public void DoTimer()
         {
             _currentTime -= Time.deltaTime;

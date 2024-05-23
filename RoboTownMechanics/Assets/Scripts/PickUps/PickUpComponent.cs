@@ -1,3 +1,4 @@
+using Robot.List;
 using UnityEngine;
 using Utilities;
 
@@ -11,10 +12,19 @@ namespace PickUps
 
         [SerializeField]
         private PickUpObjectType _pickUpObjectType;
+
+        [SerializeField]
+        private Part _partData;
         
         //--------------------Public--------------------//
         public PickUpState CurrentPickUpState => _currentPickUpState;
 
         public PickUpObjectType PickUpObjectType => _pickUpObjectType;
+
+        public Part Part
+        {
+            get => _partData;
+            set => _partData = value;
+        }
     }
 }

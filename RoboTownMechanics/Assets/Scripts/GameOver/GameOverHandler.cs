@@ -11,21 +11,21 @@ namespace GameOver.Handler
     public class GameOverHandler : MonoBehaviour
     {
         //--------------------Private--------------------//
-        private InputComponent inputComponent;
+        private InputComponent _inputComponent;
 
         //--------------------Function--------------------//
         private void OnEnable()
         {
-            inputComponent = LobbyJoinManager.Instance.Host?.CurrentPlayerMaster.PlayerInputComponent;
+            _inputComponent = LobbyJoinManager.Instance.Host?.CurrentPlayerMaster.PlayerInputComponent;
 
 
-            inputComponent.OnInteractInputAction.performed += TryAgain;
+            _inputComponent.OnInteractInputAction.performed += TryAgain;
             //inputComponent.OnSouthInputAction.performed += MainMenu;
         }
 
         private void OnDisable()
         {
-            inputComponent.OnInteractInputAction.performed -= TryAgain;
+            _inputComponent.OnInteractInputAction.performed -= TryAgain;
             //inputComponent.OnSouthInputAction.performed -= MainMenu;
         }
 

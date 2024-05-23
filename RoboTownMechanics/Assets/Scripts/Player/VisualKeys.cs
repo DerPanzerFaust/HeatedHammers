@@ -6,11 +6,12 @@ using UnityEngine.UI;
 
 public class VisualKeys : MonoBehaviour
 {
+    //--------------------Private--------------------//
     [SerializeField]
     private GameObject _buttonX;
-
     Interactor _interactor;
 
+    //--------------------Functions--------------------//
     private void Start()
     {
         _interactor =  GetComponent<Interactor>();

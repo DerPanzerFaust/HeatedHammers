@@ -108,13 +108,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _route:
   - _index: 0
-    _station: 1
-  - _index: 0
-    _station: 2
-  - _index: 0
     _station: 0
   - _index: 0
+    _station: 1
+  - _index: 0
     _station: 3
+  - _index: 0
+    _station: 2
   _currentToBeCompletedWorkstation:
     _index: 0
     _station: 0

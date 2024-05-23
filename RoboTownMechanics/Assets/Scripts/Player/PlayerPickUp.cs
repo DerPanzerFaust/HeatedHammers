@@ -148,9 +148,6 @@ namespace Player.PickUp
                     break;
             }
 
-            if (station.CurrentStationType == StationType.COMPLETED)
-                station.Interact(GetComponent<PlayerData>().Master);
-
             if (station.CurrentPickUpObjectType != PickUpObjectType.NONE)
                 return;
 

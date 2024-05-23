@@ -16,7 +16,8 @@ namespace Interaction.Workstations
 
         protected override void InteractionStart()
         {
-            _botPartList.ReturnPartCompleted(PickUpGameObjectReference.GetComponent<PickUpComponent>().Part);
+            if(PickUpGameObjectReference != null)
+                _botPartList.ReturnPartCompleted(PickUpGameObjectReference.GetComponent<PickUpComponent>().Part);
 
             CurrentPickUpObjectType = PickUpObjectType.NONE;
             PlayerMaster.CurrentActivePlayerModel.GetComponent<PlayerStateMachine>().CurrentPlayerState = PlayerState.WALKING;

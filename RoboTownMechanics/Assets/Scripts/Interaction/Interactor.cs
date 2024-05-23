@@ -104,8 +104,12 @@ namespace Interaction.Base
             else
                 return false;
         }
-
-        private BaseInteraction GetTopPriorityInteractionObject()
+        
+        /// <summary>
+        /// Handles to closest interactable object and gives that object the highest priority to interact with.
+        /// When no interactables are in range return null.
+        /// </summary>
+        public BaseInteraction GetTopPriorityInteractionObject()
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, _interactRange, _interatableLayer);
 

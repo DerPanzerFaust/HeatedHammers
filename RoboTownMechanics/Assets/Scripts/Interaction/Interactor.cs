@@ -93,7 +93,7 @@ namespace Interaction.Base
                 {
                     return;
                 }
-                else
+                else if(_playerPickUp.CurrentPickedUpObject != null)
                 {
                     if (_charge >= _maxCharge)
                     {
@@ -103,7 +103,6 @@ namespace Interaction.Base
                     }
                     else
                     {
-                        _playerDrop.DropObject(_playerPickUp.CurrentPickedUpObject);
                         return;
                     }
                 }

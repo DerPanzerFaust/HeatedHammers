@@ -69,7 +69,7 @@ namespace Player.Drop
         /// <param name="dropObject">the object to Drop</param>
         public void DropObject(PickUpComponent dropObject)
         {
-
+            Debug.Log("DRIO");
             SetWalkingState();
 
             if (_isPickingUp == true)
@@ -108,6 +108,9 @@ namespace Player.Drop
 
         public void ThrowObject(PickUpComponent dropObject)
         {
+
+            Debug.Log("THROW");
+
             SetWalkingState();
 
             if (_isPickingUp == true)
@@ -135,15 +138,15 @@ namespace Player.Drop
             _playerPickUp.Rigidbody.AddForce(transform.up + transform.forward * _partSpeed);
             dropObject.transform.SetParent(null, true);
 
+            
+
+            yield return new WaitForSeconds(_playerAnimation.GetPickupAnimDuration());
+
             _playerPickUp.CurrentPickedUpObject = null;
-
-
 
             _playerMovement.CanMove = true;
             _playerRotation.CanRotate = true;
             _isPlacing = false;
-
-            yield return null;
         }
 
     }

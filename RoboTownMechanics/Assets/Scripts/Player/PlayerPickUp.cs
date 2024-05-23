@@ -24,6 +24,8 @@ namespace Player.PickUp
 
         private PlayerAnimation _playerAnimation;
 
+        private PlayerData _playerData;
+
         private bool _isPickingUp;
         private bool _isPlacing;
 
@@ -37,6 +39,7 @@ namespace Player.PickUp
             _playerAnimation = GetComponent<PlayerAnimation>();
             _playerMovement = GetComponent<PlayerMovement>();
             _playerRotation = GetComponent<PlayerRotation>();
+            _playerData = GetComponent<PlayerData>();
         }
 
         /// <summary>
@@ -136,6 +139,8 @@ namespace Player.PickUp
 
             Destroy(_currentPickedUpObject.gameObject);
             _currentPickedUpObject = null;
+
+            station.Interact(_playerData.Master);
 
             _playerMovement.CanMove = true;
             _playerRotation.CanRotate = true;

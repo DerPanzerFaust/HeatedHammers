@@ -65,7 +65,7 @@ namespace Interaction.Base
                 WorkstationInteraction workstationInteraction = (WorkstationInteraction)interactable;
                 _playerPickUp.PlaceInStation(workstationInteraction);
             }
-            else
+            else if (interactable.CurrentInterActionType == InterActionType.PICKUP)
             {
                 _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;
                 interactable.Interact(_playerMaster);

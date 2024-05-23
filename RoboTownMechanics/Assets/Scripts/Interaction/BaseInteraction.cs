@@ -16,8 +16,8 @@ namespace Interaction.Base
         //--------------------Public--------------------//
         UnityEvent IInteraction.onInteract
         {
-            get => OnInteract;
-            set => OnInteract = value;
+            get => OnDrop;
+            set => OnDrop = value;
         }
 
         public PlayerMaster PlayerMaster => _playerMaster;
@@ -25,7 +25,7 @@ namespace Interaction.Base
         public InterActionType CurrentInterActionType => _currentInterActionType;
 
         [HideInInspector]
-        public UnityEvent OnInteract;
+        public UnityEvent OnDrop;
 
         //--------------------Functions--------------------//
         /// <summary>
@@ -36,7 +36,7 @@ namespace Interaction.Base
         {
             _playerMaster = playerMaster;
 
-            OnInteract.Invoke();
+            OnDrop.Invoke();
         }
     }
 }

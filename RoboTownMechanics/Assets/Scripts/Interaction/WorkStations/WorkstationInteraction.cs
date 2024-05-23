@@ -50,11 +50,11 @@ namespace Interaction.Workstations
         }
 
         //--------------------Functions--------------------//
-        private void Awake() => OnInteract.AddListener(InteractionStart);
+        private void Awake() => OnDrop.AddListener(InteractionStart);
 
         private void Start() => _quickHandler = GetComponent<QuickTimeHandler>();
 
-        private void OnDisable() => OnInteract.RemoveListener(InteractionStart);
+        private void OnDisable() => OnDrop.RemoveListener(InteractionStart);
 
         protected virtual void InteractionStart()
         {

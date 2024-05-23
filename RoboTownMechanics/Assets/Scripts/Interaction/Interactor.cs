@@ -7,8 +7,12 @@ using UnityEngine.InputSystem;
 using Utilities;
 using Interaction.Workstations;
 using System.Collections.Generic;
+using Player.Drop;
+using PickUps;
+using static UnityEngine.InputSystem.InputAction;
 using PartUtilities.Route;
 using Robot.List;
+
 
 namespace Interaction.Base
 {
@@ -31,6 +35,16 @@ namespace Interaction.Base
 
         private PlayerPickUp _playerPickUp;
 
+        private PlayerDrop _playerDrop;
+
+        public bool _pickingUp;
+
+        public float _charge;
+
+        private float _maxCharge = .5f;
+
+        private float _timeHeldDown;
+
         private BotPartList _botPartList;
 
         //--------------------Public--------------------//
@@ -48,6 +62,16 @@ namespace Interaction.Base
 
             _playerPickUp = GetComponent<PlayerPickUp>();
 
+            _playerDrop = GetComponent<PlayerDrop>();
+
+            _playerInput.OnInteractInputAction.canceled += DoInteract;
+
+        }
+
+        private void Update()
+        {
+            if (_charge < _maxCharge && _playerInput.OnInteractInputAction.IsPressed() && _playerPickUp.CurrentPickedUpObject != null)
+                ThrowCharge();
             _botPartList = BotPartList.Instance;
 
             _playerInput.OnInteractInputAction.performed += DoInteract;
@@ -55,15 +79,47 @@ namespace Interaction.Base
 
         private void OnDisable() => _playerInput.OnInteractInputAction.performed -= DoInteract;
 
-        private void DoInteract(InputAction.CallbackContext callbackContext)
+        
+        private void DoInteract(InputAction.CallbackContext callbackContext) 
         {
             if (_playerStateMachine.CurrentPlayerState != PlayerState.WALKING)
                 return;
 
             BaseInteraction interactable = GetTopPriorityInteractionObject();
 
-            if(interactable == null) 
-                return;
+            if(interactable == null)
+            {
+                if (_playerPickUp.CurrentPickedUpObject == null)
+                {
+                    return;
+                }
+                else if(_playerPickUp.CurrentPickedUpObject != null)
+                {
+                    if (_charge >= _maxCharge)
+                    {
+                        _playerDrop.ThrowObject(_playerPickUp.CurrentPickedUpObject);
+                        _charge = 0;
+                        return;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+
+                if (_playerPickUp.CurrentPickedUpObject != null
+                    && interactable.CurrentInterActionType == InterActionType.WORKSTATION)
+                {
+                    WorkstationInteraction workstationInteraction = (WorkstationInteraction)interactable;
+                    _playerPickUp.PlaceInStation(workstationInteraction);
+                }
+                else
+                {
+                    _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;
+                    interactable.Interact(_playerMaster);
+                }
+            
 
             //when interacting with station
             if (interactable.CurrentInterActionType == InterActionType.WORKSTATION)
@@ -188,6 +244,11 @@ namespace Interaction.Base
             }
 
             return closestObject;
+        }
+
+        private void ThrowCharge()
+        { 
+            _charge += Time.deltaTime;
         }
     }
 }

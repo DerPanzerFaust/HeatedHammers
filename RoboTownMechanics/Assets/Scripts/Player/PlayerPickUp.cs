@@ -8,13 +8,15 @@ using System.Collections;
 using Player.Movement;
 using Player.Animation;
 using Player.Rotation;
+using Interaction.Base;
+using UnityEditor.SceneManagement;
+using Interaction.Pickup;
 
 namespace Player.PickUp
 {
     public class PlayerPickUp : MonoBehaviour
     {
         //--------------------Private--------------------//
-        [SerializeField]
         private PickUpComponent _currentPickedUpObject;
 
         private PlayerStateMachine _playerStateMachine;
@@ -25,13 +27,23 @@ namespace Player.PickUp
 
         private PlayerAnimation _playerAnimation;
 
+        private Rigidbody _pickUPrigidbody;
+
+        private PickUpInteraction _pickUpInteraction;
         private PlayerData _playerData;
 
         private bool _isPickingUp;
         private bool _isPlacing;
 
         //--------------------Public--------------------//
-        public PickUpComponent CurrentPickedUpObject => _currentPickedUpObject;
+        public PickUpComponent CurrentPickedUpObject
+        {
+            get => _currentPickedUpObject;
+            set => _currentPickedUpObject = value;  
+        }
+
+        public Rigidbody Rigidbody => _pickUPrigidbody;
+
 
         //--------------------Functions--------------------//
         private void Start()
@@ -40,6 +52,8 @@ namespace Player.PickUp
             _playerAnimation = GetComponent<PlayerAnimation>();
             _playerMovement = GetComponent<PlayerMovement>();
             _playerRotation = GetComponent<PlayerRotation>();
+
+            _pickUpInteraction = GetComponent<PickUpInteraction>();
             _playerData = GetComponent<PlayerData>();
         }
 
@@ -58,7 +72,22 @@ namespace Player.PickUp
             _playerRotation.CanRotate = false;
             _isPlacing = true;
 
+            _pickUPrigidbody = pickUpObject.GetComponent<Rigidbody>();
+
+
+            if (_pickUPrigidbody != null)
+            {
+                _pickUPrigidbody.isKinematic = true;
+                pickUpObject.gameObject.GetComponentInChildren<BoxCollider>().enabled = false; 
+               
+            }
+            else
+            {
+                Debug.Log("No rigidbody");
+            }
+
             StartCoroutine(PickUpObjectRoutine(pickUpObject));
+
         }
 
         /// <summary>
@@ -88,6 +117,7 @@ namespace Player.PickUp
             _playerRotation.CanRotate = true;
             _isPlacing = false;
         }
+            
 
         /// <summary>
         /// When this function is called, the object the player is holding will be put into the given station
@@ -117,6 +147,9 @@ namespace Player.PickUp
                         return;
                     break;
             }
+
+            if (station.CurrentStationType == StationType.COMPLETED)
+                station.Interact(GetComponent<PlayerData>().Master);
 
             if (station.CurrentPickUpObjectType != PickUpObjectType.NONE)
                 return;
@@ -149,4 +182,9 @@ namespace Player.PickUp
 
         private void SetWalkingState() => _playerStateMachine.CurrentPlayerState = PlayerState.WALKING;
     }
+   
+
+
+
+
 }

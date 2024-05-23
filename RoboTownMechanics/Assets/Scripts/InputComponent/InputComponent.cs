@@ -37,6 +37,7 @@ namespace InputNameSpace
             set => _onPickUpInputAction = value;
         }
 
+
         public Action OnMoveAction;
 
         //--------------------Functions--------------------//
@@ -47,6 +48,7 @@ namespace InputNameSpace
             _onMoveInputAction = _gameInput.Player.Move;
             _onInteractInputAction = _gameInput.Player.Interact;
             _onPickUpInputAction = _gameInput.Player.PickUp;
+
         }
 
         private void OnEnable()

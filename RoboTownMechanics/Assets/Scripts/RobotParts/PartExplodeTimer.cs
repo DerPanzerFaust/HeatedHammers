@@ -40,11 +40,11 @@ namespace PartsHandler
         {
             _pickUpInteraction = GetComponent<PickUpInteraction>();
 
-            _pickUpInteraction.OnInteract.AddListener(PickedUp);
+            _pickUpInteraction.OnDrop.AddListener(PickedUp);
 
         }
 
-        private void OnDisable() => _pickUpInteraction.OnInteract.RemoveListener(PickedUp);
+        private void OnDisable() => _pickUpInteraction.OnDrop.RemoveListener(PickedUp);
       
 
         private void PickedUp()

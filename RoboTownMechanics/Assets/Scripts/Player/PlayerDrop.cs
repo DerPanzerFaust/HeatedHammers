@@ -95,7 +95,7 @@ namespace Player.Drop
             dropObject.transform.position = transform.position + transform.forward; 
             dropObject.transform.SetParent(null, true);
 
-            _playerPickUp._currentPickedUpObject = null;
+            _playerPickUp.CurrentPickedUpObject = null;
 
             _playerMovement.CanMove = true;
             _playerRotation.CanRotate = true;
@@ -135,7 +135,7 @@ namespace Player.Drop
             _playerPickUp.Rigidbody.AddForce(transform.up + transform.forward * _partSpeed);
             dropObject.transform.SetParent(null, true);
 
-            _playerPickUp._currentPickedUpObject = null;
+            _playerPickUp.CurrentPickedUpObject = null;
 
 
 

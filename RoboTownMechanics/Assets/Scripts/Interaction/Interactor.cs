@@ -115,7 +115,7 @@ namespace Interaction.Base
                     _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;
                     interactable.Interact(_playerMaster);
                 }
-            }
+            
 
             //when interacting with station
             if (_playerPickUp.CurrentPickedUpObject != null

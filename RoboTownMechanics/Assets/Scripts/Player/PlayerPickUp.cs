@@ -17,8 +17,6 @@ namespace Player.PickUp
     public class PlayerPickUp : MonoBehaviour
     {
         //--------------------Private--------------------//
-        public PickUpComponent _currentPickedUpObject;
-        [SerializeField]
         private PickUpComponent _currentPickedUpObject;
 
         private PlayerStateMachine _playerStateMachine;
@@ -38,7 +36,11 @@ namespace Player.PickUp
         private bool _isPlacing;
 
         //--------------------Public--------------------//
-        public PickUpComponent CurrentPickedUpObject => _currentPickedUpObject;
+        public PickUpComponent CurrentPickedUpObject
+        {
+            get => _currentPickedUpObject;
+            set => _currentPickedUpObject = value;  
+        }
 
         public Rigidbody Rigidbody => _pickUPrigidbody;
 

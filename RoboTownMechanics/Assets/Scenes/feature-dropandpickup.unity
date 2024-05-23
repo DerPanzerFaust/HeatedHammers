@@ -3443,17 +3443,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92b4a2c9a4d88354b8814e676994c9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _upperLeft: {fileID: 1555932468}
-  _upperLeftMaterial: {fileID: 2100000, guid: 3b1d988ec3df273479c9b97d37ff0669, type: 2}
+  _player1Sprite: {fileID: 2483349649367155699, guid: f90c7f8145668f04c9109de0ef891cc2,
+    type: 3}
+  _player1Material: {fileID: 2100000, guid: 3b1d988ec3df273479c9b97d37ff0669, type: 2}
   _spawnPositionOne: {fileID: 87382805}
-  _upperRight: {fileID: 1191923074}
-  _upperRightMaterial: {fileID: 2100000, guid: 2cf733cd6d07b7b46818aeff1a1a1353, type: 2}
+  _player2Sprite: {fileID: 2483349649367155699, guid: f90c7f8145668f04c9109de0ef891cc2,
+    type: 3}
+  _player2Material: {fileID: 2100000, guid: 1ae1e9ac69d262e4cb6ec7012963cd89, type: 2}
   _spawnPositionTwo: {fileID: 1308877897}
-  _lowerLeft: {fileID: 1188610382}
-  _lowerLeftMaterial: {fileID: 2100000, guid: ce36c097b0d67ce409031365a8b58b21, type: 2}
+  _player3Sprite: {fileID: 2483349649367155699, guid: f90c7f8145668f04c9109de0ef891cc2,
+    type: 3}
+  _player3Material: {fileID: 2100000, guid: 2cf733cd6d07b7b46818aeff1a1a1353, type: 2}
   _spawnPositionThree: {fileID: 42330842}
-  _lowerRight: {fileID: 821881544}
-  _lowerRightMaterial: {fileID: 2100000, guid: 1ae1e9ac69d262e4cb6ec7012963cd89, type: 2}
+  _player4Sprite: {fileID: 2483349649367155699, guid: f90c7f8145668f04c9109de0ef891cc2,
+    type: 3}
+  _player4Material: {fileID: 2100000, guid: ce36c097b0d67ce409031365a8b58b21, type: 2}
   _spawnPositionFour: {fileID: 1716311333}
   _lobbySpots: []
 --- !u!1 &976479264
@@ -6691,6 +6695,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1724787972}
+  - component: {fileID: 1724787973}
   m_Layer: 0
   m_Name: ---Level---
   m_TagString: Untagged
@@ -6722,6 +6727,21 @@ Transform:
   - {fileID: 106712620}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1724787973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724787971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3fe70bee32b7374095a4c5a085ecc98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _volumeProfiles:
+  - {fileID: 11400000, guid: a6560a915ef98420e9faacc1c7438823, type: 2}
+  - {fileID: 11400000, guid: ed7afd9e4710fec4b8a6f4c4e165ca95, type: 2}
 --- !u!1001 &1753009828
 PrefabInstance:
   m_ObjectHideFlags: 0

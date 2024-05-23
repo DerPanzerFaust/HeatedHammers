@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4347398673152322257}
   - component: {fileID: 934931119158528110}
   - component: {fileID: 4720214730244367697}
+  - component: {fileID: -4477283304800514591}
   m_Layer: 0
   m_Name: P_Hammer
   m_TagString: Untagged
@@ -155,3 +156,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.01475666, y: 0.15589696, z: 0.014519539}
   m_Center: {x: -0.00019479782, y: -0.010222716, z: -0.000107331274}
+--- !u!114 &-4477283304800514591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2947803905892658296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e3831c3e0d0614aadb73e5f49cdde8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

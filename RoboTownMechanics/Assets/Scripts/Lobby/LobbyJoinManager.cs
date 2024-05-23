@@ -1,44 +1,44 @@
-using LocalMultiplayer.Player;
-using StateMachines.GlobalStateMachine;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using LocalMultiplayer.Player;
+using StateMachines.GlobalStateMachine;
 
 namespace LocalMultiplayer.Lobby
 {
     public class LobbyJoinManager : SingletonBehaviour<LobbyJoinManager>
     {
         //--------------------Private--------------------//
-        [Header("UpperLeft")]
+        [Header("Player1")]
         [SerializeField]
-        private GameObject _upperLeft;
+        private GameObject _player1Sprite;
         [SerializeField]
-        private Material _upperLeftMaterial;
+        private Material _player1Material;
         [SerializeField]
         private Transform _spawnPositionOne;
         
-        [Header("UpperRight")]
+        [Header("Player2")]
         [SerializeField]
-        private GameObject _upperRight;
+        private GameObject _player2Sprite;
         [SerializeField] 
-        private Material _upperRightMaterial;
+        private Material _player2Material;
         [SerializeField]
         private Transform _spawnPositionTwo;
 
-        [Header("LowerLeft")]
+        [Header("Player3")]
         [SerializeField]
-        private GameObject _lowerLeft;
+        private GameObject _player3Sprite;
         [SerializeField]
-        private Material _lowerLeftMaterial;
+        private Material _player3Material;
         [SerializeField]
         private Transform _spawnPositionThree;
 
-        [Header("LowerRight")]
+        [Header("Player4")]
         [SerializeField] 
-        private GameObject _lowerRight;
+        private GameObject _player4Sprite;
         [SerializeField]
-        private Material _lowerRightMaterial;
+        private Material _player4Material;
         [SerializeField]
         private Transform _spawnPositionFour;
 
@@ -46,6 +46,9 @@ namespace LocalMultiplayer.Lobby
 
         [SerializeField]
         private List<LobbySpot> _lobbySpots = new();
+
+        [SerializeField]
+        private LobbySpot? _host;
 
         private PlayerSpawner _playerSpawner;
 
@@ -55,6 +58,15 @@ namespace LocalMultiplayer.Lobby
 
         private Transform _playerSpawnPosition;
 
+        //--------------------Public--------------------//
+        public LobbySpot? Host => _host;
+
+        public bool LobbyHasStarted
+        {
+            get => _lobbyHasStarted;
+            set => _lobbyHasStarted = value;
+        }
+        
         //--------------------Functions--------------------//
         private void Start()
         {
@@ -117,37 +129,40 @@ namespace LocalMultiplayer.Lobby
                 }
             }
             
-            if(lowestAvailableIndex == 1)
-                playerMaster.PlayerInputComponent.OnInteractInputAction.performed += StartGame;
-            
             switch (lowestAvailableIndex)
             {
                 case 1:
-                    _lowestMaterial = _upperLeftMaterial;
+                    _lowestMaterial = _player1Material;
                     _playerSpawnPosition = _spawnPositionOne;
-                    _upperLeft.SetActive(true);
+                    _player1Sprite.SetActive(true);
                     break;
                 case 2:
-                    _lowestMaterial = _upperRightMaterial;
+                    _lowestMaterial = _player2Material;
                     _playerSpawnPosition = _spawnPositionTwo;
 
-                    _upperRight.SetActive(true);
+                    _player2Sprite.SetActive(true);
                     break;
                 case 3:
-                    _lowestMaterial = _lowerLeftMaterial;
+                    _lowestMaterial = _player3Material;
                     _playerSpawnPosition = _spawnPositionThree;
 
-                    _lowerLeft.SetActive(true);
+                    _player3Sprite.SetActive(true);
                     break;
                 case 4:
-                    _lowestMaterial = _lowerRightMaterial;
+                    _lowestMaterial = _player4Material;
                     _playerSpawnPosition = _spawnPositionFour;
-                    _lowerRight.SetActive(true);
+                    _player4Sprite.SetActive(true);
                     break;
             }
 
             playerMaster.PlayerMaterial = _lowestMaterial;
             LobbySpot _playerLobbySpot = new LobbySpot(playerMaster, _lowestMaterial, lowestAvailableIndex, _playerSpawnPosition);
+
+            if (lowestAvailableIndex == 1)
+            {
+                playerMaster.PlayerInputComponent.OnInteractInputAction.performed += StartGame;
+                _host = _playerLobbySpot;
+            }
 
             playerMaster.CurrentLobbySpot = _playerLobbySpot;
             _lobbySpots.Add(_playerLobbySpot);
@@ -171,25 +186,28 @@ namespace LocalMultiplayer.Lobby
                 }
             }
 
-            master.HasJoinedLobby = true;
-
-            if (masterSpotIndex == 1)
-                master.PlayerInputComponent.OnInteractInputAction.performed -= StartGame;
+            master.HasJoinedLobby = false;
 
             switch (masterSpotIndex)
             {
                 case 1:
-                    _upperLeft.SetActive(false);
+                    _player1Sprite.SetActive(false);
                     break;
                 case 2:
-                    _upperRight.SetActive(false);
+                    _player2Sprite.SetActive(false);
                     break;
                 case 3:
-                    _lowerLeft.SetActive(false);
+                    _player3Sprite.SetActive(false);
                     break;
                 case 4:
-                    _lowerRight.SetActive(false);
+                    _player4Sprite.SetActive(false);
                     break;
+            }
+
+            if (masterSpotIndex == 1)
+            {
+                master.PlayerInputComponent.OnInteractInputAction.performed -= StartGame;
+                _host = null;
             }
 
             _lobbySpots.Remove(masterSpot);
@@ -205,6 +223,11 @@ namespace LocalMultiplayer.Lobby
             _stateMachine.SetState(_stateMachine.GameStateInstance);
             _lobbyHasStarted = true;
         }
+
+        /// <summary>
+        /// Despawns all the player models in the lobby
+        /// </summary>
+        public void DeSpawnPlayers() => _playerSpawner.DeSpawnPlayers(_lobbySpots);
     }
 
     [Serializable]

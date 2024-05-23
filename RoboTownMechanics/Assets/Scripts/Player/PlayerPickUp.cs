@@ -18,6 +18,8 @@ namespace Player.PickUp
     {
         //--------------------Private--------------------//
         public PickUpComponent _currentPickedUpObject;
+        [SerializeField]
+        private PickUpComponent _currentPickedUpObject;
 
         private PlayerStateMachine _playerStateMachine;
 
@@ -30,6 +32,7 @@ namespace Player.PickUp
         private Rigidbody _pickUPrigidbody;
 
         private PickUpInteraction _pickUpInteraction;
+        private PlayerData _playerData;
 
         private bool _isPickingUp;
         private bool _isPlacing;
@@ -49,6 +52,7 @@ namespace Player.PickUp
             _playerRotation = GetComponent<PlayerRotation>();
 
             _pickUpInteraction = GetComponent<PickUpInteraction>();
+            _playerData = GetComponent<PlayerData>();
         }
 
         /// <summary>
@@ -162,9 +166,12 @@ namespace Player.PickUp
             yield return new WaitForSeconds(_playerAnimation.GetPickupAnimDuration());
 
             station.CurrentPickUpObjectType = _currentPickedUpObject.GetComponent<PickUpComponent>().PickUpObjectType;
+            station.PickUpGameObjectReference = _currentPickedUpObject.gameObject;
 
-            Destroy(_currentPickedUpObject.gameObject);
+            _currentPickedUpObject.gameObject.SetActive(false);
             _currentPickedUpObject = null;
+
+            station.Interact(_playerData.Master);
 
             _playerMovement.CanMove = true;
             _playerRotation.CanRotate = true;

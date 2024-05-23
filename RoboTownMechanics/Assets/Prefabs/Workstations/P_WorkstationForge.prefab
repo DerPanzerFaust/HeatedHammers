@@ -417,6 +417,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _currentStationType: 0
+  _station: 0
+  _completedPart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
+    type: 3}
+  _partSpawnLocation: {fileID: 7599372884006328275}
   _quickTimeCanvas: {fileID: 6744753409785103320}
 --- !u!114 &1755940910171337059
 MonoBehaviour:
@@ -431,9 +435,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _quickTimeObject: {fileID: 6744753409785103320}
-  _partSpawnLocation: {fileID: 7599372884006328275}
-  _parts:
-  - {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b, type: 3}
   _maxCount: 5
   _tempo: {x: 1, y: 8}
   _targetWidth: 1

@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using Player.Drop;
 using PickUps;
 using static UnityEngine.InputSystem.InputAction;
+using PartUtilities.Route;
+
 
 namespace Interaction.Base
 {
@@ -70,7 +72,7 @@ namespace Interaction.Base
                 ThrowCharge();
         }
 
-        private void OnDisable() => _playerInput.OnInteractInputAction.performed += DoInteract;
+        private void OnDisable() => _playerInput.OnInteractInputAction.performed -= DoInteract;
 
         
         private void DoInteract(InputAction.CallbackContext callbackContext) 
@@ -114,7 +116,27 @@ namespace Interaction.Base
                     interactable.Interact(_playerMaster);
                 }
             }
-     
+
+            //when interacting with station
+            if (_playerPickUp.CurrentPickedUpObject != null
+                && interactable.CurrentInterActionType == InterActionType.WORKSTATION)
+            {
+                WorkstationInteraction workstationInteraction = (WorkstationInteraction)interactable;
+
+                //if it is not the station to be used in the route do nothing
+                if(_playerPickUp.CurrentPickedUpObject.CurrentPickUpState != PickUpState.COMPLETED)
+                    if (!_playerPickUp.CurrentPickedUpObject.GetComponent<PartRoute>().IsCorrectStation(workstationInteraction.Station))
+                        return;
+
+                _playerPickUp.PlaceInStation(workstationInteraction);
+            }
+            //when interacting with PickUpObject
+            else if (interactable.CurrentInterActionType == InterActionType.PICKUP)
+            {
+                _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;
+                interactable.Interact(_playerMaster);
+            }
+        }
 
         /// <summary>
         /// Returns the direction from the angle given
@@ -139,8 +161,12 @@ namespace Interaction.Base
             else
                 return false;
         }
-
-        private BaseInteraction GetTopPriorityInteractionObject()
+        
+        /// <summary>
+        /// Handles to closest interactable object and gives that object the highest priority to interact with.
+        /// When no interactables are in range return null.
+        /// </summary>
+        public BaseInteraction GetTopPriorityInteractionObject()
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, _interactRange, _interatableLayer);
 

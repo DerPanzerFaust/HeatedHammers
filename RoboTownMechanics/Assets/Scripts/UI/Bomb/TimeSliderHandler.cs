@@ -21,7 +21,7 @@ namespace TimeSlide.Handler
             _gameTimer.OnCurrentTimeChanged += CurrentTimeChanged;
         }
 
-        private void OnDisable() => _gameTimer.OnCurrentTimeChanged -= CurrentTimeChanged;
+        private void OnDisable() => _slider.value = _slider.maxValue;
 
         private void CurrentTimeChanged(float currentTime)
         {

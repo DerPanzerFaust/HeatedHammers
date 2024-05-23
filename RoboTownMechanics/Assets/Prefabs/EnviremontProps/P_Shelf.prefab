@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1559304362033868792}
   - component: {fileID: 4868652092574747510}
   - component: {fileID: 1527898326773577711}
+  - component: {fileID: -6821324931122869594}
   m_Layer: 0
   m_Name: P_Shelf
   m_TagString: Untagged
@@ -273,3 +274,15 @@ CapsuleCollider:
   m_Height: 0.1437346
   m_Direction: 2
   m_Center: {x: -0.08411698, y: 0.0104, z: -0.0053009414}
+--- !u!114 &-6821324931122869594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7093891102056754750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e3831c3e0d0614aadb73e5f49cdde8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

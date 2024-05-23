@@ -30,7 +30,7 @@ namespace TimerHandler
 
         private void Start()
         {
-            _gameLength = _minutes * 60 + _seconds;
+            SetTimer();
             _stateMachine = StateMachine.Instance;
         }
 
@@ -45,6 +45,16 @@ namespace TimerHandler
             {
                 GoGameOver();
             }
+        }
+
+        /// <summary>
+        /// This sets the timer to the in inspector given data
+        /// </summary>
+        public void SetTimer()
+        {
+            _gameLength = _minutes * 60 + _seconds;
+            _currentTime = 0;
+            _started = false;
         }
 
         /// <summary>

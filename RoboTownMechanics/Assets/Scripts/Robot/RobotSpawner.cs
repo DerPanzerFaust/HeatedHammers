@@ -22,6 +22,15 @@ namespace Robot.Spawner
         private void Start()
         {
             _robotAnimation = _robotObject.GetComponent<RobotAnimation>();
+
+            OnExitedShopSucces += SpawnRobot;
+            OnExitedShopUnSucces += SpawnRobot;
+        }
+
+        private void OnDisable()
+        {
+            OnExitedShopSucces -= SpawnRobot;
+            OnExitedShopUnSucces -= SpawnRobot;
         }
 
         /// <summary>

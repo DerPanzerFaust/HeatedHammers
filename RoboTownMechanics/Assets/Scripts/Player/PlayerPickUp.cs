@@ -9,6 +9,8 @@ using Player.Movement;
 using Player.Animation;
 using Player.Rotation;
 using Interaction.Base;
+using UnityEditor.SceneManagement;
+using Interaction.Pickup;
 
 namespace Player.PickUp
 {
@@ -25,11 +27,18 @@ namespace Player.PickUp
 
         private PlayerAnimation _playerAnimation;
 
+        private Rigidbody _pickUPrigidbody;
+
+        private PickUpInteraction _pickUpInteraction;
+
         private bool _isPickingUp;
         private bool _isPlacing;
 
         //--------------------Public--------------------//
         public PickUpComponent CurrentPickedUpObject => _currentPickedUpObject;
+
+        public Rigidbody Rigidbody => _pickUPrigidbody;
+
 
         //--------------------Functions--------------------//
         private void Start()
@@ -38,6 +47,8 @@ namespace Player.PickUp
             _playerAnimation = GetComponent<PlayerAnimation>();
             _playerMovement = GetComponent<PlayerMovement>();
             _playerRotation = GetComponent<PlayerRotation>();
+
+            _pickUpInteraction = GetComponent<PickUpInteraction>();
         }
 
         /// <summary>
@@ -54,8 +65,23 @@ namespace Player.PickUp
             _playerMovement.CanMove = false;
             _playerRotation.CanRotate = false;
             _isPlacing = true;
-           
+
+            _pickUPrigidbody = pickUpObject.GetComponent<Rigidbody>();
+
+
+            if (_pickUPrigidbody != null)
+            {
+                _pickUPrigidbody.isKinematic = true;
+                pickUpObject.gameObject.GetComponentInChildren<BoxCollider>().enabled = false; 
+               
+            }
+            else
+            {
+                Debug.Log("No rigidbody");
+            }
+
             StartCoroutine(PickUpObjectRoutine(pickUpObject));
+
         }
 
         /// <summary>
@@ -147,4 +173,9 @@ namespace Player.PickUp
 
         private void SetWalkingState() => _playerStateMachine.CurrentPlayerState = PlayerState.WALKING;
     }
+   
+
+
+
+
 }

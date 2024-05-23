@@ -12,6 +12,8 @@ using Player.PickUp;
 using Interaction.Pickup;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEditor;
+using Interaction.Base;
+using System.Xml.Serialization;
 
 namespace Player.Drop
 {
@@ -29,13 +31,17 @@ namespace Player.Drop
         private PlayerAnimation _playerAnimation;
 
         private PlayerPickUp _playerPickUp;
-
-        private Vector3 _playerPosition;
      
         private PickUpInteraction _pickUpInteraction;
 
+        private Interactor _interaction;
+
         private bool _isPickingUp;
         private bool _isPlacing;
+
+        private float _partSpeed;
+        [SerializeField]
+        private float _startThrowSpeed;
 
         //--------------------Public--------------------//
 
@@ -54,7 +60,7 @@ namespace Player.Drop
             _playerMovement = GetComponent<PlayerMovement>();
             _playerRotation = GetComponent<PlayerRotation>();
 
-            _playerPosition = new Vector3(0.3f, 0.3f, 0f);  
+            _interaction = GetComponent<Interactor>();
         }
 
         /// <summary>
@@ -63,6 +69,7 @@ namespace Player.Drop
         /// <param name="dropObject">the object to Drop</param>
         public void DropObject(PickUpComponent dropObject)
         {
+
             SetWalkingState();
 
             if (_isPickingUp == true)
@@ -77,6 +84,8 @@ namespace Player.Drop
 
         private IEnumerator DropObjectRoutine(PickUpComponent dropObject)
         {
+            _playerPickUp.Rigidbody.isKinematic = false;
+            dropObject.gameObject.GetComponentInChildren<BoxCollider>().enabled = true;
             _playerAnimation.StopPickUpObjectAnimation();
             _currentPickedUpObject = dropObject;
 
@@ -94,5 +103,48 @@ namespace Player.Drop
         }
 
         private void SetWalkingState() => _playerStateMachine.CurrentPlayerState = PlayerState.WALKING;
+
+
+
+        public void ThrowObject(PickUpComponent dropObject)
+        {
+            SetWalkingState();
+
+            if (_isPickingUp == true)
+                return;
+
+            _playerMovement.CanMove = false;
+            _playerRotation.CanRotate = false;
+            _isPlacing = true;
+
+            StartCoroutine(ThrowObjectRoutine(dropObject));
+        }
+
+        private IEnumerator ThrowObjectRoutine(PickUpComponent dropObject)
+        {
+            _playerPickUp.Rigidbody.isKinematic = false;
+            dropObject.gameObject.GetComponentInChildren<BoxCollider>().enabled = true;
+
+
+            _partSpeed = _interaction._charge * _startThrowSpeed;
+            
+            _playerAnimation.StopPickUpObjectAnimation();
+            _currentPickedUpObject = dropObject;
+
+            dropObject.transform.rotation = transform.rotation;
+            _playerPickUp.Rigidbody.AddForce(transform.up + transform.forward * _partSpeed);
+            dropObject.transform.SetParent(null, true);
+
+            _playerPickUp._currentPickedUpObject = null;
+
+
+
+            _playerMovement.CanMove = true;
+            _playerRotation.CanRotate = true;
+            _isPlacing = false;
+
+            yield return null;
+        }
+
     }
 }

@@ -160,6 +160,8 @@ MonoBehaviour:
     m_Bits: 1024
   _interactRange: 2
   _fieldOfViewAngle: 110
+  _pickingUp: 0
+  _charge: 0
 --- !u!114 &-855099560831049974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83cd59c31bc1a57459305ae147f731c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentPickedUpObject: {fileID: 0}
 --- !u!114 &292782110368188867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe769756041393469b8ea3ab6925b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startThrowSpeed: 1000
 --- !u!1001 &6462287651593232351
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -31,15 +31,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Drop/Throw",
-                    "type": "Button",
-                    "id": "cf849981-b5df-4fdf-894e-ac4bcbb5c9b8",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -216,28 +207,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "PickUp",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "822177f1-c26c-44da-ac6f-b53eec05ec59",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse;Gamepad",
-                    "action": "Drop/Throw",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e5a04690-aa4c-41dc-a79a-9bfeb499ffe8",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad;Keyboard&Mouse",
-                    "action": "Drop/Throw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

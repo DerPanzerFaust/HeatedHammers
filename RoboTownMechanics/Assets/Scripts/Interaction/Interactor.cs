@@ -9,6 +9,7 @@ using Interaction.Workstations;
 using System.Collections.Generic;
 using Player.Drop;
 using PickUps;
+using static UnityEngine.InputSystem.InputAction;
 
 namespace Interaction.Base
 {
@@ -35,6 +36,12 @@ namespace Interaction.Base
 
         public bool _pickingUp;
 
+        public float _charge;
+
+        private float _maxCharge = .5f;
+
+        private float _timeHeldDown;
+
 
         //--------------------Public--------------------//
         public float InteractionRange => _interactRange;
@@ -53,7 +60,14 @@ namespace Interaction.Base
 
             _playerDrop = GetComponent<PlayerDrop>();
 
-            _playerInput.OnInteractInputAction.performed += DoInteract;
+            _playerInput.OnInteractInputAction.canceled += DoInteract;
+
+        }
+
+        private void Update()
+        {
+            if (_charge < _maxCharge && _playerInput.OnInteractInputAction.IsPressed() && _playerPickUp.CurrentPickedUpObject != null)
+                ThrowCharge();
         }
 
         private void OnDisable() => _playerInput.OnInteractInputAction.performed += DoInteract;
@@ -74,24 +88,33 @@ namespace Interaction.Base
                 }
                 else
                 {
-                    _playerDrop.DropObject(_playerPickUp.CurrentPickedUpObject);
-                    return;
+                    if (_charge >= _maxCharge)
+                    {
+                        _playerDrop.ThrowObject(_playerPickUp.CurrentPickedUpObject);
+                        _charge = 0;
+                        return;
+                    }
+                    else
+                    {
+                        _playerDrop.DropObject(_playerPickUp.CurrentPickedUpObject);
+                        return;
+                    }
                 }
             }
 
-
-            if (_playerPickUp.CurrentPickedUpObject != null
-                && interactable.CurrentInterActionType == InterActionType.WORKSTATION)
-            {
-                WorkstationInteraction workstationInteraction = (WorkstationInteraction)interactable;
-                _playerPickUp.PlaceInStation(workstationInteraction);
+                if (_playerPickUp.CurrentPickedUpObject != null
+                    && interactable.CurrentInterActionType == InterActionType.WORKSTATION)
+                {
+                    WorkstationInteraction workstationInteraction = (WorkstationInteraction)interactable;
+                    _playerPickUp.PlaceInStation(workstationInteraction);
+                }
+                else
+                {
+                    _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;
+                    interactable.Interact(_playerMaster);
+                }
             }
-            else
-            {
-                _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;
-                interactable.Interact(_playerMaster);
-            }
-        }
+     
 
         /// <summary>
         /// Returns the direction from the angle given
@@ -174,6 +197,11 @@ namespace Interaction.Base
             }
 
             return closestObject;
+        }
+
+        private void ThrowCharge()
+        { 
+            _charge += Time.deltaTime;
         }
     }
 }

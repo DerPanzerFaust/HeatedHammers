@@ -423,6 +423,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _currentStationType: 2
+  _station: 0
+  _completedPart: {fileID: 0}
+  _partSpawnLocation: {fileID: 0}
   _quickTimeCanvas: {fileID: 0}
 --- !u!114 &721679611028820198
 MonoBehaviour:
@@ -454,43 +457,43 @@ MonoBehaviour:
       type: 3}
     _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
       type: 3}
-    _isBroken: 0
+    _isPickedUp: 0
   - _partName: RightArmLower
     _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
       type: 3}
     _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
       type: 3}
-    _isBroken: 0
+    _isPickedUp: 0
   - _partName: LeftArmUpper
     _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
       type: 3}
     _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
       type: 3}
-    _isBroken: 0
-  - _partName: LeftArmUpper
+    _isPickedUp: 0
+  - _partName: RightArmUpper
     _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
       type: 3}
     _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
       type: 3}
-    _isBroken: 0
+    _isPickedUp: 0
   - _partName: Left Shoulder
     _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
       type: 3}
     _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
       type: 3}
-    _isBroken: 0
+    _isPickedUp: 0
   - _partName: Head
     _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
       type: 3}
     _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
       type: 3}
-    _isBroken: 0
+    _isPickedUp: 0
   - _partName: Battery
     _wholePart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
       type: 3}
     _brokenPart: {fileID: 3393935900343468367, guid: d1e87ad6f5ce4e14ab17861e1b1c338a,
       type: 3}
-    _isBroken: 0
+    _isPickedUp: 0
   _brokenParts: []
 --- !u!114 &-7496064343995043454
 MonoBehaviour:
@@ -504,7 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b79979cf66eb8c4a9b3cfbb2207ac48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialTime: 30
+  _initialTime: 45
   _currentTime: 0
   _brokenBotList: {fileID: 1121120982470270445}
   _brokenBotSpawn: {fileID: 8014879147295815789}
@@ -520,9 +523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2befbfd111a96c648b5d5bf7d04fd031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _brokenBotList: {fileID: 1121120982470270445}
   _brokenStartParts: 2
-  _brokenPartSpawner: {fileID: -7496064343995043454}
   _botSpawned: 0
 --- !u!1 &829509283035740056
 GameObject:

@@ -3,6 +3,7 @@ using UnityEngine;
 using Utilities;
 using Interaction.Base;
 using PartUtilities.Route;
+using PickUps;
 
 namespace Interaction.Workstations
 {
@@ -73,9 +74,13 @@ namespace Interaction.Workstations
 
             if (!partRoute.CanCompleteStation())
             {
-                Instantiate(_completedPart, _partSpawnLocation.position, Quaternion.identity);
+                GameObject spawnedObject = Instantiate(_completedPart, _partSpawnLocation.position, Quaternion.identity);
 
                 _pickUpGameObjectReference.SetActive(true);
+
+                spawnedObject.GetComponent<PickUpComponent>().Part 
+                    = _pickUpGameObjectReference.GetComponent<PickUpComponent>().Part;
+
                 Destroy(_pickUpGameObjectReference);
             }
             else

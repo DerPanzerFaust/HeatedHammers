@@ -11,6 +11,7 @@ using Player.Drop;
 using PickUps;
 using static UnityEngine.InputSystem.InputAction;
 using PartUtilities.Route;
+using Robot.List;
 
 
 namespace Interaction.Base
@@ -44,6 +45,7 @@ namespace Interaction.Base
 
         private float _timeHeldDown;
 
+        private BotPartList _botPartList;
 
         //--------------------Public--------------------//
         public float InteractionRange => _interactRange;
@@ -70,6 +72,9 @@ namespace Interaction.Base
         {
             if (_charge < _maxCharge && _playerInput.OnInteractInputAction.IsPressed() && _playerPickUp.CurrentPickedUpObject != null)
                 ThrowCharge();
+            _botPartList = BotPartList.Instance;
+
+            _playerInput.OnInteractInputAction.performed += DoInteract;
         }
 
         private void OnDisable() => _playerInput.OnInteractInputAction.performed -= DoInteract;
@@ -118,18 +123,35 @@ namespace Interaction.Base
             
 
             //when interacting with station
-            if (_playerPickUp.CurrentPickedUpObject != null
-                && interactable.CurrentInterActionType == InterActionType.WORKSTATION)
+            if (interactable.CurrentInterActionType == InterActionType.WORKSTATION)
             {
                 WorkstationInteraction workstationInteraction = (WorkstationInteraction)interactable;
 
-                //if it is not the station to be used in the route do nothing
-                if(_playerPickUp.CurrentPickedUpObject.CurrentPickUpState != PickUpState.COMPLETED)
-                    if (!_playerPickUp.CurrentPickedUpObject.GetComponent<PartRoute>().IsCorrectStation(workstationInteraction.Station))
+                //any other station
+                if (_playerPickUp.CurrentPickedUpObject != null)
+                {
+                    //if it is not the station to be used in the route do nothing
+                    if (_playerPickUp.CurrentPickedUpObject.CurrentPickUpState != PickUpState.COMPLETED)
+                        if (!_playerPickUp.CurrentPickedUpObject.GetComponent<PartRoute>().IsCorrectStation(workstationInteraction.Station))
+                            return;
+
+                    _playerPickUp.PlaceInStation(workstationInteraction);
+                }
+
+                //completed station and nothing in the hand
+                else if (_playerPickUp.CurrentPickedUpObject == null
+                && workstationInteraction.CurrentStationType == StationType.COMPLETED)
+                {
+                    BaseInteraction interactableFromRobot = _botPartList.GetPart(transform);
+
+                    if (interactableFromRobot == null)
                         return;
 
-                _playerPickUp.PlaceInStation(workstationInteraction);
+                    _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;
+                    interactableFromRobot.Interact(_playerMaster);
+                }
             }
+
             //when interacting with PickUpObject
             else if (interactable.CurrentInterActionType == InterActionType.PICKUP)
             {

@@ -37,12 +37,20 @@ namespace Robot.Spawn
 
         private void BreakParts()
         {
-            _brokenPartSpawner.DoTimer();
+            if(_brokenBotList.Parts.Count <= 0)
+            {
+                for (int i = 0; i < _brokenBotList.BrokenPartList.Count; i++)
+                    _brokenBotList.Parts.Add(_brokenBotList.BrokenPartList[i]);
+
+                _brokenBotList.BrokenPartList.Clear();
+            }
 
             for (int i = 0; i < _brokenStartParts; i++)
             {
                 BreakPart();
             }
+
+            _brokenPartSpawner.IsRunning = true;
         }
 
         /// <summary>
@@ -55,7 +63,6 @@ namespace Robot.Spawn
 
             _brokenPart = _brokenBotList.Parts[Random.Range(0, _brokenBotList.Parts.Count)];
 
-            _brokenPart.IsBroken = true;
             _brokenBotList.BrokenPartList.Add(_brokenPart);
             _brokenBotList.Parts.Remove(_brokenPart);
         }

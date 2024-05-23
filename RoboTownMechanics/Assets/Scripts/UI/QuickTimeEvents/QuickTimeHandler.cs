@@ -83,7 +83,7 @@ namespace QuickTime.Handler
         public void CompletedQuickTime()
         {
             ResetQuickTime();
-            _workstationInteraction.SpawnPart()
+            _workstationInteraction.SpawnPart();
         }
 
         protected virtual void ResetQuickTime()

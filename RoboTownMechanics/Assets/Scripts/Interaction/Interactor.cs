@@ -67,8 +67,9 @@ namespace Interaction.Base
                 WorkstationInteraction workstationInteraction = (WorkstationInteraction)interactable;
 
                 //if it is not the station to be used in the route do nothing
-                if (!_playerPickUp.CurrentPickedUpObject.GetComponent<PartRoute>().IsCorrectStation(workstationInteraction.Station))
-                    return;
+                if(_playerPickUp.CurrentPickedUpObject.CurrentPickUpState != PickUpState.COMPLETED)
+                    if (!_playerPickUp.CurrentPickedUpObject.GetComponent<PartRoute>().IsCorrectStation(workstationInteraction.Station))
+                        return;
 
                 _playerPickUp.PlaceInStation(workstationInteraction);
             }

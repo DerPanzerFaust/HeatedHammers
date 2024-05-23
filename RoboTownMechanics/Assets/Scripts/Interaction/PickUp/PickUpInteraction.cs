@@ -7,7 +7,7 @@ namespace Interaction.Pickup
     public class PickUpInteraction : BaseInteraction
     {
         //--------------------Functions--------------------//
-        private void Awake() => OnInteract.AddListener(PickUp);
+        private void OnEnable() => OnInteract.AddListener(PickUp);
 
         private void OnDisable() => OnInteract.RemoveListener(PickUp);
 

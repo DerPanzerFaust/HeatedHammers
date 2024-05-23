@@ -28,21 +28,24 @@ namespace PartUtilities.Route
             }
         }
 
-        
+        /// <summary>
+        /// checks if you can complete current station and moves on to the next
+        /// </summary>
+        /// <returns>bool if route can move on to the next station or not</returns>
         public bool CanCompleteStation()
         {
             if (_currentToBeCompletedWorkstation.Index + 1 > _route.Count)
                 return false;
             
-            _currentToBeCompletedWorkstation = _route[_currentToBeCompletedWorkstation.Index + 1];
+            _currentToBeCompletedWorkstation = _route[_currentToBeCompletedWorkstation.Index];
             return true;
         }
 
         /// <summary>
-        /// 
+        /// Checks if the given station is the correct station needed to be completed
         /// </summary>
-        /// <param name="stationTypeToCheck"></param>
-        /// <returns></returns>
+        /// <param name="stationTypeToCheck">station to check</param>
+        /// <returns>bool</returns>
         public bool IsCorrectStation(WorkStation stationTypeToCheck)
         {
             if(stationTypeToCheck == _currentToBeCompletedWorkstation.Station)
@@ -56,6 +59,7 @@ namespace PartUtilities.Route
     public class RouteObject
     {
         //--------------------Private--------------------//
+        [SerializeField]
         private int _index;
 
         [SerializeField]

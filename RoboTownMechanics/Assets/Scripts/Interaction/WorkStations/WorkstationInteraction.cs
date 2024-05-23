@@ -2,8 +2,6 @@ using QuickTime.Handler;
 using UnityEngine;
 using Utilities;
 using Interaction.Base;
-using Robot.List;
-using System.Collections.Generic;
 using PartUtilities.Route;
 
 namespace Interaction.Workstations
@@ -22,7 +20,7 @@ namespace Interaction.Workstations
 
         private GameObject _pickUpGameObjectReference;
         [SerializeField]
-        private List<GameObject> _parts;
+        private GameObject _completedPart;
 
         [SerializeField]
         private Transform _partSpawnLocation;
@@ -66,23 +64,27 @@ namespace Interaction.Workstations
         {
         }
 
+        /// <summary>
+        /// This function spawns a part on the part spawn location
+        /// </summary>
         public void SpawnPart()
         {
             PartRoute partRoute = _pickUpGameObjectReference.GetComponent<PartRoute>();
 
             if (!partRoute.CanCompleteStation())
             {
-                Instantiate(_parts[Random.Range(0, _parts.Count)], 
-                _partSpawnLocation.position, Quaternion.identity);
+                Instantiate(_completedPart, _partSpawnLocation.position, Quaternion.identity);
 
+                _pickUpGameObjectReference.SetActive(true);
                 Destroy(_pickUpGameObjectReference);
             }
             else
             {
+                _pickUpGameObjectReference.SetActive(true);
+                _pickUpGameObjectReference.transform.SetParent(null);
+
                 _pickUpGameObjectReference.transform.position = _partSpawnLocation.position;
                 _pickUpGameObjectReference.transform.rotation = _partSpawnLocation.rotation;
-
-                _pickUpGameObjectReference.SetActive(true);
             }
         }
     }

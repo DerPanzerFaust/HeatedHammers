@@ -54,13 +54,12 @@ namespace Interaction.Base
             _playerDrop = GetComponent<PlayerDrop>();
 
             _playerInput.OnInteractInputAction.performed += DoInteract;
-
         }
 
         private void OnDisable() => _playerInput.OnInteractInputAction.performed += DoInteract;
 
         
-        private void DoInteract(InputAction.CallbackContext callbackContext)
+        private void DoInteract(InputAction.CallbackContext callbackContext) 
         {
             if (_playerStateMachine.CurrentPlayerState != PlayerState.WALKING)
                 return;
@@ -69,8 +68,15 @@ namespace Interaction.Base
 
             if(interactable == null)
             {
-                _playerDrop.DropObject(_playerPickUp.CurrentPickedUpObject);
-                return;
+                if (_playerPickUp.CurrentPickedUpObject == null)
+                {
+                    return;
+                }
+                else
+                {
+                    _playerDrop.DropObject(_playerPickUp.CurrentPickedUpObject);
+                    return;
+                }
             }
 
 
@@ -85,8 +91,6 @@ namespace Interaction.Base
                 _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;
                 interactable.Interact(_playerMaster);
             }
-
-            
         }
 
         /// <summary>

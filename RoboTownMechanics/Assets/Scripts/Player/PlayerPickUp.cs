@@ -15,7 +15,7 @@ namespace Player.PickUp
     public class PlayerPickUp : MonoBehaviour
     {
         //--------------------Private--------------------//
-        private PickUpComponent _currentPickedUpObject;
+        public PickUpComponent _currentPickedUpObject;
 
         private PlayerStateMachine _playerStateMachine;
 

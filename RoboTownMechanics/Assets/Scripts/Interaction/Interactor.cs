@@ -96,7 +96,7 @@ namespace Interaction.Base
                 return false;
         }
 
-        private BaseInteraction GetTopPriorityInteractionObject()
+        public BaseInteraction GetTopPriorityInteractionObject()
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, _interactRange, _interatableLayer);
 

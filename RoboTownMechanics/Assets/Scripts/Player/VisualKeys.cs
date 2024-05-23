@@ -25,6 +25,9 @@ public class VisualKeys : MonoBehaviour
         {
             _buttonX.SetActive(true);
         }
-        else _buttonX.SetActive(false);
+        else
+        {
+            _buttonX.SetActive(false);
+        }
     }
 }

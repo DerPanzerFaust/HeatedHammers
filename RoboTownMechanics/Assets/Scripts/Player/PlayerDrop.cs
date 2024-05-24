@@ -69,7 +69,6 @@ namespace Player.Drop
         /// <param name="dropObject">the object to Drop</param>
         public void DropObject(PickUpComponent dropObject)
         {
-            Debug.Log("DRIO");
             SetWalkingState();
 
             if (_isPickingUp == true)
@@ -85,7 +84,7 @@ namespace Player.Drop
         private IEnumerator DropObjectRoutine(PickUpComponent dropObject)
         {
             _playerPickUp.Rigidbody.isKinematic = false;
-            dropObject.gameObject.GetComponentInChildren<BoxCollider>().enabled = true;
+            dropObject.gameObject.GetComponent<BoxCollider>().enabled = true;
             _playerAnimation.StopPickUpObjectAnimation();
             _currentPickedUpObject = dropObject;
 
@@ -109,8 +108,6 @@ namespace Player.Drop
         public void ThrowObject(PickUpComponent dropObject)
         {
 
-            Debug.Log("THROW");
-
             SetWalkingState();
 
             if (_isPickingUp == true)
@@ -126,7 +123,7 @@ namespace Player.Drop
         private IEnumerator ThrowObjectRoutine(PickUpComponent dropObject)
         {
             _playerPickUp.Rigidbody.isKinematic = false;
-            dropObject.gameObject.GetComponentInChildren<BoxCollider>().enabled = true;
+            dropObject.gameObject.GetComponent<BoxCollider>().enabled = true;
 
 
             _partSpeed = _interaction._charge * _startThrowSpeed;

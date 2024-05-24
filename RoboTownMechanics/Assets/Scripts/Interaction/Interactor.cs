@@ -108,19 +108,6 @@ namespace Interaction.Base
                 }
             }
 
-                if (_playerPickUp.CurrentPickedUpObject != null
-                    && interactable.CurrentInterActionType == InterActionType.WORKSTATION)
-                {
-                    WorkstationInteraction workstationInteraction = (WorkstationInteraction)interactable;
-                    _playerPickUp.PlaceInStation(workstationInteraction);
-                }
-                else
-                {
-                    _playerStateMachine.CurrentPlayerState = PlayerState.INTERACTING;
-                    interactable.Interact(_playerMaster);
-                }
-            
-
             //when interacting with station
             if (interactable.CurrentInterActionType == InterActionType.WORKSTATION)
             {

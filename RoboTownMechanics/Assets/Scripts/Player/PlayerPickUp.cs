@@ -8,8 +8,6 @@ using System.Collections;
 using Player.Movement;
 using Player.Animation;
 using Player.Rotation;
-using Interaction.Base;
-using UnityEditor.SceneManagement;
 using Interaction.Pickup;
 
 namespace Player.PickUp
@@ -72,20 +70,7 @@ namespace Player.PickUp
             _playerRotation.CanRotate = false;
             _isPlacing = true;
 
-            _pickUPrigidbody = pickUpObject.GetComponent<Rigidbody>();
-
-
-            if (_pickUPrigidbody != null)
-            {
-                _pickUPrigidbody.isKinematic = true;
-                pickUpObject.gameObject.GetComponentInChildren<BoxCollider>().enabled = false; 
-               
-            }
-            else
-            {
-                Debug.Log("No rigidbody");
-            }
-
+            
             StartCoroutine(PickUpObjectRoutine(pickUpObject));
 
         }
@@ -105,6 +90,15 @@ namespace Player.PickUp
             _currentPickedUpObject = pickUpObject;
 
             yield return new WaitForSeconds(_playerAnimation.GetPickupAnimDuration());
+
+            _pickUPrigidbody = pickUpObject.GetComponent<Rigidbody>();
+
+            if (_pickUPrigidbody != null)
+            {
+                _pickUPrigidbody.isKinematic = true;
+                pickUpObject.gameObject.GetComponent<BoxCollider>().enabled = false;
+
+            }
 
             pickUpObject.transform.rotation = transform.rotation;
             pickUpObject.transform.position = transform.position + new Vector3(0, .5f, 0);
@@ -166,6 +160,9 @@ namespace Player.PickUp
 
             station.CurrentPickUpObjectType = _currentPickedUpObject.GetComponent<PickUpComponent>().PickUpObjectType;
             station.PickUpGameObjectReference = _currentPickedUpObject.gameObject;
+
+            _currentPickedUpObject.GetComponent<Rigidbody>().isKinematic = false;
+            _currentPickedUpObject.GetComponent<BoxCollider>().enabled = true;
 
             _currentPickedUpObject.gameObject.SetActive(false);
             _currentPickedUpObject = null;

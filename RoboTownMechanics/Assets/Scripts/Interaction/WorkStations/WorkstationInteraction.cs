@@ -17,9 +17,11 @@ namespace Interaction.Workstations
         [SerializeField]
         private WorkStation _station;
 
+        [SerializeField]
         private PickUpObjectType _currentPickUpObjectType;
-
+        [SerializeField]
         private GameObject _pickUpGameObjectReference;
+        
         [SerializeField]
         private GameObject _completedPart;
 

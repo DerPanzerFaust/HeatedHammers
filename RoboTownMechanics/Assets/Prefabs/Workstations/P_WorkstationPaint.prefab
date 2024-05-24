@@ -188,7 +188,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 2.5}
-  m_SizeDelta: {x: 1, y: 2}
+  m_SizeDelta: {x: 2, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8457797813413570359
 Canvas:
@@ -605,13 +605,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentInterActionType: 1
-  OnInteract:
+  OnDrop:
     m_PersistentCalls:
       m_Calls: []
   _currentStationType: 0
   _station: 0
-  _completedPart: {fileID: 0}
-  _partSpawnLocation: {fileID: 0}
+  _currentPickUpObjectType: 0
+  _pickUpGameObjectReference: {fileID: 0}
+  _completedPart: {fileID: 5288907943946995759, guid: b3aad0bde210b3043a1257e8dd15671b,
+    type: 3}
+  _partSpawnLocation: {fileID: 1825993236918687068}
   _quickTimeCanvas: {fileID: 8549385191491876761}
 --- !u!114 &1496065899697984397
 MonoBehaviour:
